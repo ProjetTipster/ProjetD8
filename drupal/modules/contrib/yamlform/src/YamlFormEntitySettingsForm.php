@@ -9,7 +9,7 @@ use Drupal\Core\Url;
 use Drupal\user\Entity\User;
 
 /**
- * Base for controller for YAML form settings.
+ * Base for controller for form settings.
  */
 class YamlFormEntitySettingsForm extends EntityForm {
 
@@ -35,8 +35,7 @@ class YamlFormEntitySettingsForm extends EntityForm {
       '#markup' => $yamlform->id(),
       '#value' => $yamlform->id(),
     ];
-
-    $form['element']['title'] = [
+    $form['general']['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Title'),
       '#maxlength' => 255,
@@ -65,6 +64,35 @@ class YamlFormEntitySettingsForm extends EntityForm {
       '#description' => $this->t('If saving of submissions is disabled, submission settings, submission limits and the saving of drafts will be disabled.  Submissions must be sent via an email or handled using a custom <a href=":href">form handler</a>.', [':href' => Url::fromRoute('entity.yamlform.handlers_form', ['yamlform' => $yamlform->id()])->toString()]),
       '#default_value' => $settings['results_disabled'],
     ];
+    // Display warning when disabling the saving of submissions with no
+    // handlers.
+    if (!$yamlform->getHandlers(NULL, TRUE, YamlFormHandlerInterface::RESULTS_PROCESSED)->count()) {
+      /** @var \Drupal\yamlform\YamlFormMessageManagerInterface $message_manager */
+      $message_manager = \Drupal::service('yamlform.message_manager');
+      $message_manager->setYamlForm($yamlform);
+      $form['general']['results_disabled_error'] = [
+        '#type' => 'yamlform_message',
+        '#message_type' => 'warning',
+        '#message_message' => $message_manager->get(YamlFormMessageManagerInterface::FORM_SAVE_EXCEPTION),
+        '#states' => [
+          'visible' => [
+            ':input[name="results_disabled"]' => ['checked' => TRUE],
+            ':input[name="results_disabled_ignore"]' => ['checked' => FALSE],
+          ],
+        ],
+      ];
+      $form['general']['results_disabled_ignore'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Ignore disabled results warning'),
+        '#description' => $this->t("If checked all warnings and log messages about 'This form is currently not saving any submitted data.' will be suppressed."),
+        '#return_value' => TRUE,
+        '#states' => [
+          'visible' => [
+            ':input[name="results_disabled"]' => ['checked' => TRUE],
+          ],
+        ],
+      ];
+    }
 
     // Page.
     $form['page'] = [
@@ -181,7 +209,7 @@ class YamlFormEntitySettingsForm extends EntityForm {
       $form['form']['form_novalidate'] = [
         '#type' => 'checkbox',
         '#title' => $this->t('Disable client-side validation'),
-        '#description' => $this->t('If checked, the <a href="@href">novalidate</a> attribute, which disables client-side validation, will be added to this forms.', ['@href' => 'http://www.w3schools.com/tags/att_form_novalidate.asp']),
+        '#description' => $this->t('If checked, the <a href=":href">novalidate</a> attribute, which disables client-side validation, will be added to this forms.', [':href' => 'http://www.w3schools.com/tags/att_form_novalidate.asp']),
         '#return_value' => TRUE,
         '#default_value' => $settings['form_novalidate'],
       ];
@@ -193,6 +221,28 @@ class YamlFormEntitySettingsForm extends EntityForm {
       '#return_value' => TRUE,
       '#default_value' => $settings['form_autofocus'],
     ];
+    if ($default_settings['default_form_details_toggle']) {
+      $form['form']['form_details_toggle_disabled'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Display collapse/expand all details link'),
+        '#description' => $this->t('Expand/collapse all (details) is automatically added to all forms.'),
+        '#disabled' => TRUE,
+        '#default_value' => TRUE,
+      ];
+      $form['form']['form_details_toggle'] = [
+        '#type' => 'value',
+        '#value' => $settings['form_details_toggle'],
+      ];
+    }
+    else {
+      $form['form']['form_details_toggle'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Display collapse/expand all details link'),
+        '#description' => $this->t('If checked, an expand/collapse all (details) link will be added to this forms when there are two or more details elements.'),
+        '#return_value' => TRUE,
+        '#default_value' => $settings['form_details_toggle'],
+      ];
+    }
 
     // Wizard.
     $form['wizard'] = [
@@ -384,6 +434,20 @@ class YamlFormEntitySettingsForm extends EntityForm {
         ],
       ],
     ];
+    $form['submission']['token_update'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Allow users to update a submission using a secure token.'),
+      '#description' => $this->t("If checked users will be able to update a submission using the form's URL appended with the submission's (secure) token.  The URL to update a submission will be available when viewing a submission's information and can be inserted into the an email using the [yamlform-submission:update-url] token."),
+      '#return_value' => TRUE,
+      '#default_value' => $settings['token_update'],
+    ];
+    $form['submission']['next_serial'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Next submission number'),
+      '#description' => $this->t('The value of the next submission number. This is usually 1 when you start and will go up with each form submission.'),
+      '#min' => 1,
+      '#default_value' => $yamlform->getState('next_serial') ?: 1,
+    ];
 
     // Limits.
     $form['limits'] = [
@@ -399,25 +463,30 @@ class YamlFormEntitySettingsForm extends EntityForm {
     $form['limits']['limit_total'] = [
       '#type' => 'number',
       '#title' => $this->t('Total submissions limit'),
+      '#min' => 1,
       '#default_value' => $settings['limit_total'],
     ];
     $form['limits']['entity_limit_total'] = [
       '#type' => 'number',
       '#title' => $this->t('Total submissions limit per entity'),
+      '#min' => 1,
       '#default_value' => $settings['entity_limit_total'],
     ];
     $form['limits']['limit_total_message'] = [
       '#type' => 'yamlform_html_editor',
       '#title' => $this->t('Total submissions limit message'),
+      '#min' => 1,
       '#default_value' => $settings['limit_total_message'],
     ];
     $form['limits']['limit_user'] = [
       '#type' => 'number',
       '#title' => $this->t('Per user submission limit'),
+      '#min' => 1,
       '#default_value' => $settings['limit_user'],
     ];
     $form['limits']['entity_limit_user'] = [
       '#type' => 'number',
+      '#min' => 1,
       '#title' => $this->t('Per user submission limit per entity'),
       '#default_value' => $settings['entity_limit_user'],
     ];
@@ -450,6 +519,7 @@ class YamlFormEntitySettingsForm extends EntityForm {
       '#title' => $this->t('Confirmation URL'),
       '#description' => $this->t('URL to redirect the user to upon successful submission.'),
       '#default_value' => $settings['confirmation_url'],
+      '#maxlength' => NULL,
       '#states' => [
         'visible' => [
           [':input[name="confirmation_type"]' => ['value' => 'url']],
@@ -469,24 +539,25 @@ class YamlFormEntitySettingsForm extends EntityForm {
         ],
       ],
     ];
-    $form['confirmation']['token_tree_link'] = [
-      '#theme' => 'token_tree_link',
-      '#token_types' => ['yamlform', 'yamlform-submission'],
-      '#click_insert' => FALSE,
-      '#dialog' => TRUE,
-    ];
-
+    if ($this->moduleHandler->moduleExists('token')) {
+      $form['confirmation']['token_tree_link'] = [
+        '#theme' => 'token_tree_link',
+        '#token_types' => ['yamlform', 'yamlform-submission'],
+        '#click_insert' => FALSE,
+        '#dialog' => TRUE,
+      ];
+    }
     // Author.
     $form['author'] = [
       '#type' => 'details',
       '#title' => $this->t('Author information'),
       '#open' => TRUE,
-      '#access' => \Drupal::currentUser()->hasPermission('administer yamlform'),
+      '#access' => $this->currentUser()->hasPermission('administer yamlform'),
     ];
     $form['author']['uid'] = [
       '#type' => 'entity_autocomplete',
       '#title' => $this->t('Authored by'),
-      '#description' => $this->t("The username of the YAML form author/owner."),
+      '#description' => $this->t("The username of the form author/owner."),
       '#target_type' => 'user',
       '#settings' => [
         'match_operator' => 'CONTAINS',
@@ -520,6 +591,18 @@ class YamlFormEntitySettingsForm extends EntityForm {
     /** @var \Drupal\yamlform\YamlFormInterface $yamlform */
     $yamlform = $this->getEntity();
 
+    /** @var \Drupal\yamlform\YamlFormSubmissionStorageInterface $submission_storage */
+    $submission_storage = \Drupal::entityTypeManager()->getStorage('yamlform_submission');
+
+    // Set next serial number.
+    $next_serial = (int) $values['next_serial'];
+    $max_serial = $submission_storage->getMaxSerial($yamlform);
+    if ($next_serial < $max_serial) {
+      drupal_set_message(t('The next submission number was increased to @min to make it higher than existing submissions.', ['@min' => $max_serial]));
+      $next_serial = $max_serial;
+    }
+    $yamlform->setState('next_serial', $next_serial);
+
     // Remove main properties.
     unset(
       $values['id'],
@@ -527,14 +610,21 @@ class YamlFormEntitySettingsForm extends EntityForm {
       $values['description'],
       $values['template'],
       $values['status'],
-      $values['uid']
+      $values['uid'],
+      $values['next_serial']
+    );
+
+    // Remove disabled properties.
+    unset(
+      $values['form_novalidate_disabled'],
+      $values['form_details_toggle_disabled']
     );
 
     // Set settings and save the form.
     $yamlform->setSettings($values)->save();
 
-    $this->logger('yamlform')->notice('YAML form settings @label saved.', ['@label' => $yamlform->label()]);
-    drupal_set_message($this->t('YAML form settings %label saved.', ['%label' => $yamlform->label()]));
+    $this->logger('yamlform')->notice('Form settings @label saved.', ['@label' => $yamlform->label()]);
+    drupal_set_message($this->t('Form settings %label saved.', ['%label' => $yamlform->label()]));
   }
 
   /**

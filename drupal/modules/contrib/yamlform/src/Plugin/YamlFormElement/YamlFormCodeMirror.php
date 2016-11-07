@@ -23,6 +23,7 @@ class YamlFormCodeMirror extends YamlFormElementBase {
    */
   public function getDefaultProperties() {
     return parent::getDefaultProperties() + [
+      // Codemirror setings.
       'mode' => 'text',
     ];
   }

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Support module for YAML form related testing.
+ * Support module for form related testing.
  */
 
 use Drupal\Core\Form\FormStateInterface;
@@ -23,10 +23,12 @@ function yamlform_test_theme() {
  * Implements hook_yamlform_options_YAMLFORM_OPTIONS_ID_alter().
  */
 function yamlform_test_yamlform_options_test_alter(array &$options, array &$element) {
-  // Set three options.
-  $options['one'] = 'one';
-  $options['two'] = 'two';
-  $options['three'] = 'three';
+  $options = [
+    'one' => t('One'),
+    'two' => t('Two'),
+    'three' => t('Three'),
+  ];
+
 }
 
 /**
@@ -50,39 +52,36 @@ function yamlform_test_form_yamlform_submission_test_form_validate_form_validate
  * Implements hook_yamlform_load().
  */
 function yamlform_test_yamlform_load(array $entities) {
+  // If ?generate is passed to the current pages URL the test form's elements
+  // will get rebuilt.
+  if (!isset($_GET['generate'])) {
+    return;
+  }
+
   $include_base_path = drupal_get_path('module', 'yamlform_test') . '/includes';
   foreach ($entities as $id => $entity) {
-    // Note: Comment out the below line to regenerate form elements on every
-    // YamlForm entity load.
-    if ($entity->getElementsRaw()) {
-      continue;
+    if (preg_match('/^(test_form_(?:wizard_)?long)_\d+$/', $id, $match)) {
+      $name = $match[1];
+    }
+    else {
+      $name = $id;
     }
 
-    $elements = [];
-    if (strpos($id, 'test_form_long_') === 0) {
-      $length = (int) str_replace('test_form_long_', '', $id);
-      $elements = [];
-      for ($i = 1; $i <= $length; $i++) {
-        $elements["element_$i"] = [
-          '#type' => 'textfield',
-          '#title' => (string) t('Element #@index', ['@index' => $i]),
-        ];
-      }
-    }
-    elseif (file_exists("$include_base_path/yamlform_test.$id.inc")) {
-      module_load_include('inc', 'yamlform_test', 'includes/yamlform_test.' . $id);
-      $function = 'yamlform_test_' . $id;
-      $elements = $function();
-    }
-
-    if ($elements) {
+    if (file_exists("$include_base_path/yamlform_test.$name.inc")) {
+      module_load_include('inc', 'yamlform_test', 'includes/yamlform_test.' . $name);
+      $function = 'yamlform_test_' . $name;
+      $elements = $function($entity);
       $entity->setElements($elements);
+
       // Issue: Unable to execute YamlForm::save().
       // $entity->save();
       // Workaround: Write the elements directory to yamlform config.
       \Drupal::configFactory()->getEditable('yamlform.yamlform.' . $id)
         ->set('elements', Yaml::encode($elements))
         ->save();
+
+      // Display message.
+      drupal_set_message(t('Generated elements for %title form', ['%title' => $entity->label()]));
     }
   }
 }
@@ -125,6 +124,9 @@ function _yamlform_test_issues() {
     ],
     'yamlform_markup' => [
       2700667 => 'Notice: Undefined index: #type in drupal_process_states()',
+    ],
+    'yamlform_time' => [
+      1838234 => 'Add jQuery Timepicker for the Time element of the datetime field',
     ],
   ];
 }

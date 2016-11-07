@@ -43,6 +43,12 @@ yamlform.help:
 
 # Form.
 
+yamlform.confirmation:
+  version: 1.x
+  css:
+    theme:
+      css/yamlform.confirmation.css: {}
+
 yamlform.form:
   version: 1.x
   css:
@@ -78,6 +84,12 @@ yamlform.progress.bar:
   css:
     theme:
       css/yamlform.progress.bar.css: {}
+
+yamlform.navigation:
+  version: 1.x
+  css:
+    theme:
+      css/yamlform.navigation.css: {}
 
 # Elements.
 
@@ -132,6 +144,13 @@ yamlform.element.counter:
     - core/jquery.once
     - yamlform/jquery.counter
 
+yamlform.element.date:
+  version: 1.x
+  js:
+    js/yamlform.element.date.js: {}
+  dependencies:
+    - core/drupal.date
+
 yamlform.element.details.save:
   version: 1.x
   js:
@@ -159,8 +178,17 @@ yamlform.element.flexbox:
     theme:
       css/yamlform.element.flexbox.css: {}
 
+yamlform.element.image_file:
+  version: 1.x
+  css:
+    theme:
+      css/yamlform.element.image_file.css: {}
+
 yamlform.element.html_editor:
   version: 1.x
+  css:
+    theme:
+      css/yamlform.element.html_editor.css: {}
   js:
     js/yamlform.element.html_editor.js: {}
   dependencies:
@@ -168,7 +196,7 @@ yamlform.element.html_editor:
     - core/drupalSettings
     - core/jquery
     - core/jquery.once
-    - core/ckeditor
+    - yamlform/ckeditor
 
 yamlform.element.inputmask:
   version: 1.x
@@ -185,6 +213,25 @@ yamlform.element.likert:
   css:
     component:
       css/yamlform.element.likert.css: {}
+
+yamlform.element.location:
+  version: 1.x
+  css:
+    component:
+      css/yamlform.element.location.css: {}
+  js:
+    js/yamlform.element.location.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once
+    - yamlform/jquery.geocomplete
+
+yamlform.element.message:
+  version: 1.x
+  css:
+    theme:
+      css/yamlform.element.message.css: {}
 
 yamlform.element.options:
   version: 1.x
@@ -224,6 +271,15 @@ yamlform.element.rating:
   dependencies:
     - yamlform/jquery.rateit
 
+yamlform.element.roles:
+  version: 1.x
+  js:
+    js/yamlform.element.roles.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once
+
 yamlform.element.select2:
   version: 1.x
   js:
@@ -256,11 +312,25 @@ yamlform.element.text_format:
   js:
     js/yamlform.element.text_format.js: {}
 
+yamlform.element.tableselect:
+  version: 1.x
+  css:
+    theme:
+      css/yamlform.element.tableselect.css: {}
+
 yamlform.element.tableselect_sort:
   version: 1.x
   css:
     theme:
       css/yamlform.element.tableselect_sort.css: {}
+
+yamlform.element.time:
+  version: 1.x
+  js:
+    js/yamlform.element.time.js: {}
+  dependencies:
+    - core/drupal
+    - yamlform/jquery.timepicker
 
 yamlform.element.toggle:
   version: 1.x
@@ -282,13 +352,25 @@ yamlform.element.tooltip:
     - core/jquery.once
     - core/jquery.ui.tooltip
 
-yamlform.navigation:
+yamlform.element.video_file:
   version: 1.x
   css:
     theme:
-      css/yamlform.navigation.css: {}
+      css/yamlform.element.video_file.css: {}
 
 # External libraries.
+
+ckeditor:
+  remote: http://ckeditor.com/
+  version: 4.5.11
+  license:
+    name: MIT
+    url: http://codemirror.net/LICENSE
+    gpl-compatible: true
+  cdn:
+    /libraries/ckeditor/: 'https://cdn.ckeditor.com/4.5.11/standard/'
+  js:
+    /libraries/ckeditor/ckeditor.js: { preprocess: false, minified: true }
 
 codemirror.text:
   remote: https://github.com/codemirror/codemirror
@@ -340,6 +422,20 @@ jquery.counter:
   dependencies:
     - core/jquery
 
+jquery.geocomplete:
+  remote: http://ubilabs.github.io/geocomplete/
+  version: 1.7.0
+  license:
+    name: MIT
+    url: https://github.com/ubilabs/geocomplete/blob/master/MIT-LICENSE.txt
+    gpl-compatible: true
+  cdn:
+    /libraries/geocomplete/: https://cdnjs.cloudflare.com/ajax/libs/geocomplete/1.7.0/
+  js:
+    /libraries/geocomplete/jquery.geocomplete.min.js: {}
+  dependencies:
+    - core/jquery
+
 jquery.inputmask:
   remote: https://github.com/RobinHerbots/jquery.inputmask
   version: 3.31
@@ -388,10 +484,27 @@ jquery.select2:
   dependencies:
     - core/jquery
 
+jquery.timepicker:
+  remote: https://github.com/jonthornton/jquery-timepicker
+  version: 1.10.0
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/mit-license.php
+    gpl-compatible: true
+  cdn:
+    /libraries/jquery.timepicker/: https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/
+  css:
+    theme:
+      /libraries/jquery.timepicker/jquery.timepicker.css: {}
+  js:
+    /libraries/jquery.timepicker/jquery.timepicker.min.js: {}
+  dependencies:
+    - core/jquery
+
 jquery.toggles:
   remote: https://github.com/simontabor/jquery-toggles/
-  version: &yamlform_toggles_version 4.0.0
-  license: &yamlform_toggles_version
+  version: 4.0.0
+  license:
     name: MIT
     url: http://opensource.org/licenses/mit-license.php
     gpl-compatible: true
@@ -410,7 +523,7 @@ signature_pad:
   version: 1.5.3
   license:
     name: MIT
-    url: https://opensource.org/licenses/MIT
+    url: http://opensource.org/licenses/mit-license.php
     gpl-compatible: true
   cdn:
     /libraries/signature_pad/: https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/

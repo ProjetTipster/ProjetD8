@@ -135,11 +135,16 @@ class YamlFormTableSelectSort extends Table {
 
     // Append weight to header.
     $header[] = t('Weight');
-    $element['#attributes']['class'][] = 'js-tableselect-sort';
-    $element['#attributes']['class'][] = 'tableselect-sort';
+
+    // Set header and rows.
     $element['#header'] = $header;
     $element['#rows'] = $rows;
+
+    // Attach table sort.
+    $element['#attributes']['class'][] = 'js-tableselect-sort';
+    $element['#attributes']['class'][] = 'tableselect-sort';
     $element['#attached']['library'][] = 'yamlform/yamlform.element.tableselect_sort';
+
     return $element;
   }
 
@@ -161,7 +166,12 @@ class YamlFormTableSelectSort extends Table {
     $value = is_array($element['#value']) ? $element['#value'] : [];
 
     // Add validate callback that extracts the associative array of options.
-    $element['#element_validate'] = [[get_called_class(), 'validateTableSelectOrder']];
+    if (isset($element['#element_validate'])) {
+      array_unshift($element['#element_validate'], [get_called_class(), 'validateTableSelectOrder']);
+    }
+    else {
+      $element['#element_validate'][] = [get_called_class(), 'validateTableSelectOrder'];
+    }
 
     $element['#tree'] = TRUE;
 
@@ -260,7 +270,7 @@ class YamlFormTableSelectSort extends Table {
 
     // Set values.
     $values = [];
-    foreach ($checked_values as $index => $item) {
+    foreach ($checked_values as $item) {
       $values[$item['value']] = $item['value'];
     }
 
@@ -269,8 +279,6 @@ class YamlFormTableSelectSort extends Table {
 
     // Now, set the values as the element's value.
     $form_state->setValueForElement($element, $values);
-
-    return $element;
   }
 
 }

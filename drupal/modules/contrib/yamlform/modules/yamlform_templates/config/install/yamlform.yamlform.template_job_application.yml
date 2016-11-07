@@ -4,13 +4,12 @@ dependencies: {  }
 uid: null
 template: true
 id: template_job_application
-title: 'Job application'
+title: 'Job Application'
 description: 'A job application form template.'
 elements: |
   information:
     '#title': 'Your Information'
-    '#type': details
-    '#open': true
+    '#type': fieldset
     first_name:
       '#title': 'First Name'
       '#type': textfield
@@ -26,8 +25,7 @@ elements: |
       '#required': true
   contact_information:
     '#title': 'Contact Information'
-    '#type': details
-    '#open': true
+    '#type': fieldset
     contact:
       '#type': contact
       '#title': Contact
@@ -36,8 +34,7 @@ elements: |
       '#company__access': false
   resume:
     '#title': 'Your Resume'
-    '#type': details
-    '#open': true
+    '#type': fieldset
     resume_method:
       '#type': radios
       '#options':
@@ -48,6 +45,8 @@ elements: |
       '#default_value': attach
     resume_file_container:
       '#type': container
+      '#title': Resume
+      '#title_display': invisible
       '#states':
         visible:
           ':input[name="resume_method"]':
@@ -62,6 +61,8 @@ elements: |
         '#type': managed_file
     resume_text:
       '#type': textarea
+      '#title': Resume
+      '#title_display': invisible
       '#states':
         visible:
           ':input[name="resume_method"]':
@@ -85,6 +86,7 @@ settings:
   form_prepopulate_source_entity: false
   form_novalidate: false
   form_autofocus: false
+  form_details_toggle: false
   wizard_progress_bar: true
   wizard_progress_pages: false
   wizard_progress_percentage: false
@@ -112,6 +114,8 @@ settings:
   entity_limit_total: null
   entity_limit_user: null
   results_disabled: false
+  results_disabled_ignore: false
+  token_update: false
 access:
   create:
     roles:

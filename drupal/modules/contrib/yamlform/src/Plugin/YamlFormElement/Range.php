@@ -22,9 +22,11 @@ class Range extends NumericBase {
    */
   public function getDefaultProperties() {
     return parent::getDefaultProperties() + [
+      // Form validation.
       'min' => '',
       'max' => '',
       'step' => '',
+      // Range settings.
       'range__output' => FALSE,
       'range__output_prefix' => '',
       'range__output_suffix' => '',

@@ -21,6 +21,7 @@ class Details extends ContainerBase {
    */
   public function getDefaultProperties() {
     return parent::getDefaultProperties() + [
+      // Form display.
       'open' => FALSE,
     ];
   }

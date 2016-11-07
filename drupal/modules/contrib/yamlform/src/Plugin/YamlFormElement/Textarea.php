@@ -24,38 +24,26 @@ class Textarea extends TextBase {
   public function getDefaultProperties() {
     return [
       'title' => '',
+      // General settings.
       'description' => '',
-
-      'required' => FALSE,
-      'required_error' => '',
       'default_value' => '',
-
+      // Form display
       'title_display' => '',
       'description_display' => '',
       'field_prefix' => '',
       'field_suffix' => '',
       'placeholder' => '',
-
+      'rows' => '',
+      // Form validation.
+      'required' => FALSE,
+      'required_error' => '',
       'unique' => FALSE,
-
-      'admin_title' => '',
-      'private' => FALSE,
-
-      'format' => $this->getDefaultFormat(),
-
       'counter_type' => '',
       'counter_maximum' => '',
       'counter_message' => '',
-      'rows' => '',
-
-      'wrapper_attributes__class' => '',
-      'wrapper_attributes__style' => '',
-      'attributes__class' => '',
-      'attributes__style' => '',
-
-      'flex' => 1,
-      'states' => [],
-    ];
+      // Submission display.
+      'format' => $this->getDefaultFormat(),
+    ] + $this->getDefaultBaseProperties();
   }
 
   /**

@@ -98,9 +98,9 @@ class YamlFormElementStates extends FormElement {
     if ($warning_message = self::isDefaultValueCustomizedFormApiStates($element)) {
       $warning_message .= ' ' . t('Form API #states must be manually entered.');
       $element['messages'] = [
-        '#type' => 'container',
-        '#attributes' => ['class' => ['messages', 'messages--warning']],
-        'warning' => ['#markup' => $warning_message],
+        '#type' => 'yamlform_message',
+        '#message_type' => 'warning',
+        '#message_message' => $warning_message,
       ];
       $element['states'] = [
         '#type' => 'yamlform_codemirror',
@@ -153,7 +153,7 @@ class YamlFormElementStates extends FormElement {
     // Build state and conditions rows.
     $row_index = 0;
     $rows = [];
-    foreach ($states as $state => $state_settings) {
+    foreach ($states as $state_settings) {
       $rows[$row_index] = self::buildStateRow($element, $state_settings, $table_id, $row_index, $ajax_settings);
       $row_index++;
       foreach ($state_settings['conditions'] as $condition) {
@@ -317,7 +317,7 @@ class YamlFormElementStates extends FormElement {
     $operations = [];
     $operations['add'] = [
       '#type' => 'image_button',
-      '#src' => 'core/misc/icons/787878/plus.svg',
+      '#src' => drupal_get_path('module', 'yamlform') . '/images/icons/plus.svg',
       '#limit_validation_errors' => [],
       '#submit' => [[get_called_class(), 'addConditionSubmit']],
       '#ajax' => $ajax_settings,
@@ -326,7 +326,7 @@ class YamlFormElementStates extends FormElement {
     ];
     $operations['remove'] = [
       '#type' => 'image_button',
-      '#src' => 'core/misc/icons/787878/ex.svg',
+      '#src' => drupal_get_path('module', 'yamlform') . '/images/icons/ex.svg',
       '#limit_validation_errors' => [],
       '#submit' => [[get_called_class(), 'removeRowSubmit']],
       '#ajax' => $ajax_settings,
@@ -349,7 +349,7 @@ class YamlFormElementStates extends FormElement {
    *   The current state of the form.
    */
   public static function addStateSubmit(array &$form, FormStateInterface $form_state) {
-    // Get the YAML form states element by going up one level.
+    // Get the form states element by going up one level.
     $button = $form_state->getTriggeringElement();
     $element =& NestedArray::getValue($form, array_slice($button['#array_parents'], 0, -1));
 
@@ -386,7 +386,7 @@ class YamlFormElementStates extends FormElement {
    *   The current state of the form.
    */
   public static function addConditionSubmit(array &$form, FormStateInterface $form_state) {
-    // Get the YAML form states element by going up one level.
+    // Get the form states element by going up one level.
     $button = $form_state->getTriggeringElement();
     $element =& NestedArray::getValue($form, array_slice($button['#array_parents'], 0, -4));
 
@@ -467,7 +467,7 @@ class YamlFormElementStates extends FormElement {
   }
 
   /**
-   * Validates YAML form states element.
+   * Validates form states element.
    */
   public static function validateStates(&$element, FormStateInterface $form_state, &$complete_form) {
     if (isset($element['states']['#value']) && is_string($element['states']['#value'])) {

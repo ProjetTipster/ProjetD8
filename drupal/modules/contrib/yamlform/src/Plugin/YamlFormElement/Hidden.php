@@ -19,6 +19,7 @@ class Hidden extends TextBase {
    */
   public function getDefaultProperties() {
     return [
+      // General settings.
       'value' => '',
     ];
   }

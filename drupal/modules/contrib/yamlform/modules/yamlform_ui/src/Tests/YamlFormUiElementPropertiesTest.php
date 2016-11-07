@@ -6,7 +6,7 @@ use Drupal\yamlform\Tests\YamlFormTestBase;
 use Drupal\yamlform\Entity\YamlForm;
 
 /**
- * Tests for YAML form UI element properties.
+ * Tests for form UI element properties.
  *
  * @group YamlFormUi
  */
@@ -37,7 +37,7 @@ class YamlFormUiElementPropertiesTest extends YamlFormTestBase {
     // the element's render array has not be altered.
     // This verifies that the edit element form is not unexpectedly altering
     // an element's render array.
-    $yamlform_ids = ['example_layout_basic', 'test_element', 'test_element_extras', 'test_form_states_triggers'];
+    $yamlform_ids = ['example_layout_basic', 'test_element', 'test_element_access', 'test_element_extras', 'test_form_states_triggers'];
     foreach ($yamlform_ids as $yamlform_id) {
       /** @var \Drupal\yamlform\YamlFormInterface $yamlform_elements */
       $yamlform_elements = YamlForm::load($yamlform_id);
@@ -45,7 +45,7 @@ class YamlFormUiElementPropertiesTest extends YamlFormTestBase {
       foreach ($original_elements as $key => $original_element) {
         $this->drupalPostForm('admin/structure/yamlform/manage/' . $yamlform_elements->id() . '/element/' . $key . '/edit', [], t('Save'));
 
-        // Must reset the YAML form entity cache so that the update elements can
+        // Must reset the form entity cache so that the update elements can
         // be loaded.
         \Drupal::entityTypeManager()->getStorage('yamlform_submission')->resetCache();
 

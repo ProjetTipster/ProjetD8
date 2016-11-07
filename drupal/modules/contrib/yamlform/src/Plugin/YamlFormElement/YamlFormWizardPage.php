@@ -21,6 +21,7 @@ class YamlFormWizardPage extends Details {
    */
   public function getDefaultProperties() {
     return [
+      // Page settings.
       'title' => '',
       'open' => '',
       'prev_button_label' => '',
@@ -45,7 +46,7 @@ class YamlFormWizardPage extends Details {
   /**
    * {@inheritdoc}
    */
-  public function isRoot(array $element) {
+  public function isRoot() {
     return TRUE;
   }
 
@@ -79,10 +80,10 @@ class YamlFormWizardPage extends Details {
   }
 
   /**
-   * Get default from YAML form or global settings.
+   * Get default from form or global settings.
    *
    * @param \Drupal\yamlform\YamlFormInterface $yamlform
-   *   A YAML form.
+   *   A form.
    * @param string $name
    *   The name of the setting.
    *

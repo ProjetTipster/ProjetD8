@@ -4,7 +4,6 @@ namespace Drupal\yamlform\Plugin\YamlFormElement;
 
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\yamlform\YamlFormSubmissionInterface;
 
 /**
  * Provides a 'datelist' element.
@@ -23,6 +22,7 @@ class DateList extends DateBase {
    */
   public function getDefaultProperties() {
     return parent::getDefaultProperties() + [
+      // Date settings.
       'date_part_order' => [
         'year',
         'month',
@@ -36,14 +36,6 @@ class DateList extends DateBase {
       'date_year_range' => '1900:2050',
       'date_increment' => 1,
     ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function prepare(array &$element, YamlFormSubmissionInterface $yamlform_submission) {
-    parent::prepare($element, $yamlform_submission);
-    $element['#element_validate'][] = [get_class($this), 'validate'];
   }
 
   /**
@@ -124,12 +116,14 @@ class DateList extends DateBase {
     $form['date']['date_year_range'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Date year range'),
-      '#description' => $this->t("A description of the range of years to allow, like '1900:2050', '-3:+3' or '2000:+3', where the first value describes the earliest year and the second the latest year in the range."),
+      '#description' => $this->t("A description of the range of years to allow, like '1900:2050', '-3:+3' or '2000:+3', where the first value describes the earliest year and the second the latest year in the range.") . ' ' .
+      $this->t('Use min/max validation to define a more specific date range.'),
     ];
     $form['date']['date_increment'] = [
       '#type' => 'number',
       '#title' => $this->t('Date increment'),
       '#description' => $this->t('The increment to use for minutes and seconds'),
+      '#min' => 1,
       '#size' => 4,
     ];
     return $form;
@@ -149,11 +143,11 @@ class DateList extends DateBase {
   /**
    * {@inheritdoc}
    */
-  protected function setConfigurationFormDefaultValue(array &$form, array &$element, array &$property_element, $property_name) {
+  protected function setConfigurationFormDefaultValue(array &$form, array &$properties, array &$property_element, $property_name) {
     if (in_array($property_name, ['date_text_parts', 'date_part_order'])) {
-      $element[$property_name] = array_combine($element[$property_name], $element[$property_name]);
+      $properties[$property_name] = array_combine($properties[$property_name], $properties[$property_name]);
     }
-    parent::setConfigurationFormDefaultValue($form, $element, $property_element, $property_name);
+    parent::setConfigurationFormDefaultValue($form, $properties, $property_element, $property_name);
   }
 
 }

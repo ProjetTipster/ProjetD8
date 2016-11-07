@@ -9,7 +9,7 @@ description: 'Test options element.'
 elements: |
   yamlform_options_elements:
     '#type': details
-    '#title': 'YAML form options'
+    '#title': 'Form options'
     '#open': true
     yamlform_options:
       '#type': yamlform_options
@@ -34,7 +34,7 @@ elements: |
           three: Three
   yamlform_element_options_elements:
     '#type': details
-    '#title': 'YAML form element options'
+    '#title': 'Form element options'
     '#open': true
     yamlform_element_options_entity:
       '#type': yamlform_element_options
@@ -62,6 +62,7 @@ settings:
   form_prepopulate_source_entity: false
   form_novalidate: false
   form_autofocus: false
+  form_details_toggle: false
   wizard_progress_bar: true
   wizard_progress_pages: false
   wizard_progress_percentage: false
@@ -89,6 +90,8 @@ settings:
   entity_limit_total: null
   entity_limit_user: null
   results_disabled: true
+  results_disabled_ignore: false
+  token_update: false
 access:
   create:
     roles:

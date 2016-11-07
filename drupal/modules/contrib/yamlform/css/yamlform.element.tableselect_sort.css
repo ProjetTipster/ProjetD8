@@ -1,13 +1,10 @@
 /**
  * @file
- * Styles for YAML form Table select sort element.
+ * Table select sort element styles.
  */
-
-.tableselect-sort th:first-child {
-  text-align: center;
-}
 
 .tableselect-sort th:first-child,
 .tableselect-sort td:first-child {
   white-space: nowrap;
+  width: 40px;
 }

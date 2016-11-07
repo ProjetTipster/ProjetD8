@@ -11,8 +11,12 @@ Phase I (before Release Candidate)
 
 - [#2787117](https://www.drupal.org/node/2787117)
   Add more starter templates ★
-- Review out-of-the-box templates provide by the yamlform_templates.module. ★ 
   
+**Download**
+
+- [#2822560](https://www.drupal.org/node/2822560) Excel exporter
+
+
 **Code Review**
 
 - Testability
@@ -27,8 +31,6 @@ Phase I (before Release Candidate)
 
 **Libraries**
 
-- [#2792239](Move CKEditor Fake Objects and Link plugins outside the Core folder to /libraries)
-  Fix CKEditor libraries.
 - Add external libraries to composer.json ★
 
 **Testing**
@@ -41,7 +43,7 @@ Phase I (before Release Candidate)
 
 ### Multilingual 
 
-- Finalize how YAML form's elements are translated. ★
+- [#2805113](https://www.drupal.org/node/2805113) Rework translation handling. ★
 - Make sure the YAML Form module is completely translatable. ★
 
 ### Documentation & Help 

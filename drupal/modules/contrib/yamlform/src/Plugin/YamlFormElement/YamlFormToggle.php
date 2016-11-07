@@ -20,6 +20,7 @@ class YamlFormToggle extends Checkbox {
    */
   public function getDefaultProperties() {
     $properties = parent::getDefaultProperties() + [
+      // Toggle settings.
       'toggle_theme' => 'light',
       'toggle_size' => 'medium',
       'on_text' => '',

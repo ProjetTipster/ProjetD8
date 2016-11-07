@@ -10,7 +10,7 @@ use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Template\Attribute;
 
 /**
- * Helper class YAML form element methods.
+ * Helper class form element methods.
  */
 class YamlFormElementHelper {
 
@@ -22,7 +22,7 @@ class YamlFormElementHelper {
   public static $ignoredProperties = [
     // Properties that will allow code injection.
     '#allowed_tags' => '#allowed_tags',
-      // Properties that will break YAML form data handling.
+      // Properties that will break form data handling.
     '#tree' => '#tree',
     '#array_parents' => '#array_parents',
     '#parents' => '#parents',
@@ -191,6 +191,9 @@ class YamlFormElementHelper {
     $allowed_tags = isset($element['#allowed_tags']) ? $element['#allowed_tags'] : Xss::getHtmlTagList();
     $element['#prefix'] = new FormattableMarkup('<div' . new Attribute($attributes) . '>' . Xss::filter($element['#prefix'], $allowed_tags), []);
     $element['#suffix'] = $element['#suffix'] . '</div>';
+
+    // Remove #states property to prevent nesting.
+    unset($element['#states']);
   }
 
   /**
@@ -211,7 +214,7 @@ class YamlFormElementHelper {
         }
       }
       elseif (is_array($value)) {
-        $ignored_properties += self::getIgnoredProperties($value, $ignored_properties);
+        $ignored_properties += self::getIgnoredProperties($value);
       }
     }
     return $ignored_properties;

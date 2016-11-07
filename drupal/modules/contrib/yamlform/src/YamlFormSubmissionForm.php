@@ -7,6 +7,7 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Entity\ContentEntityForm;
+use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\TrustedRedirectResponse;
@@ -15,56 +16,56 @@ use Drupal\yamlform\Controller\YamlFormController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Base for controller for YAML form submission forms.
+ * Base for controller for form submission forms.
  */
 class YamlFormSubmissionForm extends ContentEntityForm {
 
   use YamlFormDialogTrait;
 
   /**
-   * The YAML form element (plugin) manager.
+   * The form element (plugin) manager.
    *
    * @var \Drupal\yamlform\YamlFormElementManagerInterface
    */
   protected $elementManager;
 
   /**
-   * The YAML form submission storage.
+   * The form submission storage.
    *
    * @var \Drupal\yamlform\YamlFormSubmissionStorageInterface
    */
   protected $storage;
 
   /**
-   * YAML form request handler.
+   * Form request handler.
    *
    * @var \Drupal\yamlform\YamlFormRequestInterface
    */
   protected $requestHandler;
 
   /**
-   * The YAML form third party settings manager.
+   * The form third party settings manager.
    *
    * @var \Drupal\yamlform\YamlFormThirdPartySettingsManagerInterface
    */
   protected $thirdPartySettingsManager;
 
   /**
-   * The YAML form message manager.
+   * The form message manager.
    *
    * @var \Drupal\yamlform\YamlFormMessageManagerInterface
    */
   protected $messageManager;
 
   /**
-   * The YAML form settings.
+   * The form settings.
    *
    * @var array
    */
   protected $settings;
 
   /**
-   * The YAML form submission.
+   * The form submission.
    *
    * @var \Drupal\yamlform\YamlFormSubmissionInterface
    */
@@ -83,13 +84,13 @@ class YamlFormSubmissionForm extends ContentEntityForm {
    * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
    *   The entity manager.
    * @param \Drupal\yamlform\YamlFormRequestInterface $request_handler
-   *   The YAML form request handler.
+   *   The form request handler.
    * @param \Drupal\yamlform\YamlFormElementManagerInterface $element_manager
-   *   The YAML form element manager.
+   *   The form element manager.
    * @param \Drupal\yamlform\YamlFormThirdPartySettingsManagerInterface $third_party_settings_manager
-   *   The YAML form third party settings manager.
+   *   The form third party settings manager.
    * @param \Drupal\yamlform\YamlFormMessageManagerInterface $message_manager
-   *   The YAML form message manager.
+   *   The form message manager.
    */
   public function __construct(EntityManagerInterface $entity_manager, YamlFormRequestInterface $request_handler, YamlFormElementManagerInterface $element_manager, YamlFormThirdPartySettingsManagerInterface $third_party_settings_manager, YamlFormMessageManagerInterface $message_manager) {
     parent::__construct($entity_manager);
@@ -117,10 +118,19 @@ class YamlFormSubmissionForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function setEntity(EntityInterface $entity) {
+    /** @var \Drupal\yamlform\YamlFormInterface $yamlform */
+    $yamlform = $entity->getYamlForm();
     $this->sourceEntity = $this->requestHandler->getCurrentSourceEntity(['yamlform', 'yamlform_submission']);
-    if ($yamlform_submission_draft = $this->storage->loadDraft($entity->getYamlForm(), $this->sourceEntity, $this->currentUser())) {
+
+    if ($yamlform->getSetting('token_update') && ($token = $this->getRequest()->query->get('token'))) {
+      if ($yamlform_submissions_token = $this->storage->loadByProperties(['token' => $token])) {
+        $entity = reset($yamlform_submissions_token);
+      }
+    }
+    elseif ($yamlform_submission_draft = $this->storage->loadDraft($yamlform, $this->sourceEntity, $this->currentUser())) {
       $entity = $yamlform_submission_draft;
     }
+
     $this->messageManager->setYamlFormSubmission($entity);
     $this->messageManager->setSourceEntity($this->sourceEntity);
     return parent::setEntity($entity);
@@ -134,10 +144,10 @@ class YamlFormSubmissionForm extends ContentEntityForm {
     // on the 'url' cache context.
     $form['#cache']['contexts'][] = 'url';
 
-    // Add this YAML form and the YAML form settings to the cache tags.
+    // Add this form and the form settings to the cache tags.
     $form['#cache']['tags'][] = 'config:yamlform.settings';
 
-    // Add the YAML form as a cacheable dependency.
+    // Add the form as a cacheable dependency.
     \Drupal::service('renderer')->addCacheableDependency($form, $this->getYamlForm());
 
     // Display status messages.
@@ -151,6 +161,12 @@ class YamlFormSubmissionForm extends ContentEntityForm {
       $form['#attributes']['novalidate'] = 'novalidate';
     }
 
+    // Display collapse/expand all details link.
+    if ($this->getYamlFormSetting('form_details_toggle')) {
+      $form['#attributes']['class'][] = 'yamlform-details-toggle';
+      $form['#attached']['library'][] = 'yamlform/yamlform.element.details.toggle';
+    }
+
     // Add autofocus class to form.
     if ($this->entity->isNew() && $this->getYamlFormSetting('form_autofocus')) {
       $form['#attributes']['class'][] = 'js-yamlform-autofocus';
@@ -162,7 +178,7 @@ class YamlFormSubmissionForm extends ContentEntityForm {
       $form['#attributes']['class'][] = 'js-yamlform-disable-autosubmit';
     }
 
-    // Call custom YAML form alter hook.
+    // Call custom form alter hook.
     $form_id = $this->getFormId();
     $this->thirdPartySettingsManager->alter('yamlform_submission_form', $form, $form_state, $form_id);
 
@@ -184,13 +200,11 @@ class YamlFormSubmissionForm extends ContentEntityForm {
     /* @var $yamlform_submission \Drupal\yamlform\YamlFormSubmissionInterface */
     $yamlform_submission = $this->getEntity();
 
-    // Prepend YAML form submission data using the default view without the data.
+    // Prepend form submission data using the default view without the data.
     if (!$yamlform_submission->isNew() && !$yamlform_submission->isDraft()) {
       $form['navigation'] = [
         '#theme' => 'yamlform_submission_navigation',
         '#yamlform_submission' => $yamlform_submission,
-        '#source_entity' => $this->sourceEntity,
-        '#rel' => 'edit-form',
         '#weight' => -20,
       ];
       $form['information'] = [
@@ -202,7 +216,7 @@ class YamlFormSubmissionForm extends ContentEntityForm {
       ];
     }
 
-    // Get YAML form elements.
+    // Get form elements.
     $elements = $yamlform_submission->getYamlForm()->getElementsInitialized();
 
     // Get submission data.
@@ -211,10 +225,10 @@ class YamlFormSubmissionForm extends ContentEntityForm {
     // Prepopulate data using query string parameters.
     $this->prepopulateData($data);
 
-    // Populate YAML form elements with YAML form submission data.
+    // Populate form elements with form submission data.
     $this->populateElements($elements, $data);
 
-    // Prepare YAML form elements.
+    // Prepare form elements.
     $this->prepareElements($elements);
 
     // Handle form with managed file upload but saving of submission is disabled.
@@ -233,17 +247,19 @@ class YamlFormSubmissionForm extends ContentEntityForm {
     // Add wizard progress tracker to the form.
     if ($this->getYamlFormSetting('wizard_progress_bar') || $this->getYamlFormSetting('wizard_progress_pages') || $this->getYamlFormSetting('wizard_progress_percentage')) {
       $wizard = $form_state->get('wizard');
-      $form['progress'] = [
-        '#theme' => 'yamlform_progress',
-        '#yamlform' => $this->getYamlForm(),
-        '#current_page' => $wizard['current'],
-      ];
+      if ($wizard['total']) {
+        $form['progress'] = [
+          '#theme' => 'yamlform_progress',
+          '#yamlform' => $this->getYamlForm(),
+          '#current_page' => $wizard['current'],
+        ];
+      }
     }
 
     // Append elements to the form.
     $form['elements'] = $elements;
 
-    // Alter form via YAML form handler.
+    // Alter form via form handler.
     $this->getYamlForm()->invokeHandlers('alterForm', $form, $form_state, $yamlform_submission);
 
     // Add CSS and JS.
@@ -251,7 +267,7 @@ class YamlFormSubmissionForm extends ContentEntityForm {
 
     // Attach details element save open/close library.
     // This ensures that the library will be loaded even if the
-    // YAML form is used as a block or a node.
+    // Form is used as a block or a node.
     if ($this->config('yamlform.settings')->get('ui.details_save')) {
       $form['#attached']['library'][] = 'yamlform/yamlform.element.details.save';
     }
@@ -263,7 +279,7 @@ class YamlFormSubmissionForm extends ContentEntityForm {
   }
 
   /**
-   * Get custom form which is displayed instead of the YAML form's elements.
+   * Get custom form which is displayed instead of the form's elements.
    *
    * @param array $form
    *   An associative array containing the structure of the form.
@@ -271,7 +287,7 @@ class YamlFormSubmissionForm extends ContentEntityForm {
    *   The current state of the form.
    *
    * @return array|bool
-   *   A custom form or FALSE if the default form containing the YAML form's
+   *   A custom form or FALSE if the default form containing the form's
    *   elements should be built.
    */
   protected function getCustomForm(array $form, FormStateInterface $form_state) {
@@ -320,7 +336,7 @@ class YamlFormSubmissionForm extends ContentEntityForm {
 
     // Disable this form if submissions are not being saved to the database or
     // passed to a YamlFormHandler.
-    if ($this->getYamlFormSetting('results_disabled') && !$yamlform->getHandlers(NULL, TRUE, YamlFormHandlerInterface::RESULTS_PROCESSED)->count()) {
+    if ($this->getYamlFormSetting('results_disabled') && !$this->getYamlFormSetting('results_disabled_ignore') && !$yamlform->getHandlers(NULL, TRUE, YamlFormHandlerInterface::RESULTS_PROCESSED)->count()) {
       $this->messageManager->log(YamlFormMessageManagerInterface::FORM_SAVE_EXCEPTION, 'error');
       if ($this->currentUser()->hasPermission('administer yamlform')) {
         // Display error to admin but allow them to submit the broken form.
@@ -360,7 +376,7 @@ class YamlFormSubmissionForm extends ContentEntityForm {
   }
 
   /**
-   * Display draft and previous submission status messages for this YAML form submission.
+   * Display draft and previous submission status messages for this form submission.
    *
    * @param array $form
    *   An associative array containing the structure of the form.
@@ -420,20 +436,25 @@ class YamlFormSubmissionForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   protected function actions(array $form, FormStateInterface $form_state) {
+    /* @var $yamlform_submission \Drupal\yamlform\YamlFormSubmissionInterface */
+    $yamlform_submission = $this->entity;
+
     $element = parent::actions($form, $form_state);
 
     /* @var \Drupal\yamlform\YamlFormSubmissionInterface $yamlform_submission */
     $preview_mode = $this->getYamlFormSetting('preview');
     $wizard = $form_state->get('wizard');
 
-    // Remove the delete button from the YAML form submission form.
+    // Remove the delete button from the form submission form.
     unset($element['delete']);
 
     // Mark the submit action as the primary action, when it appears.
     $element['submit']['#button_type'] = 'primary';
 
-    // Customize the submit button.
-    $element['submit']['#value'] = $this->getYamlFormSetting('form_submit_label');
+    // Customize the submit button's label for new submissions only.
+    if ($yamlform_submission->isNew() || $yamlform_submission->isDraft()) {
+      $element['submit']['#value'] = $this->getYamlFormSetting('form_submit_label');
+    }
 
     // Add validate and complete handler to submit.
     $element['submit']['#validate'][] = '::validateForm';
@@ -643,7 +664,7 @@ class YamlFormSubmissionForm extends ContentEntityForm {
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
 
-    // Validate form via YAML form handler.
+    // Validate form via form handler.
     $this->getYamlForm()->invokeHandlers('validateForm', $form, $form_state, $this->entity);
 
     // Form validate handlers (via form['#validate']) are not called when
@@ -685,7 +706,7 @@ class YamlFormSubmissionForm extends ContentEntityForm {
 
     parent::submitForm($form, $form_state);
 
-    // Submit form via YAML form handler.
+    // Submit form via form handler.
     $this->getYamlForm()->invokeHandlers('submitForm', $form, $form_state, $yamlform_submission);
   }
 
@@ -703,7 +724,7 @@ class YamlFormSubmissionForm extends ContentEntityForm {
     /** @var \Drupal\yamlform\YamlFormSubmissionInterface $yamlform_submission */
     $yamlform_submission = $this->getEntity();
 
-    // Confirm form via YAML form handler.
+    // Confirm form via form handler.
     $this->getYamlForm()->invokeHandlers('confirmForm', $form, $form_state, $yamlform_submission);
   }
 
@@ -735,7 +756,7 @@ class YamlFormSubmissionForm extends ContentEntityForm {
       return;
     }
 
-    // Save and log YAML form submission.
+    // Save and log form submission.
     $yamlform_submission->save();
 
     // Check limits and invalidate cached and rebuild.
@@ -949,25 +970,53 @@ class YamlFormSubmissionForm extends ContentEntityForm {
       if (Element::property($key) || !is_array($element)) {
         continue;
       }
-      // Set #access to FALSE which will surpress Form #required validation.
+
+      // Set #access to FALSE which will suppresses form #required validation.
       $element['#access'] = FALSE;
 
-      // ISSUE: If invalid data is being saved, via the previous button,
-      // #element_validate could be triggered for hidden elements and throw
-      // validation errors.
+      // ISSUE: Hidden elements still need to call #element_validate because
+      // certain elements, including managed_file, checkboxes, password_confirm,
+      // etc..., will also massage the submitted values via #element_validate.
       //
-      // WORKAROUND: Set empty #element_validate which overrides the default
-      // callback.
+      // SOLUTION: Call #element_validate for all hidden elements but suppresses
+      // #element_validate errors.
       //
-      // WARNING: This might cause issues in Elements that use
-      // '#element_validate' to alter the $form_state value.
-      // @see \Drupal\Core\Render\Element\Email::validateEmail
-      //
-      // NOTE: Element validation handler should respect #access=FALSE.
-      $element['#element_validate'] = [];
+      // Set hidden element #after_build handler.
+      $element['#after_build'][] = [get_class($this), 'hiddenElementAfterBuild'];
 
       $this->hideElements($element);
     }
+  }
+
+  /**
+   * Form element #after_build callback: Wrap #element_validate so that we suppress element validation errors.
+   */
+  public static function hiddenElementAfterBuild(array $element, FormStateInterface $form_state) {
+    if (!empty($element['#element_validate'])) {
+      $element['#_element_validate'] = $element['#element_validate'];
+      $element['#element_validate'] = [[get_called_class(), 'hiddenElementValidate']];
+    }
+    return $element;
+  }
+
+  /**
+   * Form element #element_validate callback: Execute #element_validate and suppress errors.
+   */
+  public static function hiddenElementValidate(array $element, FormStateInterface $form_state) {
+    // Create a temp form state that will capture and suppress element
+    // validation errors.
+    $temp_form_state = new FormState();
+    $temp_form_state->setLimitValidationErrors([]);
+    $temp_form_state->setValues($form_state->getValues());
+
+    // @see \Drupal\Core\Form\FormValidator::doValidateForm
+    foreach ($element['#_element_validate'] as $callback) {
+      $complete_form = &$form_state->getCompleteForm();
+      call_user_func_array($form_state->prepareCallback($callback), [&$element, &$temp_form_state, &$complete_form]);
+    }
+
+    // Get the temp form state's values.
+    $form_state->setValues($temp_form_state->getValues());
   }
 
   /**
@@ -1035,10 +1084,10 @@ class YamlFormSubmissionForm extends ContentEntityForm {
   /****************************************************************************/
 
   /**
-   * Check YAML form submission total limits.
+   * Check form submission total limits.
    *
    * @return bool
-   *   TRUE if YAML form submission total limit have been met.
+   *   TRUE if form submission total limit have been met.
    */
   protected function checkTotalLimit() {
     $yamlform = $this->getYamlForm();
@@ -1061,10 +1110,10 @@ class YamlFormSubmissionForm extends ContentEntityForm {
   }
 
   /**
-   * Check YAML form submission user limit.
+   * Check form submission user limit.
    *
    * @return bool
-   *   TRUE if YAML form submission user limit have been met.
+   *   TRUE if form submission user limit have been met.
    */
   protected function checkUserLimit() {
     $account = $this->currentUser();
@@ -1104,10 +1153,10 @@ class YamlFormSubmissionForm extends ContentEntityForm {
   }
 
   /**
-   * Returns the YAML form confidential indicator.
+   * Returns the form confidential indicator.
    *
    * @return bool
-   *   TRUE if the YAML form is confidential .
+   *   TRUE if the form is confidential .
    */
   protected function isConfidential() {
     return $this->getYamlFormSetting('form_confidential', FALSE);
@@ -1177,10 +1226,10 @@ class YamlFormSubmissionForm extends ContentEntityForm {
   }
 
   /**
-   * Is the current YAML form an entity reference from the source entity.
+   * Is the current form an entity reference from the source entity.
    *
    * @return bool
-   *   TRUE is the current YAML form an entity reference from the source entity.
+   *   TRUE is the current form an entity reference from the source entity.
    */
   protected function isYamlFormEntityReferenceFromSourceEntity() {
     return $this->sourceEntity
@@ -1194,10 +1243,10 @@ class YamlFormSubmissionForm extends ContentEntityForm {
   /****************************************************************************/
 
   /**
-   * Get the YAML form submission's YAML form.
+   * Get the form submission's form.
    *
    * @return \Drupal\yamlform\Entity\YamlForm
-   *   A YAML form.
+   *   A form.
    */
   protected function getYamlForm() {
     /** @var \Drupal\yamlform\YamlFormSubmissionInterface $yamlform_submission */
@@ -1206,10 +1255,10 @@ class YamlFormSubmissionForm extends ContentEntityForm {
   }
 
   /**
-   * Get the YAML form submission's source entity.
+   * Get the form submission's source entity.
    *
    * @return \Drupal\Core\Entity\EntityInterface
-   *   The YAML form submission's source entity.
+   *   The form submission's source entity.
    */
   protected function getSourceEntity() {
     return $this->sourceEntity;
@@ -1219,7 +1268,7 @@ class YamlFormSubmissionForm extends ContentEntityForm {
    * Get source entity for use with entity limit total and user submissions.
    *
    * @return \Drupal\Core\Entity\EntityInterface|null
-   *   The YAML form submission's source entity.
+   *   The form submission's source entity.
    */
   protected function getLimitSourceEntity() {
     /** @var \Drupal\yamlform\YamlFormSubmissionInterface $yamlform_submission */
@@ -1233,7 +1282,7 @@ class YamlFormSubmissionForm extends ContentEntityForm {
   }
 
   /**
-   * Get a YAML form submission's YAML form setting.
+   * Get a form submission's form setting.
    *
    * @param string $name
    *   Setting name.
@@ -1241,10 +1290,10 @@ class YamlFormSubmissionForm extends ContentEntityForm {
    *   Default value.
    *
    * @return mixed
-   *   A YAML form setting.
+   *   A form setting.
    */
   protected function getYamlFormSetting($name, $default_value = NULL) {
-    // Get YAML form settings with default values.
+    // Get form settings with default values.
     if (empty($this->settings)) {
       $this->settings = $this->getYamlForm()->getSettings();
       $default_settings = $this->config('yamlform.settings')->get('settings');

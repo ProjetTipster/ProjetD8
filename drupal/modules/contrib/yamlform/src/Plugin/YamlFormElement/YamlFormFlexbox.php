@@ -21,6 +21,7 @@ class YamlFormFlexbox extends Container {
    */
   public function getDefaultProperties() {
     return parent::getDefaultProperties() + [
+      // Flexbox.
       'align_items' => 'flex-start',
     ];
   }

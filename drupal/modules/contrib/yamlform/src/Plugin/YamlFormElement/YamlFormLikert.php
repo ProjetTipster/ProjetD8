@@ -3,6 +3,7 @@
 namespace Drupal\yamlform\Plugin\YamlFormElement;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\yamlform\Element\YamlFormLikert as YamlFormLikertElement;
 use Drupal\yamlform\Entity\YamlFormOptions;
 use Drupal\yamlform\Utility\YamlFormElementHelper;
 use Drupal\yamlform\Utility\YamlFormOptionsHelper;
@@ -17,7 +18,6 @@ use Drupal\yamlform\YamlFormInterface;
  *   label = @Translation("Likert"),
  *   category = @Translation("Options elements"),
  *   multiline = TRUE,
- *   multiple = TRUE,
  *   composite = TRUE,
  * )
  */
@@ -29,26 +29,24 @@ class YamlFormLikert extends YamlFormElementBase {
   public function getDefaultProperties() {
     return [
       'title' => '',
+      // General settings.
       'description' => '',
-
-      'required' => FALSE,
-      'default_value' => '',
-
+      'default_value' => [],
+      // Form display.
       'title_display' => '',
       'description_display' => '',
-
-      'admin_title' => '',
-      'private' => FALSE,
-
+      // Form validation.
+      'required' => FALSE,
+      // Submission display.
       'format' => $this->getDefaultFormat(),
-
-      'flex' => 1,
-      'states' => [],
-
+      // Likert settings.
       'questions' => [],
       'questions_randomize' => FALSE,
       'answers' => [],
-    ];
+      'na_answer' => FALSE,
+      'na_answer_value' => '',
+      'na_answer_text' => $this->t('N/A'),
+    ] + $this->getDefaultBaseProperties();
   }
 
   /**
@@ -61,6 +59,9 @@ class YamlFormLikert extends YamlFormElementBase {
     if (isset($element['#answers'])) {
       $element['#answers'] = YamlFormOptions::getElementOptions($element, '#answers');
     }
+
+    // Process answers and set N/A.
+    YamlFormLikertElement::processYamlFormLikertAnswers($element);
   }
 
   /**
@@ -190,7 +191,7 @@ class YamlFormLikert extends YamlFormElementBase {
   /**
    * {@inheritdoc}
    */
-  public function buildExportOptionsForm(array &$form, FormStateInterface $form_state, array $default_values) {
+  public function buildExportOptionsForm(array &$form, FormStateInterface $form_state, array $export_options) {
     $form['likert'] = [
       '#type' => 'details',
       '#title' => $this->t('Likert questions and answers'),
@@ -204,7 +205,7 @@ class YamlFormLikert extends YamlFormElementBase {
         'label' => $this->t('Answer labels, the human-readable value (label)'),
         'key' => $this->t('Answer keys, the raw value stored in the database (key)'),
       ],
-      '#default_value' => $default_values['likert_answers_format'],
+      '#default_value' => $export_options['likert_answers_format'],
     ];
   }
 
@@ -222,11 +223,11 @@ class YamlFormLikert extends YamlFormElementBase {
   /**
    * {@inheritdoc}
    */
-  public function buildExportRecord(array $element, $value, array $options) {
+  public function buildExportRecord(array $element, $value, array $export_options) {
     $record = [];
     foreach ($element['#questions'] as $question_key => $question_label) {
       $answer_value = (isset($value[$question_key])) ? $value[$question_key] : NULL;
-      if ($options['likert_answers_format'] == 'key') {
+      if ($export_options['likert_answers_format'] == 'key') {
         $record[] = $answer_value;
       }
       else {
@@ -313,7 +314,7 @@ class YamlFormLikert extends YamlFormElementBase {
    */
   protected function getElementSelectorInputsOptions(array $element) {
     $selectors = $element['#questions'];
-    foreach ($selectors as $value => &$text) {
+    foreach ($selectors as &$text) {
       $text .= ' [' . $this->t('Radios') . ']';
     }
     return $selectors;
@@ -330,8 +331,8 @@ class YamlFormLikert extends YamlFormElementBase {
       '#open' => TRUE,
     ];
     $form['likert']['questions'] = [
-      '#title' => $this->t('Questions'),
       '#type' => 'yamlform_options',
+      '#title' => $this->t('Questions'),
       '#label' => $this->t('question'),
       '#labels' => $this->t('questions'),
       '#required' => TRUE,
@@ -343,10 +344,39 @@ class YamlFormLikert extends YamlFormElementBase {
       '#return_value' => TRUE,
     ];
     $form['likert']['answers'] = [
-      '#title' => $this->t('Answers'),
       '#type' => 'yamlform_element_options',
+      '#title' => $this->t('Answers'),
       '#likert' => TRUE,
       '#required' => TRUE,
+    ];
+    $form['likert']['na_answer'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Allow N/A answer'),
+      '#description' => $this->t('Allowing N/A is ideal for situations where you wish to make a likert element required, but still want to allow users to opt out of certain questions.'),
+      '#return_value' => TRUE,
+    ];
+    $form['likert']['na_answer_value'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('N/A answer value'),
+      '#description' => $this->t('Value stored in the database. Leave blank to store an empty string in the database.'),
+      '#states' => [
+        'visible' => [
+          ':input[name="properties[na_answer]"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    $form['likert']['na_answer_text'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('N/A answer text'),
+      '#description' => $this->t('Text display display on form.'),
+      '#states' => [
+        'visible' => [
+          ':input[name="properties[na_answer]"]' => ['checked' => TRUE],
+        ],
+        'required' => [
+          ':input[name="properties[na_answer]"]' => ['checked' => TRUE],
+        ],
+      ],
     ];
     return $form;
   }

@@ -14,12 +14,11 @@ use Drupal\yamlform\Element\YamlFormSelectOther;
 use Drupal\yamlform\YamlFormHandlerBase;
 use Drupal\yamlform\YamlFormHandlerMessageInterface;
 use Drupal\yamlform\YamlFormSubmissionInterface;
-
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Emails a YAML form submission.
+ * Emails a form submission.
  *
  * @YamlFormHandler(
  *   id = "email",
@@ -49,7 +48,7 @@ class EmailYamlFormHandler extends YamlFormHandlerBase implements YamlFormHandle
   /**
    * The token handler.
    *
-   * @var \Drupal\Core\Utility\Token $token
+   * @var \Drupal\Core\Utility\Token
    */
   protected $token;
 
@@ -78,7 +77,7 @@ class EmailYamlFormHandler extends YamlFormHandlerBase implements YamlFormHandle
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('logger.factory')->get('yamlform'),
+      $container->get('logger.factory')->get('yamlform.email'),
       $container->get('plugin.manager.mail'),
       $container->get('config.factory'),
       $container->get('token')
@@ -185,7 +184,7 @@ class EmailYamlFormHandler extends YamlFormHandlerBase implements YamlFormHandle
     $elements = $this->yamlform->getElementsInitializedAndFlattened();
     foreach ($elements as $key => $element) {
       $title = (isset($element['#title'])) ? new FormattableMarkup('@title (@key)', ['@title' => $element['#title'], '@key' => $key]) : $key;
-      if (isset($element['#type']) && in_array($element['#type'], ['email', 'hidden', 'value', 'select', 'radios', 'textfield', 'yamlform_email_multiple'])) {
+      if (isset($element['#type']) && in_array($element['#type'], ['email', 'hidden', 'value', 'select', 'radios', 'textfield', 'yamlform_email_multiple', 'yamlform_email_confirm'])) {
         // Note: Token must use the :raw form mail elements.
         // For example a select menu's option value would be used to route an
         // email address.
@@ -218,6 +217,7 @@ class EmailYamlFormHandler extends YamlFormHandlerBase implements YamlFormHandle
       ],
       '#other__placeholder' => $this->t('Enter to email address...'),
       '#other__type' => 'yamlform_email_multiple',
+      '#other__allow_tokens' => TRUE,
       '#required' => TRUE,
       '#parents' => ['settings', 'to_mail'],
       '#default_value' => $this->configuration['to_mail'],
@@ -234,6 +234,7 @@ class EmailYamlFormHandler extends YamlFormHandlerBase implements YamlFormHandle
       '#other__placeholder' => $this->t('Enter CC email address...'),
       '#other__type' => 'yamlform_email_multiple',
       '#parents' => ['settings', 'cc_mail'],
+      '#other__allow_tokens' => TRUE,
       '#default_value' => $this->configuration['cc_mail'],
     ];
     $form['to']['bcc_mail'] = [
@@ -247,6 +248,7 @@ class EmailYamlFormHandler extends YamlFormHandlerBase implements YamlFormHandle
       ],
       '#other__placeholder' => $this->t('Enter BCC email address...'),
       '#other__type' => 'yamlform_email_multiple',
+      '#other__allow_tokens' => TRUE,
       '#parents' => ['settings', 'bcc_mail'],
       '#default_value' => $this->configuration['bcc_mail'],
     ];
@@ -267,6 +269,7 @@ class EmailYamlFormHandler extends YamlFormHandlerBase implements YamlFormHandle
       ],
       '#other__placeholder' => $this->t('Enter from email address...'),
       '#other__type' => 'yamlform_email_multiple',
+      '#other__allow_tokens' => TRUE,
       '#required' => TRUE,
       '#parents' => ['settings', 'from_mail'],
       '#default_value' => $this->configuration['from_mail'],
@@ -337,16 +340,14 @@ class EmailYamlFormHandler extends YamlFormHandlerBase implements YamlFormHandle
         ],
       ];
     }
-    $form['message']['token_tree_link'] = [
-      '#theme' => 'token_tree_link',
-      '#token_types' => [
-        'yamlform',
-        'yamlform-submission',
-      ],
-      '#click_insert' => FALSE,
-      '#dialog' => TRUE,
-    ];
-
+    if (\Drupal::moduleHandler()->moduleExists('token')) {
+      $form['message']['token_tree_link'] = [
+        '#theme' => 'token_tree_link',
+        '#token_types' => ['yamlform', 'yamlform-submission'],
+        '#click_insert' => FALSE,
+        '#dialog' => TRUE,
+      ];
+    }
     // Elements.
     $form['elements'] = [
       '#type' => 'details',
@@ -489,7 +490,7 @@ class EmailYamlFormHandler extends YamlFormHandlerBase implements YamlFormHandle
       }
     }
 
-    // Add YAML form submission.
+    // Add form submission.
     $message['yamlform_submission'] = $yamlform_submission;
 
     return $message;
@@ -510,7 +511,7 @@ class EmailYamlFormHandler extends YamlFormHandlerBase implements YamlFormHandle
       '@form' => $this->getYamlForm()->label(),
       '@title' => $this->label(),
     ];
-    \Drupal::logger('yamlform.email')->notice('@form form sent @title email.', $context);
+    $this->logger->notice('@form form sent @title email.', $context);
 
     // Debug by displaying send email onscreen.
     if ($this->configuration['debug']) {

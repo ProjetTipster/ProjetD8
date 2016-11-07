@@ -8,12 +8,12 @@ use Drupal\yamlform\YamlFormElementManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a abstract element type form for a YAML form element.
+ * Provides a abstract element type form for a form element.
  */
 abstract class YamlFormUiElementTypeFormBase extends FormBase {
 
   /**
-   * The YAML form element manager.
+   * The form element manager.
    *
    * @var \Drupal\yamlform\YamlFormElementManagerInterface
    */
@@ -23,7 +23,7 @@ abstract class YamlFormUiElementTypeFormBase extends FormBase {
    * Constructs a YamlFormUiElementSelectTypeForm object.
    *
    * @param \Drupal\yamlform\YamlFormElementManagerInterface $element_manager
-   *   The YAML form element manager.
+   *   The form element manager.
    */
   public function __construct(YamlFormElementManagerInterface $element_manager) {
     $this->elementManager = $element_manager;
@@ -53,7 +53,7 @@ abstract class YamlFormUiElementTypeFormBase extends FormBase {
    */
   protected function getDefinitions() {
     $definitions = $this->elementManager->getDefinitions();
-    $definitions = $this->elementManager->getSortedDefinitions($definitions);
+    $definitions = $this->elementManager->getSortedDefinitions($definitions, 'category');
     $grouped_definitions = $this->elementManager->getGroupedDefinitions($definitions);
 
     // Get definitions with basic and advanced first and uncategorized elements

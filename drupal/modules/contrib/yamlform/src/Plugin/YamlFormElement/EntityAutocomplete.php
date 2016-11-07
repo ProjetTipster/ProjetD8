@@ -25,6 +25,7 @@ class EntityAutocomplete extends YamlFormElementBase implements YamlFormEntityRe
    */
   public function getDefaultProperties() {
     return parent::getDefaultProperties() + [
+      // Entity reference settings.
       'target_type' => 'node',
       'selection_handler' => 'default',
       'selection_settings' => [],
@@ -68,6 +69,13 @@ class EntityAutocomplete extends YamlFormElementBase implements YamlFormEntityRe
     if ($this->hasMultipleValues($element)) {
       $element['#after_build'][] = [get_class($this), 'afterBuildEntityAutocomplete'];
     }
+
+    // If selection handler include auto_create when need to also set it for
+    // the $element.
+    // @see \Drupal\Core\Entity\Element\EntityAutocomplete::validateEntityAutocomplete
+    if (!empty($element['#selection_settings']['auto_create_bundle'])) {
+      $element['#autocreate']['bundle'] = $element['#selection_settings']['auto_create_bundle'];
+    }
   }
 
   /**
@@ -87,26 +95,21 @@ class EntityAutocomplete extends YamlFormElementBase implements YamlFormEntityRe
     if (is_array($value) && !empty($value)) {
       $entity_ids = [];
       foreach ($value as $item) {
-        $entity_ids[] = $item['target_id'];
+        if (isset($item['target_id'])) {
+          $entity_ids[] = $item['target_id'];
+        }
+        elseif (isset($item['entity'])) {
+          // If #auto_create is set then we need to save the entity and get
+          // the new entity's id.
+          // @todo Decide what level of access controls are needed to allow
+          // users to create entities.
+          $entity = $item['entity'];
+          $entity->save();
+          $entity_ids[] = $entity->id();
+        }
       }
       $form_state->setValueForElement($element, $entity_ids);
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function form(array $form, FormStateInterface $form_state) {
-    $form = parent::form($form, $form_state);
-
-    $form['entity_reference']['tags'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Tags'),
-      '#description' => $this->t('Check this option if the user should be allowed to enter multiple entity references.'),
-      '#return_value' => TRUE,
-    ];
-
-    return $form;
   }
 
 }

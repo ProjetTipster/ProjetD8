@@ -3,6 +3,8 @@ Additional Resources
 
 ### Articles and Blogs Posts about YAML Forms
 
+- [Getting NYU onto YAML Form](https://www.fourkitchens.com/blog/article/getting-nyu-yaml-form)
+
 - [YAML Forms for Drupal 8](https://www.gaiaresources.com.au/yaml-forms-drupal-8/)
 
 
@@ -34,7 +36,7 @@ Additional Resources
 
 ### Form Builders
 
-Below are the YAML Form module's 'competitors'.
+Below are the YAML Form module's 'alternatives' and 'competitors'.
  
 **Drupal Form Builders**
 
@@ -44,8 +46,15 @@ Below are the YAML Form module's 'competitors'.
 
 - [Webform.com](https://www.drupal.org/project/webform)  
    Webform.com is a form and survey service built on the open-source software Drupal and Webform. 
-
     - [Drupal 7 Form Building](https://www.drupalwatchdog.com/volume-3/issue-2/drupal-7-form-building)
+- [Contact](https://www.drupal.org/documentation/modules/contact) 
+    - [Contact Storage](https://www.drupal.org/project/contact_storage)
+    - [Contact module 8.1 and beyond roadmap](https://www.drupal.org/node/2582955)
+    - [Goodbye Webform? Contact Forms Are In the Drupal 8 Core](https://www.ostraining.com/blog/drupal/drupal-8-contact-forms/)
+- [Eform](https://www.drupal.org/project/eform)
+    - [When to use Entityform](https://www.drupal.org/node/1540680)
+- [Webform](https://www.drupal.org/project/webform) 
+        
         
 **WordPress Form Builders**
 
@@ -83,19 +92,12 @@ Below are the YAML Form module's 'competitors'.
   A free online form builder that helps you create HTML forms for your website. 
   Create contact forms, registration forms, order forms, surveys, and more.
 
-- [Gravity Forms](http://www.gravityforms.com/)  
-  Gravity Forms is the Easiest Tool to Create Advanced Forms for Your WordPress 
-  Powered Website.
-
 - [FormSite](https://www.formsite.com)  
   Easily build professional online html forms and web surveys. 
 
 - [JotForm](https://jotform.com/)   
   JotForm's form builder helps you create & publish online forms anywhere, 
   anytime without writing a single line of code.
-
-- [Ninja Forms](https://ninjaforms.com/)  
-  The easiest and most flexible WordPress form builder!
 
 - [Wufoo](https://www.wufoo.com)  
   Our form designer can help you create contact forms, online surveys and 

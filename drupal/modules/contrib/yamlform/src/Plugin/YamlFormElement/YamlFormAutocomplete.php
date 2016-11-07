@@ -21,6 +21,7 @@ class YamlFormAutocomplete extends TextField {
    */
   public function getDefaultProperties() {
     return parent::getDefaultProperties() + [
+      // Autocomplete settings.
       'autocomplete_existing' => FALSE,
       'autocomplete_options' => [],
       'autocomplete_limit' => 10,
@@ -35,7 +36,7 @@ class YamlFormAutocomplete extends TextField {
   public function prepare(array &$element, YamlFormSubmissionInterface $yamlform_submission) {
     parent::prepare($element, $yamlform_submission);
 
-    // Query YAML form submission for existing values.
+    // Query form submission for existing values.
     if (!empty($element['#autocomplete_existing'])) {
       // Make sure YAML Form has submission values to use in autocompletion.
       $display_autocomplete = \Drupal::database()->select('yamlform_submission_data')
@@ -87,11 +88,13 @@ class YamlFormAutocomplete extends TextField {
       '#type' => 'number',
       '#title' => $this->t('Autocomplete limit'),
       '#description' => $this->t("The maximum number of matches to be displayed."),
+      '#min' => 1,
     ];
     $form['autocomplete']['autocomplete_match'] = [
       '#type' => 'number',
       '#title' => $this->t('Autocomplete minimum number of characters'),
       '#description' => $this->t('The minimum number of characters a user must type before a search is performed.'),
+      '#min' => 1,
     ];
     $form['autocomplete']['autocomplete_match_operator'] = [
       '#type' => 'radios',

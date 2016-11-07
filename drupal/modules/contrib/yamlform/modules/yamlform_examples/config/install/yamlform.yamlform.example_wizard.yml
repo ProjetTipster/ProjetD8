@@ -31,6 +31,10 @@ elements: |
     phone:
       '#title': Phone
       '#type': tel
+    contact_via_phone:
+      '#type': radios
+      '#title': 'Can we contact you via phone?'
+      '#options': yes_no
   feedback:
     '#title': 'Your Feedback'
     '#type': wizard_page
@@ -50,6 +54,7 @@ settings:
   form_prepopulate_source_entity: false
   form_novalidate: false
   form_autofocus: false
+  form_details_toggle: false
   wizard_progress_bar: true
   wizard_progress_pages: false
   wizard_progress_percentage: false
@@ -77,6 +82,8 @@ settings:
   entity_limit_total: null
   entity_limit_user: null
   results_disabled: false
+  results_disabled_ignore: false
+  token_update: false
 access:
   create:
     roles:

@@ -3,6 +3,7 @@
 namespace Drupal\yamlform\Controller;
 
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\ElementInfoManagerInterface;
 use Drupal\Core\Url;
@@ -12,9 +13,16 @@ use Drupal\yamlform\YamlFormElementManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Controller for all YAML form elements.
+ * Controller for all form elements.
  */
 class YamlFormPluginElementController extends ControllerBase {
+
+  /**
+   * The module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
 
   /**
    * A element info manager.
@@ -24,7 +32,7 @@ class YamlFormPluginElementController extends ControllerBase {
   protected $elementInfo;
 
   /**
-   * A YAML form element plugin manager.
+   * A form element plugin manager.
    *
    * @var \Drupal\yamlform\YamlFormElementManagerInterface
    */
@@ -33,12 +41,15 @@ class YamlFormPluginElementController extends ControllerBase {
   /**
    * Constructs a YamlFormPluginBaseController object.
    *
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler.
    * @param \Drupal\Core\Render\ElementInfoManagerInterface $element_info
    *   A element info plugin manager.
    * @param \Drupal\yamlform\YamlFormElementManagerInterface $element_manager
-   *   A YAML form element plugin manager.
+   *   A form element plugin manager.
    */
-  public function __construct(ElementInfoManagerInterface $element_info, YamlFormElementManagerInterface $element_manager) {
+  public function __construct(ModuleHandlerInterface $module_handler, ElementInfoManagerInterface $element_info, YamlFormElementManagerInterface $element_manager) {
+    $this->moduleHandler = $module_handler;
     $this->elementInfo = $element_info;
     $this->elementManager = $element_manager;
   }
@@ -48,6 +59,7 @@ class YamlFormPluginElementController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
+      $container->get('module_handler'),
       $container->get('plugin.manager.element_info'),
       $container->get('plugin.manager.yamlform.element')
     );
@@ -79,7 +91,7 @@ class YamlFormPluginElementController extends ControllerBase {
 
     // Test element is only enabled if the YAML Form Devel and UI module are
     // enabled.
-    $test_element_enabled = (\Drupal::moduleHandler()->moduleExists('yamlform_devel') && \Drupal::moduleHandler()->moduleExists('yamlform_ui')) ? TRUE : FALSE;
+    $test_element_enabled = ($this->moduleHandler->moduleExists('yamlform_devel') && $this->moduleHandler->moduleExists('yamlform_ui')) ? TRUE : FALSE;
 
     // Define a default element used to get default properties.
     $element = ['#type' => 'element'];
@@ -107,8 +119,8 @@ class YamlFormPluginElementController extends ControllerBase {
         $yamlform_info_definitions = [
           'input' => $yamlform_element->isInput($element),
           'container' => $yamlform_element->isContainer($element),
-          'root' => $yamlform_element->isRoot($element),
-          'hidden' => $yamlform_element->isHidden($element),
+          'root' => $yamlform_element->isRoot(),
+          'hidden' => $yamlform_element->isHidden(),
           'multiline' => $yamlform_element->isMultiline($element),
           'multiple' => $yamlform_element->hasMultipleValues($element),
           'states_wrapper' => $yamlform_element_plugin_definition['states_wrapper'],

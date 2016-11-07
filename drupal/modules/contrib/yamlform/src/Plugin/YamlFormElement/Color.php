@@ -23,6 +23,7 @@ class Color extends YamlFormElementBase {
    */
   public function getDefaultProperties() {
     return [
+      // Color settings.
       'color_size' => 'medium',
     ] + parent::getDefaultProperties();
   }

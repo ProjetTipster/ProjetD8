@@ -11,7 +11,7 @@ use Drupal\yamlform\Utility\YamlFormDialogHelper;
 use Drupal\yamlform\YamlFormEntityForm;
 
 /**
- * Base for controller for YAML form UI.
+ * Base for controller for form UI.
  */
 class YamlFormUiEntityForm extends YamlFormEntityForm {
 
@@ -75,7 +75,12 @@ class YamlFormUiEntityForm extends YamlFormEntityForm {
       $yamlform_element = $this->elementManager->createInstance($plugin_id);
 
       $is_container = $yamlform_element->isContainer($element);
-      $is_root = $yamlform_element->isRoot($element);
+      $is_root = $yamlform_element->isRoot();
+
+      // If disabled, display warning.
+      if ($yamlform_element->isDisabled()) {
+        $yamlform_element->displayDisabledWarning($element);
+      }
 
       // Get row class names.
       $row_class = ['draggable'];
@@ -189,6 +194,13 @@ class YamlFormUiEntityForm extends YamlFormEntityForm {
           'url' => new Url('entity.yamlform_ui.element.edit_form', ['yamlform' => $yamlform->id(), 'key' => $key]),
           'attributes' => $dialog_attributes,
         ];
+        // Issue #2741877 Nested modals don't work: when using CKEditor in a
+        // modal, then clicking the image button opens another modal,
+        // which closes the original modal.
+        // @todo Remove the below workaround once this issue is resolved.
+        if ($yamlform_element->getPluginId() == 'processed_text') {
+          unset($rows[$key]['operations']['#links']['edit']['attributes']);
+        }
         if (!$yamlform->hasTranslations()) {
           $rows[$key]['operations']['#links']['duplicate'] = [
             'title' => $this->t('Duplicate'),
@@ -224,12 +236,14 @@ class YamlFormUiEntityForm extends YamlFormEntityForm {
         '#url' => new Url('entity.yamlform_ui.element', ['yamlform' => $yamlform->id()]),
         '#attributes' => $local_action_attributes,
       ];
-      $form['local_actions']['add_page'] = [
-        '#type' => 'link',
-        '#title' => $this->t('Add page'),
-        '#url' => new Url('entity.yamlform_ui.element.add_form', ['yamlform' => $yamlform->id(), 'type' => 'wizard_page']),
-        '#attributes' => $local_action_attributes,
-      ];
+      if ($this->elementManager->createInstance('yamlform_wizard_page')->isEnabled()) {
+        $form['local_actions']['add_page'] = [
+          '#type' => 'link',
+          '#title' => $this->t('Add page'),
+          '#url' => new Url('entity.yamlform_ui.element.add_form', ['yamlform' => $yamlform->id(), 'type' => 'wizard_page']),
+          '#attributes' => $local_action_attributes,
+        ];
+      }
       if ($yamlform->hasFlexboxLayout()) {
         $form['local_actions']['add_layout'] = [
           '#type' => 'link',
@@ -266,10 +280,11 @@ class YamlFormUiEntityForm extends YamlFormEntityForm {
 
     $form['#attached']['library'][] = 'yamlform_ui/yamlform_ui';
 
-    // Must preload CodeMirror libarary so that the window.dialog:aftercreate
-    // trigger is set before any dialogs are opened.
+    // Must preload CKEditor and CodeMirror library so that the
+    // window.dialog:aftercreate trigger is set before any dialogs are opened.
     // @see js/yamlform.element.codemirror.js
     $form['#attached']['library'][] = 'yamlform/yamlform.element.codemirror.yaml';
+    $form['#attached']['library'][] = 'yamlform/yamlform.element.html_editor';
 
     return $form;
   }
@@ -281,7 +296,7 @@ class YamlFormUiEntityForm extends YamlFormEntityForm {
     /** @var \Drupal\yamlform\YamlFormInterface $yamlform */
     $yamlform = $this->getEntity();
 
-    // Don't validate new YAML forms because they don't have any initial
+    // Don't validate new forms because they don't have any initial
     // elements.
     if ($yamlform->isNew()) {
       return;
@@ -335,7 +350,7 @@ class YamlFormUiEntityForm extends YamlFormEntityForm {
     }
     $this->buildUpdatedElementsRecursive($elements_updated, '', $elements_reordered, $elements_flattened);
 
-    // Update the YAML form's elements.
+    // Update the form's elements.
     $yamlform->setElements($elements_updated);
 
     parent::validateForm($form, $form_state);
@@ -378,7 +393,7 @@ class YamlFormUiEntityForm extends YamlFormEntityForm {
   }
 
   /**
-   * Get YAML form's elements as an associative array of orderable elements.
+   * Get form's elements as an associative array of orderable elements.
    *
    * @return array
    *   An associative array of orderable elements.
@@ -415,7 +430,7 @@ class YamlFormUiEntityForm extends YamlFormEntityForm {
           $element['#title'] = Unicode::truncate(strip_tags($element['#markup']), 100, TRUE, TRUE);
         }
         else {
-          $element['#title'] = '&lt;' . ((string) t('blank')) . '&gt;';
+          $element['#title'] = '[' . t('blank') . ']';
         }
       }
     }

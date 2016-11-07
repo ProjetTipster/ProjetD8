@@ -29,6 +29,9 @@ class YamlFormLikert extends FormElement {
       // Using #answers insteads of #options to prevent triggering
       // \Drupal\Core\Form\FormValidator::performRequiredValidation().
       '#answers' => [],
+      '#na_answer' => FALSE,
+      '#na_answer_text' => '',
+      '#na_answer_value' => '',
     ];
   }
 
@@ -36,6 +39,9 @@ class YamlFormLikert extends FormElement {
    * Processes a likert scale form element.
    */
   public static function processYamlFormLikert(&$element, FormStateInterface $form_state, &$complete_form) {
+    // Get answer with optional N/A.
+    self::processYamlFormLikertAnswers($element);
+
     // Build header.
     $header = [
       ['question' => FALSE],
@@ -98,12 +104,30 @@ class YamlFormLikert extends FormElement {
   }
 
   /**
+   * Get likert element's answer which can include an N/A option.
+   *
+   * @param array $element
+   *   The element.
+   */
+  public static function processYamlFormLikertAnswers(array &$element) {
+    if (empty($element['#na_answer']) || empty($element['#answers'])) {
+      return;
+    }
+
+    $na_value = (!empty($element['#na_answer_value'])) ? $element['#na_answer_value'] : (string) t('N/A');
+    $na_text = (!empty($element['#na_answer_text'])) ? $element['#na_answer_text'] : $na_value;
+    $element['#answers'] += [
+      $na_value => $na_text,
+    ];
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function valueCallback(&$element, $input, FormStateInterface $form_state) {
     $default_value = [];
     foreach ($element['#questions'] as $question_key => $question_title) {
-      $default_value[$question_key] = '';
+      $default_value[$question_key] = NULL;
     }
 
     if ($input === FALSE) {
@@ -134,7 +158,6 @@ class YamlFormLikert extends FormElement {
     }
 
     $form_state->setValueForElement($element, $value);
-    return $element;
   }
 
 }

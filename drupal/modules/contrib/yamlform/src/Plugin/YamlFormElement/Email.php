@@ -21,6 +21,7 @@ class Email extends YamlFormElementBase {
    */
   public function getDefaultProperties() {
     return parent::getDefaultProperties() + [
+      // Form validation.
       'size' => '',
       'maxlength' => '',
       'placeholder' => '',
@@ -31,6 +32,10 @@ class Email extends YamlFormElementBase {
    * {@inheritdoc}
    */
   public function formatHtml(array &$element, $value, array $options = []) {
+    if (empty($value)) {
+      return '';
+    }
+
     $format = $this->getFormat($element);
     switch ($format) {
       case 'link':

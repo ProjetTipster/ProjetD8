@@ -6,7 +6,7 @@ use Drupal\yamlform\Tests\YamlFormTestBase;
 use Drupal\yamlform\Entity\YamlForm;
 
 /**
- * Tests for YAML form UI element.
+ * Tests for form UI element.
  *
  * @group YamlFormUi
  */
@@ -48,6 +48,7 @@ class YamlFormUiElementTest extends YamlFormTestBase {
     $this->drupalPostForm('admin/structure/yamlform/manage/contact', $edit, t('Save elements'));
 
     \Drupal::entityTypeManager()->getStorage('yamlform_submission')->resetCache();
+    \Drupal::entityTypeManager()->getStorage('yamlform')->resetCache();
     $yamlform_contact = YamlForm::load('contact');
     $this->assertEqual(['message', 'subject', 'email', 'name'], array_keys($yamlform_contact->getElementsDecodedAndFlattened()));
 
@@ -144,6 +145,17 @@ class YamlFormUiElementTest extends YamlFormTestBase {
     $this->drupalPostForm('admin/structure/yamlform/manage/contact/element/add/color', ['key' => 'test_color', 'properties[title]' => 'Test color'], t('Save'));
     $this->drupalGet('admin/structure/yamlform/manage/contact/element/test_color/change');
     $this->assertResponse(404);
+
+    /**************************************************************************/
+    // Date
+    /**************************************************************************/
+
+    // Check GNU Date Input Format validation.
+    $edit = [
+      'properties[default_value]' => 'not a valid date',
+    ];
+    $this->drupalPostForm('admin/structure/yamlform/manage/test_element_dates/element/date_min_max_dynamic/edit', $edit, t('Save'));
+    $this->assertRaw('The Default value could not be interpreted in <a href="https://www.gnu.org/software/tar/manual/html_chapter/tar_7.html#Date-input-formats">GNU Date Input Format</a>.');
   }
 
   /**
