@@ -12,7 +12,12 @@ HEADER
 }
 
 
-
+/*
+TYPO
+*/
+h2, .h2 {
+  font-size:inherit;
+}
 
 /*
 REGIONS
@@ -28,4 +33,6 @@ REGIONS
   -webkit-box-shadow:inset 0px 15px 0px #00cc26;
   box-shadow:inset 0px 15px 0px #00cc26;
   margin-bottom: 20px;
+  padding-left: 10px;
+  padding-bottom: 10px;
 }
