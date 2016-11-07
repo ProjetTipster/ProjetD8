@@ -19,6 +19,9 @@ theme:
   dependencies:
     - bootstrap/drupal.bootstrap
     - bootstrap/attributes
+  css:
+    theme:
+      css/style-tipster-one.css: {}
 
 theme-settings:
   js:
