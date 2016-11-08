@@ -7,6 +7,7 @@ attributes:
 
 drupal.bootstrap:
   js:
+    js/tipster.js: {}
     js/drupal.bootstrap.js: {}
   dependencies:
     - core/jquery
