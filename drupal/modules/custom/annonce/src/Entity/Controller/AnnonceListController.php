@@ -16,7 +16,7 @@ class AnnonceListController extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['id'] = t('AnnonceID');
+    //$header['id'] = t('AnnonceID');
     $header['name'] = t('Name');
     return $header + parent::buildHeader();
   }
@@ -26,7 +26,7 @@ class AnnonceListController extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\annonce\Entity\Annonce */
-    $row['id'] = $entity->id();
+    //$row['id'] = $entity->id();
     $row['name'] = \Drupal::l(
       $this->getLabel($entity),
       new Url(

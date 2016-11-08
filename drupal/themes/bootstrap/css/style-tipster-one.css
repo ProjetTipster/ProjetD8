@@ -1,6 +1,18 @@
+/*
+COULEURS
+VERT CLAIR : 00cc26
+VERT FONCé : 024a07
+*/
 
+
+/*
+LIENS
+*/
 a {
   color:#00cc26;
+}
+a:hover, a:focus{
+  color:#024a07;
 }
 
 /*
@@ -10,18 +22,49 @@ HEADER
   background:none;
   border: none;
 }
-
+.page-header {
+  border-bottom: 1px solid #024a07;
+}
 
 /*
 TYPO
 */
+body {
+    font-family: Calibri, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+h1, .h1,
 h2, .h2 {
-  font-size:inherit;
+  color: #024a07;
+}
+
+/*
+FORMULAIRE
+*/
+.annonce-form label {
+  color:#024a07;
+}
+
+.form-inline .form-control {
+    display: block;
+    width: 100%;
+}
+
+/*
+BOUTONS BOOTSTRAP
+*/
+.btn-primary {
+  background-color: #00cc26;
+  border-color: #024a07;
 }
 
 /*
 REGIONS
 */
+aside .well {
+  padding: 0;
+  border: 0;
+  background: 0;
+}
 
 .region-sidebar-first section,
 .region-sidebar-second section{
@@ -35,4 +78,5 @@ REGIONS
   margin-bottom: 20px;
   padding-left: 10px;
   padding-bottom: 10px;
+  padding-right: 10px;
 }
