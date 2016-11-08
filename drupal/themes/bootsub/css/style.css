@@ -7904,10 +7904,18 @@ p:last-child,
   .help-block:first-child, .control-group .help-inline:first-child {
     margin-top: 0; }
 
-/* line 14, ../sass/style.scss */
+/* line 71, ../sass/_overrides.scss */
 .logo img {
   border: 1px solid red !important; }
 
+/* line 1, ../sass/_styles-tipster-one.scss */
+.logo img {
+  border: 1px solid red !important; }
+
+/* line 14, ../sass/style.scss */
+.logo img {
+  border: 1px solid green !important; }
+
 /* line 18, ../sass/style.scss */
 a {
-  color: red !important; }
+  color: green !important; }
