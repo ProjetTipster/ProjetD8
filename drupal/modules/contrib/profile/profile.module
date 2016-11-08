@@ -196,8 +196,16 @@ function profile_form_user_register_form_alter(&$form, FormStateInterface $form_
   $attached_profile_form = FALSE;
   $weight = 90;
 
-  /** @var ProfileType[] $profile_types */
   $profile_types = ProfileType::loadMultiple();
+
+/*    $form['profile_utilisateur']= array(
+        '#type' =>          'radios',
+        '#title' =>         t('Choisissez le type de profile : '),
+        '#default_value' => 0,
+        '#options' =>       array(0 => t('Tipster'),1 => t('Follower')),
+    );*/
+  /** @var ProfileType[] $profile_types */
+
   foreach ($profile_types as $profile_type) {
     $instances = array_filter(\Drupal::service('entity_field.manager')->getFieldDefinitions('profile', $profile_type->id()), function ($field_definition) {
       return $field_definition instanceof FieldConfigInterface;
@@ -217,7 +225,15 @@ function profile_form_user_register_form_alter(&$form, FormStateInterface $form_
         $form_state->set($property, $profile);
       }
       $form_state->set('form_display_' . $profile_type->id(), EntityFormDisplay::collectRenderDisplay($profile, 'default'));
+
+        $form['profile_utilisateur']= array(
+            '#type' =>          'radios',
+            '#title' =>         t('Choisissez le type de profile : '),
+            '#default_value' => 0,
+            '#options' =>       array(0 => t('Tipster'),1 => t('Follower')),
+        );
       $form['entity_' . $profile_type->id()] = [
+        '#class' => 'collapse',
         '#type' => 'details',
         '#title' => $profile_type->label(),
         '#tree' => TRUE,
