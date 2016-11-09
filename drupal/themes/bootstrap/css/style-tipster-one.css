@@ -56,6 +56,12 @@ BOUTONS BOOTSTRAP
   background-color: #00cc26;
   border-color: #024a07;
 }
+.btn-primary:focus, .btn-primary.focus,
+.btn-primary:active, .btn-primary.active,
+.btn-primary:hover {
+  background-color: #024a07;
+  border-color: #024a07;
+}
 
 /*
 REGIONS
@@ -79,4 +85,12 @@ aside .well {
   padding-left: 10px;
   padding-bottom: 10px;
   padding-right: 10px;
+}
+
+
+/*
+FOOTER
+*/
+.footer {
+  border-top: 1px solid #024a07;
 }
