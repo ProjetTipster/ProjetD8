@@ -25,6 +25,9 @@ HEADER
 .page-header {
   border-bottom: 1px solid #024a07;
 }
+header.container {
+  padding-left: 0;
+}
 
 /*
 TYPO
@@ -36,6 +39,12 @@ h1, .h1,
 h2, .h2 {
   color: #024a07;
 }
+h2, .h2 {
+    font-size: 20px;
+}
+h1, .h1 {
+    font-size: 30px;
+}
 
 /*
 USER
@@ -46,8 +55,15 @@ USER
   color: black;
   font-size:100%;
 }
-
-
+.field--name-user-picture {
+  display: none;
+}
+.path-user .field--name-user-picture {
+  display: block;
+}
+.path-user .region-sidebar-second .field--name-user-picture {
+  display: none;
+}
 /*
 NODE PRONOSTIQUE
 */
@@ -83,6 +99,8 @@ article.pronostique .field--name-field-analyse .field--item {
   white-space: normal;
   width: 600px;
   border-bottom: none;
+  font-weight: normal;
+  color: black;
 }
 
 
@@ -110,6 +128,9 @@ BOUTONS BOOTSTRAP
 .btn-primary:hover {
   background-color: #024a07;
   border-color: #024a07;
+}
+.nav > li > a:hover, .nav > li > a:focus {
+  background: none;
 }
 
 /*
