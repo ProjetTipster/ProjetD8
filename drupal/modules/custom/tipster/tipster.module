@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * @file
+ * Contains tipster.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\profile\Entity\Profile;
+use Drupal\profile\Entity\ProfileType;
+use Drupal\field\FieldConfigInterface;
+use Drupal\Core\Form\FormStateInterface;
+/**
+ * Implements hook_help().
+ */
+function tipster_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the tipster module.
+    case 'help.page.tipster':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('tipster module') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Add available profile forms to the user registration form.
+ */
+
+function tipster_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+   /*if (isset($form['type']) && $form['type']['#value'] . '_node_settings' == $form_id) {
+        $upload_enabled_types = \Drupal::config('mymodule.settings')->get('upload_enabled_types');
+        $form['workflow']['upload_' . $form['type']['#value']] = array(
+            '#type' => 'radios',
+            '#title' => t('Attachments'),
+            '#default_value' => in_array($form['type']['#value'], $upload_enabled_types) ? 1 : 0,
+            '#options' => array(t('Disabled'), t('Enabled')),
+        );
+        // Add a custom submit handler to save the array of types back to the config file.
+        $form['actions']['submit']['#submit'][] = 'mymodule_upload_enabled_types_submit';
+    }*/
+//   kint($form_id);
+   // die();
+}
+
+/*
+function tipster_form_user_register_form_alter(&$form, FormStateInterface $form_state) {
+
+    $attached_profile_form = FALSE;
+    $weight = 90;
+    $form['profile_utilisateur'] = array(
+        '#type' => 'radios',
+        '#title' => t('Choisissez le type de profile : '),
+        '#options' => array('tipster' => t('Tipster'), 'follower' => t('Follower')),
+    );
+    $form['actions']['submit']['#validate'][] = 'tipster_form_user_register_form_validate';
+     $form['actions']['submit']['#submit'][] = 'tipster_form_user_register_form_submit';
+}*/
+
