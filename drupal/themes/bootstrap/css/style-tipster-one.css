@@ -64,9 +64,15 @@ article.pronostique .field--name-field-analyse .field--item:hover {
   white-space: none;
 }
 
+article.pronostique .field--name-field-analyse {
+  clear:both;
+}
 
-
-
+article.pronostique .field--name-field-analyse .field--item {
+  white-space: normal;
+  width: 600px;
+  border-bottom: none;
+}
 
 
 /*
