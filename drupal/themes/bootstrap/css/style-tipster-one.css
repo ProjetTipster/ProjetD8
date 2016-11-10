@@ -38,6 +38,55 @@ h2, .h2 {
 }
 
 /*
+USER
+*/
+.form-item h4.label {
+  padding: 0;
+  font-weight: normal;
+  color: black;
+  font-size:100%;
+}
+
+
+/*
+NODE PRONOSTIQUE
+*/
+article.pronostique .field--label-above .field--label {
+  color:#024a07;
+  padding:5px;
+  width:200px;
+  float:left;
+  border-bottom:1px solid #024a07;
+}
+article.pronostique .field--label-above .field--item {
+  font-weight:bold;
+  color:#00cc26;
+  padding:5px;
+  width:200px;
+  float:left;
+  border-bottom:1px solid #024a07;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+article.pronostique .field--name-field-analyse .field--item:hover {
+  overflow: none;
+  text-overflow: none;
+  white-space: none;
+}
+
+article.pronostique .field--name-field-analyse {
+  clear:both;
+}
+
+article.pronostique .field--name-field-analyse .field--item {
+  white-space: normal;
+  width: 600px;
+  border-bottom: none;
+}
+
+
+/*
 FORMULAIRE
 */
 .annonce-form label {
@@ -54,6 +103,12 @@ BOUTONS BOOTSTRAP
 */
 .btn-primary {
   background-color: #00cc26;
+  border-color: #024a07;
+}
+.btn-primary:focus, .btn-primary.focus,
+.btn-primary:active, .btn-primary.active,
+.btn-primary:hover {
+  background-color: #024a07;
   border-color: #024a07;
 }
 
@@ -79,4 +134,19 @@ aside .well {
   padding-left: 10px;
   padding-bottom: 10px;
   padding-right: 10px;
+}
+
+
+/*
+FOOTER
+*/
+.footer {
+  border-top: 1px solid #024a07;
+}
+
+/*
+HACK CSS BUG AFFICHAGE TIPSTER FOLLOWER
+*/
+.views-element-container.form-group .view-display-id-user_view{
+  display: none;
 }

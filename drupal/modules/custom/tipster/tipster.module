@@ -50,7 +50,7 @@ function tipster_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_s
    // die();
 }
 
-
+/*
 function tipster_form_user_register_form_alter(&$form, FormStateInterface $form_state) {
 
     $attached_profile_form = FALSE;
@@ -60,81 +60,7 @@ function tipster_form_user_register_form_alter(&$form, FormStateInterface $form_
         '#title' => t('Choisissez le type de profile : '),
         '#options' => array('tipster' => t('Tipster'), 'follower' => t('Follower')),
     );
+    $form['actions']['submit']['#validate'][] = 'tipster_form_user_register_form_validate';
+     $form['actions']['submit']['#submit'][] = 'tipster_form_user_register_form_submit';
+}*/
 
-    /** @var ProfileType[] $profile_types */
-    $profile_types = ProfileType::loadMultiple();
-    foreach ($profile_types as $profile_type) {
-        $instances = array_filter(\Drupal::service('entity_field.manager')->getFieldDefinitions('profile', $profile_type->id()), function ($field_definition) {
-            return $field_definition instanceof FieldConfigInterface;
-        });
-
-        if ($profile_type->getRegistration() === TRUE && count($instances)) {
-            $property = ['profiles', $profile_type->id()];
-            $profile = $form_state->get($property);
-            if (empty($profile)) {
-                $profile = Profile::create([
-                    'type' => $profile_type->id(),
-                    'langcode' => $profile_type->language() ?
-                        $profile_type->language() : \Drupal::languageManager()->getDefaultLanguage()->getId(),
-                ]);
-
-                // Attach profile entity form.
-                $form_state->set($property, $profile);
-            }
-            $form_state->set('form_display_' . $profile_type->id(), EntityFormDisplay::collectRenderDisplay($profile, 'default'));
-
-            $form['entity_' . $profile_type->id()] = [
-                '#type' => 'details',
-                '#title' => $profile_type->label(),
-                '#tree' => TRUE,
-                '#parents' => ['entity_' . $profile_type->id()],
-                '#weight' => ++$weight,
-                '#open' => TRUE,
-            ];
-            $form_state
-                ->get('form_display_' . $profile_type->id())
-                ->buildForm($profile, $form['entity_' . $profile_type->id()], $form_state);
-
-            $attached_profile_form = TRUE;
-        }
-    }
-
-    if ($attached_profile_form) {
-        $form['actions']['submit']['#validate'][] = 'tipster_form_user_register_form_validate';
-        $form['actions']['submit']['#submit'][] = 'tipster_form_user_register_form_submit';
-    }
-}
-
-/**
- * Extra form validation handler for the user registration form.
- */
-function tipster_form_user_register_form_validate(array &$form, FormStateInterface $form_state) {
-    $profiles = $form_state->get('profiles');
-    if (!empty($profiles)) {
-        foreach ($profiles as $bundle => $entity) {
-            /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $form_display */
-            $form_display = $form_state->get('form_display_' . $bundle);
-            $form_display->extractFormValues($entity, $form['entity_' . $bundle], $form_state);
-            $form_display->validateFormValues($entity, $form['entity_' . $bundle], $form_state);
-        }
-    }
-    // Entity was validated in entityFormValidate(). This will prevent validation
-    // exception from being thrown.
-    $form_state->getFormObject()->getEntity()->validate();
-}
-
-/**
- * Extra form submission handler for the user registration form.
- */
-function tipster_form_user_register_form_submit(array &$form, FormStateInterface $form_state) {
-    /** @var \Drupal\Core\Session\AccountInterface $account */
-    $account = $form_state->getFormObject()->getEntity();
-    $profiles = $form_state->get('profiles');
-    if (!empty($profiles)) {
-        foreach ($profiles as $bundle => $entity) {
-            $entity->setOwnerId($account->id());
-            $entity->setActive(TRUE);
-            $entity->save();
-        }
-    }
-}
