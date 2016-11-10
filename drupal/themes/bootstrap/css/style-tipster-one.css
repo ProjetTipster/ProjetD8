@@ -38,6 +38,17 @@ h2, .h2 {
 }
 
 /*
+USER
+*/
+.form-item h4.label {
+  padding: 0;
+  font-weight: normal;
+  color: black;
+  font-size:100%;
+}
+
+
+/*
 NODE PRONOSTIQUE
 */
 article.pronostique .field--label-above .field--label {
@@ -133,3 +144,9 @@ FOOTER
   border-top: 1px solid #024a07;
 }
 
+/*
+HACK CSS BUG AFFICHAGE TIPSTER FOLLOWER
+*/
+.views-element-container.form-group .view-display-id-user_view{
+  display: none;
+}
