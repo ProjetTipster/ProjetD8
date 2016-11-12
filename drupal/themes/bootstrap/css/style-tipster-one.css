@@ -171,3 +171,9 @@ FOOTER
   border-top: 1px solid #024a07;
 }
 
+/*
+HACK CSS BUG AFFICHAGE TIPSTER FOLLOWER
+*/
+.views-element-container.form-group .view-display-id-user_view{
+  display: none;
+}
