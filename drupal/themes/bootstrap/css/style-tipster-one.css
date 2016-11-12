@@ -47,6 +47,7 @@ h1, .h1 {
 }
 
 /*
+<<<<<<< HEAD
 USER
 */
 .form-item h4.label {
@@ -65,6 +66,8 @@ USER
   display: none;
 }
 /*
+=======
+>>>>>>> parent of 8e08224... hack css pour le bug d affichage de tipster et follower partout
 NODE PRONOSTIQUE
 */
 article.pronostique .field--label-above .field--label {
@@ -165,9 +168,3 @@ FOOTER
   border-top: 1px solid #024a07;
 }
 
-/*
-HACK CSS BUG AFFICHAGE TIPSTER FOLLOWER
-*/
-.views-element-container.form-group .view-display-id-user_view{
-  display: none;
-}
