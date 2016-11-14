@@ -46,11 +46,6 @@ h1, .h1 {
     font-size: 30px;
 }
 
-/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-USER
-*/
 .form-item h4.label {
   padding: 0;
   font-weight: normal;
@@ -66,13 +61,8 @@ USER
 .path-user .region-sidebar-second .field--name-user-picture {
   display: none;
 }
-/*
-=======
->>>>>>> parent of 8e08224... hack css pour le bug d affichage de tipster et follower partout
-=======
->>>>>>> parent of 8e08224... hack css pour le bug d affichage de tipster et follower partout
-NODE PRONOSTIQUE
-*/
+
+
 article.pronostique .field--label-above .field--label {
   color:#024a07;
   padding:5px;
