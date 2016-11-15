@@ -106,7 +106,7 @@ h1, .h1 {
 
 /*
 PICTO FLAG
-*/
+
 
 .action-unflag {
   background:url(../img/picto-follow-on.png) no-repeat top left transparent;
@@ -117,9 +117,22 @@ PICTO FLAG
   padding: 8px 0px 3px 35px;
 
 }
+*/
 
-
-
+/*
+SIDE BAR RIGHT
+*/
+.view-derniers-utilisateurs-inscrits .views-field-login span.field-content {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.view-derniers-pronostiques .views-field-uid {
+    margin-bottom: 10px;
+}
+.view-derniers-pronostiques .views-field-title {
+  font-weight: bold;
+}
 
 /*
 PRONOSTIQUE
