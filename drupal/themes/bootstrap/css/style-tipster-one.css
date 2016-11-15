@@ -104,6 +104,19 @@ h1, .h1 {
   display: none;
 }
 
+/*
+PICTO FLAG
+*/
+
+.action-unflag {
+  background:url(../img/picto-follow-on.png) no-repeat top left transparent;
+  padding: 8px 0px 3px 35px;
+}
+.action-flag {
+  background:url(../img/picto-follow-off.png) no-repeat top left transparent;
+  padding: 8px 0px 3px 35px;
+
+}
 
 
 
