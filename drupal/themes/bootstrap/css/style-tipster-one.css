@@ -29,6 +29,48 @@ header.container {
   padding-left: 0;
 }
 
+.breadcrumb {
+  background:none;
+}
+.region-header .tabs .nav-tabs {
+    border-bottom: none;
+}
+.region-header .tabs .nav-tabs > li > a {
+  border-radius: 4px;
+}
+.region-header .tabs .nav-tabs > li.active > a {
+  border: none;
+}
+.region-header .tabs .nav-tabs > li > a:hover,
+.region-header .tabs .nav-tabs > li > a:focus {
+  border: 1px solid #024a07;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #00cc26;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  border: 1px solid #024a07;
+  border-radius: 4px;
+  color: #024a07;
+  background: none;
+  background-color: #00cc26;
+}
+
+.navbar-default .navbar-collapse {
+    margin-top: 120px;
+    padding-left: 0;
+}
+
+.navbar-default .navbar-brand {
+    color: #024a07;
+    text-transform: uppercase;
+    font-size: 30px;
+    padding: 80px 0 0 0;
+}
 /*
 TYPO
 */
@@ -63,6 +105,12 @@ h1, .h1 {
 }
 
 
+
+
+
+/*
+PRONOSTIQUE
+*/
 article.pronostique .field--label-above .field--label {
   color:#024a07;
   padding:5px;
