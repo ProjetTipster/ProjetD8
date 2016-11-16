@@ -1,0 +1,49 @@
+
+Non co :
+
+- actu
+- analyse
+- derniers prono
+- bloc tipster du moment
+
+co : 
+
+tipster = 
+
+- leur profil
+	* creer prono
+	* modifier
+- actu
+- analyse
+- derniers prono
+- tous les tipsters
+- bloc tipster du moment
+- bloc dernier prono
+- bloc dernier inscrits
+- Mes followers
+- Mes pronostics
+
+follower = 
+
+- leur profil
+	* modifier
+- actu
+- analyse
+- derniers prono
+- tous les tipsters
+- bloc tipster du moment
+- bloc dernier prono
+- bloc dernier inscrits
+- Mes Tipsters
+- les pronos de mes tipsters
+- les pronos que je valide
+
+
+
+
+
+
+virer lien newsL
+
+virer creer prono pour follower
+
