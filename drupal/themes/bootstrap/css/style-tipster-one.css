@@ -23,7 +23,8 @@ HEADER
   border: none;
 }
 .page-header {
-  border-bottom: 1px solid #024a07;
+  border-bottom: none;
+  margin: 0;
 }
 header.container {
   padding-left: 0;
@@ -45,14 +46,21 @@ header.container {
 .region-header .tabs .nav-tabs > li > a:focus {
   border: 1px solid #024a07;
 }
-.navbar-default .navbar-nav > li > a {
+.navbar-default .nav > li > a {
   color: #00cc26;
+  border: 1px solid #00cc26;
+  border-radius: 4px;
+  margin: 0 10px;
+  padding: 10px;
 }
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav > .active > a:focus,
-.navbar-default .navbar-nav > li > a:hover,
-.navbar-default .navbar-nav > li > a:focus {
+.navbar-default .nav li{
+      float: left;
+}
+.navbar-default .nav > .active > a,
+.navbar-default .nav > .active > a:hover,
+.navbar-default .nav > .active > a:focus,
+.navbar-default .nav > li > a:hover,
+.navbar-default .nav > li > a:focus {
   border: 1px solid #024a07;
   border-radius: 4px;
   color: #024a07;
@@ -71,6 +79,13 @@ header.container {
     font-size: 30px;
     padding: 80px 0 0 0;
 }
+
+#block-menucomptetipster ul.nav,
+#block-menucomptefollower  ul.nav,
+#block-menucomptenonauthentifie ul.nav {float:right;}
+#block-menunavigationtipster ul.nav,
+#block-menunavigationfollower ul.nav,
+#block-menunavigationnonauthentifie ul.nav {float:left;}
 /*
 TYPO
 */
@@ -133,22 +148,37 @@ SIDE BAR RIGHT
 .view-derniers-pronostiques .views-field-title {
   font-weight: bold;
 }
-
+.view-tipster-de-la-semaine .views-label {
+  float: left;
+}
+.view-tipster-de-la-semaine .field-content {
+  float: right;
+  color: #024a07;
+  font-weight:bold;
+}
+.view-tipster-de-la-semaine .views-field-name .field-content {
+  float: left;
+}
+.view-tipster-de-la-semaine .views-field {
+  clear: both;
+}
 /*
 PRONOSTIQUE
 */
-article.pronostique .field--label-above .field--label {
+article.pronostique .field--label-above .field--label,
+.view-id-infos_follower .views-label {
   color:#024a07;
   padding:5px;
-  width:200px;
+  width:25%;
   float:left;
   border-bottom:1px solid #024a07;
 }
-article.pronostique .field--label-above .field--item {
+article.pronostique .field--label-above .field--item,
+.view-id-infos_follower .field-content {
   font-weight:bold;
   color:#00cc26;
   padding:5px;
-  width:200px;
+  width:25%;
   float:left;
   border-bottom:1px solid #024a07;
   overflow: hidden;
@@ -240,4 +270,23 @@ HACK CSS BUG AFFICHAGE TIPSTER FOLLOWER
 */
 .views-element-container.form-group .view-display-id-user_view{
   display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+MEDIA QUERIES
+*/
+@media screen and (max-width: 1200px) {
+  header .navbar-header .region-navigation .navbar-brand {
+    display:none;
+  }
 }
