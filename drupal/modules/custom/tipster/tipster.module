@@ -11,9 +11,13 @@ use Drupal\profile\Entity\Profile;
 use Drupal\profile\Entity\ProfileType;
 use Drupal\field\FieldConfigInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\CurrentRouteMatch;
+use Drupal\Core\Field\EntityReferenceFieldItemList;
 /**
  * Implements hook_help().
  */
+
+
 function tipster_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     // Main module help for the tipster module.
@@ -36,31 +40,166 @@ function tipster_help($route_name, RouteMatchInterface $route_match) {
 
 function tipster_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
    /*if (isset($form['type']) && $form['type']['#value'] . '_node_settings' == $form_id) {
-        $upload_enabled_types = \Drupal::config('mymodule.settings')->get('upload_enabled_types');
-        $form['workflow']['upload_' . $form['type']['#value']] = array(
-            '#type' => 'radios',
-            '#title' => t('Attachments'),
-            '#default_value' => in_array($form['type']['#value'], $upload_enabled_types) ? 1 : 0,
-            '#options' => array(t('Disabled'), t('Enabled')),
-        );
-        // Add a custom submit handler to save the array of types back to the config file.
-        $form['actions']['submit']['#submit'][] = 'mymodule_upload_enabled_types_submit';
-    }*/
-//   kint($form_id);
-   // die();
+    $upload_enabled_types = \Drupal::config('mymodule.settings')->get('upload_enabled_types');
+    $form['workflow']['upload_' . $form['type']['#value']] = array(
+        '#type' => 'radios',
+        '#title' => t('Attachments'),
+        '#default_value' => in_array($form['type']['#value'], $upload_enabled_types) ? 1 : 0,
+        '#options' => array(t('Disabled'), t('Enabled')),
+    );
+    // Add a custom submit handler to save the array of types back to the config file.
+    $form['actions']['submit']['#submit'][] = 'mymodule_upload_enabled_types_submit';
+}*/
+//   kint($form);
+// die();
 }
 
-/*
-function tipster_form_user_register_form_alter(&$form, FormStateInterface $form_state) {
-
-    $attached_profile_form = FALSE;
-    $weight = 90;
-    $form['profile_utilisateur'] = array(
+function tipster_form_user_register_form_alter(&$form, Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+{
+ /*   $form['choix_profile'] = array(
         '#type' => 'radios',
-        '#title' => t('Choisissez le type de profile : '),
+//            '#title' => t('Choisissez le type de profile : '),
         '#options' => array('tipster' => t('Tipster'), 'follower' => t('Follower')),
-    );
-    $form['actions']['submit']['#validate'][] = 'tipster_form_user_register_form_validate';
-     $form['actions']['submit']['#submit'][] = 'tipster_form_user_register_form_submit';
+    );*/
+    $form['account']['name']['#title']= t('Pseudo');
+}
+
+
+function tipster_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
+    //   kint($entity);
+    //   die();
+  /*  $profile=$entity->get('choix_profile')->value();
+    //$profile=$entity->fields('field_profile')->getValue();
+    if(!empty($profile)) {
+        if ($profile == 'tipster') {
+            $entity->addRole('tipster');
+        } elseif ($profile == 'follower') {
+            $entity->addRole('follower');
+        }
+    }*/
+}
+
+
+function tipster_form_profile_tipster_add_form_alter(&$form, FormStateInterface $form_state) {
+kint($form);
+
+    $form['field_bankroll_actuelle']['#type']= 'hidden';
+    $form['field_roi']['#type']= 'hidden';
+    $form['field_total_des_mises']['#type']= 'hidden';
+    $form['field__de_reussite']['#type']= 'hidden';
+    $form['field_cote_moyenne']['#type']= 'hidden';
+    $form['field_bets_valides']['#type']= 'hidden';
+    $form['field_bets_non_valides']['#type']= 'hidden';
+    $form['field_bets_annules']['#type']= 'hidden';
+
+// $form['actions']['submit']['#validate'][] = 'tipster_form_user_register_form_validate';
+//  $form['actions']['submit']['#submit'][] = 'tipster_form_profile_tipster_add_form_submit';
+}
+
+
+
+function tipster_profile_presave(Drupal\Core\Entity\EntityInterface $entity) {
+    $current_route_match = \Drupal::routeMatch();
+    //echo '!! ' . $current_route_match->getRouteName() . ' !!';
+  if ($current_route_match->getRouteName() == 'entity.profile.add_form'){
+     $BkDepart=$entity->get('field_bankroll_de_depart')->value;
+        $entity->set('field_bankroll_actuelle',$BkDepart);
+     }
+
+/*  kint($entity);
+    die();*/
+
+}
+/*
+function tipster_form_profile_tipster_add_form_validate(&$form,FormStateInterface $form_state){
+    $BkDepart = $form_state->getValue('field_bankroll_de_depart');
+  $form['field_bankroll_actuelle']['#value']= $BkDepart;
+  $form_state->setValue('field_bankroll_actuelle', $BkDepart);
 }*/
 
+/**
+ * Implements hook_ENTITY_TYPE_load().
+ */
+
+/*
+function tipster_node_load($entities)
+{
+    kint($entities);
+    foreach ($entities as $entity){
+        if($entity->bundle() =='pronostique') {
+            $type = $entity->get('field_etat')->value;
+            echo $type;
+        }
+    }
+}*/
+
+function tipster_form_node_pronostique_form_alter(&$form, FormStateInterface $form_state) {
+    //kint($form);
+    //die();
+    $form['field_etat']['#type']= 'hidden';
+
+
+
+// $form['actions']['submit']['#validate'][] = 'tipster_form_user_register_form_validate';
+//  $form['actions']['submit']['#submit'][] = 'tipster_form_profile_tipster_add_form_submit';
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function tipster_node_presave(Drupal\Core\Entity\EntityInterface $entity)
+{
+//kint($entity);
+//die();
+    if( $entity->bundle() =='pronostique') {
+
+kint($entity);
+
+        /*on récupère la valeur des champs résultat et état*/
+        $etat=$entity->get('field_etat')->value;
+        $resultat= $entity->get('field_resultat')->getValue();
+        $current_user = \Drupal:: currentUser();
+
+ //       echo 'resultat : '.$resultat[0]['target_id']. ' etat : '. $etat;
+
+        /*Si le prono passe de 'En attente' à 'gagné' ou 'perdu' pour la première fois*/
+        if( ($resultat[0]['target_id'] !=='28') and ($etat == 'En attente') ){
+
+
+
+            /*Le prono est gagné*/
+            switch ($resultat[0]['target_id']){
+                case '29':  $entity->set('field_etat','Gagné');
+                            //echo 'gagné';die();
+
+
+
+
+
+
+
+
+
+                    break;
+                case '30':  $entity->set('field_etat','Perdu');
+                            //echo 'perdu';die();
+
+
+
+
+
+
+
+
+
+                    break;
+            }
+        }
+
+
+
+
+ //       echo($entity->get('field_etat')->getValue());
+ //       die();
+    }
+}

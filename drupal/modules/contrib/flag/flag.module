@@ -254,7 +254,7 @@ function flag_entity_extra_field_info() {
       if ($flag_type_plugin->showAsField()) {
         $extra[$flag->getFlaggableEntityTypeId()][$bundle_name]['display']['flag_' . $flag->id()] = [
           'label' => t('Flag: %title', [
-            '%title' => $flag->label,
+            '%title' => $flag->label(),
           ]),
           'description' => t('Individual flag link'),
           'weight' => 10,
@@ -328,7 +328,7 @@ function flag_entity_view(array &$build, EntityInterface $entity, EntityViewDisp
     $build['#cache']['tags'] = Cache::mergeTags($build['#cache']['tags'], $flag->getCacheTags());
 
     // Do not display the flag if disabled.
-    if (!$flag->isEnabled()){
+    if (!$flag->status()){
       continue;
     }
 
@@ -418,7 +418,7 @@ function flag_entity_view_alter(&$build, EntityInterface $entity, EntityViewDisp
         $action = 'unflag';
       }
 
-      $flag_keys[] = $flag->id . '-' . $action;
+      $flag_keys[] = $flag->id() . '-' . $action;
     }
 
     if (!empty($flag_keys)) {
@@ -449,7 +449,7 @@ function flag_contextual_links_alter(array &$links, $group, array $route_paramet
   foreach ($flags as $flag) {
     /** @var \Drupal\flag\FlagInterface $flag */
     // Do not display the flag if disabled.
-    if (!$flag->isEnabled()){
+    if (!$flag->status()){
       continue;
     }
 
@@ -497,7 +497,7 @@ function flag_contextual_links_alter(array &$links, $group, array $route_paramet
  * Implements hook_entity_predelete().
  */
 function flag_entity_predelete(EntityInterface $entity) {
-  // User flags handle things through the entity type delete hook.
+  // User flags handle things through user entity hooks.
   // @todo: make this configurable in the flag type definition?
   if ($entity->getEntityTypeId() == 'user') {
     return;
@@ -514,7 +514,7 @@ function flag_user_cancel($edit, $account, $method) {
 }
 
 /**
- * Implements hook_user_delete().
+ * Implements hook_user_predelete().
  */
 function flag_user_predelete(UserInterface $account) {
   \Drupal::service('flag')->userFlagRemoval($account);
@@ -527,7 +527,7 @@ function flag_entity_operation(\Drupal\Core\Entity\EntityInterface $entity) {
   $operations = [];
 
   if ($entity instanceof \Drupal\flag\FlagInterface) {
-    if (!$entity->isEnabled()) {
+    if (!$entity->status()) {
       $operations['enable'] = [
         'title' => t('Enable'),
         'url' => $entity->toUrl('enable'),
