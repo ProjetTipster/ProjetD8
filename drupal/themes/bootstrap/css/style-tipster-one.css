@@ -4,7 +4,9 @@ VERT CLAIR : 00cc26
 VERT FONCé : 024a07
 */
 
-
+body {
+  margin-top: 0;
+}
 /*
 LIENS
 */
@@ -27,9 +29,15 @@ HEADER
   margin: 0;
 }
 header.container {
-  padding-left: 0;
+  padding: 0;
 }
-
+header .navbar-header {
+  width: 100%;
+}
+.view-ml-jouer-comporte-des-risques img {
+  width: 579px;
+  margin: 0 auto;
+}
 .breadcrumb {
   background:none;
 }
@@ -47,11 +55,11 @@ header.container {
   border: 1px solid #024a07;
 }
 .navbar-default .nav > li > a {
-  color: #00cc26;
-  border: 1px solid #00cc26;
+  color: #024a07;
+  border: 1px solid #024a07;
   border-radius: 4px;
-  margin: 0 10px;
-  padding: 10px;
+  margin: 0 5px;
+  padding: 5px;
 }
 .navbar-default .nav li{
       float: left;
@@ -59,8 +67,10 @@ header.container {
 .navbar-default .nav > .active > a,
 .navbar-default .nav > .active > a:hover,
 .navbar-default .nav > .active > a:focus,
+.navbar-default .nav > .active > a:visited,
 .navbar-default .nav > li > a:hover,
-.navbar-default .nav > li > a:focus {
+.navbar-default .nav > li > a:focus,
+.navbar-default .nav > .active > a:visited {
   border: 1px solid #024a07;
   border-radius: 4px;
   color: #024a07;
@@ -70,7 +80,7 @@ header.container {
 
 .navbar-default .navbar-collapse {
     margin-top: 120px;
-    padding-left: 0;
+    padding: 0;
 }
 
 .navbar-default .navbar-brand {
@@ -82,7 +92,9 @@ header.container {
 
 #block-menucomptetipster ul.nav,
 #block-menucomptefollower  ul.nav,
-#block-menucomptenonauthentifie ul.nav {float:right;}
+#block-menucomptenonauthentifie ul.nav {
+    float: right;
+}
 #block-menunavigationtipster ul.nav,
 #block-menunavigationfollower ul.nav,
 #block-menunavigationnonauthentifie ul.nav {float:left;}
@@ -203,6 +215,58 @@ article.pronostique .field--name-field-analyse .field--item {
   color: black;
 }
 
+/*
+SLIDESHOW
+*/
+.views-slideshow-controls-bottom {
+  height: 32px;
+  margin: 10px 0;
+}
+#views_slideshow_controls_text_slideshow-block_1 {
+  float: left;
+}
+#views_slideshow_slide_counter_slideshow-block_1 {
+  float: right;
+}
+#views_slideshow_controls_text_next_slideshow-block_1 a {
+    background: url(../img/fast-forward.png) no-repeat top left transparent;
+    color: transparent;
+    width: 32px;
+    padding-bottom: 15px;
+}
+#views_slideshow_controls_text_previous_slideshow-block_1 a {
+    background: url(../img/rewind.png) no-repeat top left transparent;
+    color: transparent;
+    width: 32px;
+    padding-bottom: 15px;
+    margin-right: -15px;
+}
+#views_slideshow_controls_text_pause_slideshow-block_1 a {
+    background: url(../img/skip.png) no-repeat top left transparent;
+    color: transparent;
+    width: 32px;
+    padding-bottom: 15px;
+}
+#views_slideshow_controls_text_next_slideshow-block_1 a:hover,
+#views_slideshow_controls_text_next_slideshow-block_1 a:focus
+ {
+    background: url(../img/fast-forward-on.png) no-repeat top left transparent;
+}
+#views_slideshow_controls_text_previous_slideshow-block_1 a:hover,
+#views_slideshow_controls_text_previous_slideshow-block_1 a:focus
+ {
+    background: url(../img/rewind-on.png) no-repeat top left transparent;
+}
+#views_slideshow_controls_text_pause_slideshow-block_1 a:hover,
+#views_slideshow_controls_text_pause_slideshow-block_1 a:focus
+ {
+    background: url(../img/skip-on.png) no-repeat top left transparent;
+}
+#views_slideshow_cycle_main_slideshow-block_1 .img-responsive {
+    -moz-border-radius: 9px;
+  -webkit-border-radius: 9px;
+  border-radius: 9px;
+}
 
 /*
 FORMULAIRE
@@ -257,7 +321,51 @@ aside .well {
   padding-right: 10px;
 }
 
-
+/*
+ARTICLE
+*/
+article img {
+  max-width: 100%;
+}
+.views-element-container .view-frontpage .views-row article,
+.views-element-container .view-actualites .views-row article {
+  border: solid 3px #024a07;
+  -moz-border-radius: 9px;
+  -webkit-border-radius: 9px;
+  border-radius: 9px;
+  -moz-box-shadow: inset 0px 15px 0px #00cc26;
+  -webkit-box-shadow: inset 0px 15px 0px #00cc26;
+  box-shadow: inset 0px 15px 0px #00cc26;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
+.views-element-container .view-frontpage .views-row article article,
+.views-element-container .view-actualites .views-row article article {
+  display: none;
+}
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+    background-color: #00cc26;
+    border-color: #024a07;
+}
+.pagination > li > a, .pagination > li > span {
+  border-color: #024a07;
+  color: #024a07;
+}
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+    color: white;
+    background-color: #00cc26;
+    border-color: #024a07;
+}
 /*
 FOOTER
 */
@@ -271,7 +379,13 @@ HACK CSS BUG AFFICHAGE TIPSTER FOLLOWER
 .views-element-container.form-group .view-display-id-user_view{
   display: none;
 }
-
+/*
+HACK CSS EFFASER MEMBRE DEPUIS ETC ... SUR PROFILE
+*/
+.path-user .region-content .js-form-type-item {
+  display: none;
+  margin-bottom: 0;
+}
 
 
 
