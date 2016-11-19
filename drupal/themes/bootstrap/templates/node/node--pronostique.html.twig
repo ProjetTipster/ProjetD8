@@ -76,7 +76,7 @@
   ]
 %}
 <article{{ attributes.addClass(classes) }}>
-
+{{ kint(content) }}
   {{ title_prefix }}
   {% if not page %}
     <h2{{ title_attributes }}>
@@ -98,8 +98,8 @@
   <div{{ content_attributes.addClass('content') }}>
     {{ content }}
   </div>
-  <div {{ attributes.addClass('suivre-prono') }}>
+  {#<div {{ attributes.addClass('suivre-prono') }}>
     <a href="" class="btn btn-info">Suivre le prono!!!</a>
-  </div>
+  </div>#}
 
 </article>
