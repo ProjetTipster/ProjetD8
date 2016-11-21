@@ -27,11 +27,10 @@
       <file leaf-file-name="tipster.module" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/modules/custom/tipster/tipster.module">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="192" column="25" selection-start-line="192" selection-start-column="25" selection-end-line="192" selection-end-column="25" />
+            <state relative-caret-position="323">
+              <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
               <folding>
                 <element signature="e#54#98#0#PHP" expanded="true" />
-                <element signature="n#tipster_node_save#0;n#!!top" expanded="false" />
                 <element signature="n#tipster_flagging_insert#0;n#!!top" expanded="false" />
                 <element signature="n#tipster_flagging_delete#0;n#!!top" expanded="false" />
               </folding>
@@ -414,15 +413,15 @@
       <workItem from="1479292021857" duration="9188000" />
       <workItem from="1479330092820" duration="37294000" />
       <workItem from="1479559090854" duration="26579000" />
-      <workItem from="1479726403751" duration="77000" />
+      <workItem from="1479726403751" duration="741000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="179585000" />
+    <option name="totallyTimeSpent" value="180249000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1050" extended-state="7" />
+    <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2234375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -800,11 +799,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/custom/tipster/tipster.module">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="192" column="25" selection-start-line="192" selection-start-column="25" selection-end-line="192" selection-end-column="25" />
+        <state relative-caret-position="323">
+          <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
           <folding>
             <element signature="e#54#98#0#PHP" expanded="true" />
-            <element signature="n#tipster_node_save#0;n#!!top" expanded="false" />
             <element signature="n#tipster_flagging_insert#0;n#!!top" expanded="false" />
             <element signature="n#tipster_flagging_delete#0;n#!!top" expanded="false" />
           </folding>
