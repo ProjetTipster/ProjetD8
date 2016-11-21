@@ -100,11 +100,9 @@ class UserFlagType extends EntityFlagType {
     $access = parent::actionAccess($action, $flag, $account, $flaggable);
 
     // If the acting upon yourself check for permission.
-<<<<<<< HEAD
+
  	// $is_current_user = $account->id() == $flaggable->id();
-=======
-    // $is_current_user = $account->id() == $flaggable->id();
->>>>>>> 4e801889e18d99632557d155d8c0a71628e00404
+
     if ($flaggable == NULL) {
       $is_current_user = FALSE;
     } else {
@@ -113,13 +111,7 @@ class UserFlagType extends EntityFlagType {
     $condition = !$is_current_user || $this->canUsersFlagThemselves();
     $themselves_access = AccessResult::allowedIf($condition)
       ->addCacheContexts(['user']);
-
-<<<<<<< HEAD
-    return $access->andIf($themselves_access);
-  }
-=======
       return $access->andIf($themselves_access);
     }
->>>>>>> 4e801889e18d99632557d155d8c0a71628e00404
 
 }
