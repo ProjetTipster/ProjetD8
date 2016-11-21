@@ -66,23 +66,27 @@ function tipster_form_user_register_form_alter(&$form, Drupal\Core\Form\FormStat
 
 
 function tipster_user_presave(Drupal\Core\Entity\EntityInterface $entity) {
-    //   kint($entity);
-    //   die();
-  /*  $profile=$entity->get('choix_profile')->value();
-    //$profile=$entity->fields('field_profile')->getValue();
-    if(!empty($profile)) {
-        if ($profile == 'tipster') {
+ //  kint($entity);
+//   die();
+
+    $role= $entity->get('field_role')->getValue();
+    $role_value=$role[0]['target_id'];
+  /*  $profile=$entity->get('field_role')->value();
+    //$profile=$entity->fields('field_profile')->getValue();*/
+    if(!empty($role)) {
+        if ($role_value == 'tipster') {
             $entity->addRole('tipster');
-        } elseif ($profile == 'follower') {
+        }elseif ($role_value == 'follower') {
             $entity->addRole('follower');
         }
-    }*/
+    }
 }
 
 
 function tipster_form_profile_tipster_add_form_alter(&$form, FormStateInterface $form_state) {
-kint($form);
-
+    /*kint($form);
+    $current_route_match = \Drupal::routeMatch();
+    echo '!! ' . $current_route_match->getRouteName() . ' !!';*/
     $form['field_bankroll_actuelle']['#type']= 'hidden';
     $form['field_roi']['#type']= 'hidden';
     $form['field_total_des_mises']['#type']= 'hidden';
@@ -99,16 +103,11 @@ kint($form);
 
 
 function tipster_profile_presave(Drupal\Core\Entity\EntityInterface $entity) {
-    $current_route_match = \Drupal::routeMatch();
-    //echo '!! ' . $current_route_match->getRouteName() . ' !!';
-  if ($current_route_match->getRouteName() == 'entity.profile.add_form'){
+    if($entity->isNew()){
      $BkDepart=$entity->get('field_bankroll_de_depart')->value;
         $entity->set('field_bankroll_actuelle',$BkDepart);
+      //die();
      }
-
-/*  kint($entity);
-    die();*/
-
 }
 /*
 function tipster_form_profile_tipster_add_form_validate(&$form,FormStateInterface $form_state){
@@ -156,42 +155,263 @@ function tipster_node_presave(Drupal\Core\Entity\EntityInterface $entity)
 kint($entity);
 
         /*on récupère la valeur des champs résultat et état*/
-        $etat=$entity->get('field_etat')->value;
+        $etat_prono=$entity->get('field_etat')->value;
         $resultat= $entity->get('field_resultat')->getValue();
+
+        /* On récupère la valeur des champs numériques pour le calcul de la BK*/
+        $mise_prono=$entity->get('field_mise')->value;
+        $cote_prono=$entity->get('field_cote')->value;
+
+        $id_author_prono=$entity->get('uid')->value;
         $current_user = \Drupal:: currentUser();
+        $tab_role = $current_user->getRoles();
+
+        if(in_array('tipster',$tab_role)){
+            echo 'OKKKKKKKKKKKKKKKKKKKKKKKKKKKKK !!!!!!!!!!!!!';
+        }
+
+        $id_prono=$entity->id();
 
  //       echo 'resultat : '.$resultat[0]['target_id']. ' etat : '. $etat;
 
-        /*Si le prono passe de 'En attente' à 'gagné' ou 'perdu' pour la première fois*/
-        if( ($resultat[0]['target_id'] !=='28') and ($etat == 'En attente') ){
-
-
-
+        /*Si le prono passe de 'En attente(28)' à 'gagné(29)' ou 'perdu(30)' pour la première fois*/
+        if( ($resultat[0]['target_id'] !=='28')
+            //and ($etat_prono == 'En attente')
+            ){
             /*Le prono est gagné*/
             switch ($resultat[0]['target_id']){
+
                 case '29':  $entity->set('field_etat','Gagné');
-                            //echo 'gagné';die();
+                     /*Mise à jour dela BK pour l'auteur*/
 
+                        $storage_profile = \Drupal::entityTypeManager()->getStorage('profile');
+                        //kint($storage_profile);
+                        $query = \Drupal::entityQuery('profile')
+                            ->condition('uid', $current_user->id(), '=');
+                        $id_profile = $query->execute();
+                        $profiles = $storage_profile->loadMultiple($id_profile);
+                        foreach ($profiles as $profile) {
+                            echo 'profile';
+                            $bankroll_actuelle = $profile->get('field_bankroll_actuelle')->value;
+                            $bankroll_depart = $profile->get('field_bankroll_de_depart')->value;
+                            //$roi = $profile->get('field_roi')->value;
+                            //$reussite = $profile->get('field__de_reussite')->value;
+                            //$bet_annules = $profile->get('field_bets_annules')->value;
+                            $bet_valides = $profile->get('field_bets_valides')->value;
+                            $bet_non_valides = $profile->get('field_bets_non_valides')->value;
+                            $cote_moyenne = $profile->get('field_cote_moyenne')->value;
+                            $total_des_mises = $profile->get('field_total_des_mises')->value;
 
+                            /*Calcul des éléments de BK*/
+                            //-$mise_prono en attendant de substituer la mise de la BK sur le hook create_flag_prono
+                            $bankroll_actuelle = ($bankroll_actuelle - $mise_prono) + $mise_prono * $cote_prono;
+                            echo 'bk actuelle : ' . $bankroll_actuelle . '</br>';
+                            $total_des_mises = $total_des_mises + $mise_prono;
+                            echo 'total des mises : ' . $total_des_mises . '</br>';
+                            $bet_valides = $bet_valides + 1;
+                            echo 'bets win : ' . $bet_valides . '</br>';
+                            $bet_total = $bet_valides + $bet_non_valides;
+                            echo 'bets total : ' . $bet_total . '</br>';
+                            $tx_reussite = round(($bet_valides / $bet_total) * 100, 2);
+                            echo 'Taux de réussite : ' . $tx_reussite . '%</br>';
+                            $cote_moyenne = ($cote_moyenne * ($bet_total - 1) + $cote_prono) / $bet_total;
+                            echo 'cote moyenne : ' . $cote_moyenne . '</br>';
+                            $roi = round((($bankroll_actuelle - $bankroll_depart) / $total_des_mises) * 100, 2);
+                            echo 'roi : ' . $roi . '%</br>';
 
+                            $profile->set('field_bankroll_actuelle', $bankroll_actuelle);
+                            $profile->set('field_bankroll_de_depart', $bankroll_depart);
+                            $profile->set('field_roi', $roi);
+                            $profile->set('field__de_reussite', $tx_reussite);
+                            //$profile->set('field_bets_annules');
+                            $profile->set('field_bets_valides', $bet_valides);
+                            //$profile->set('field_bets_non_valides',$bet_non_valides);
+                            $profile->set('field_cote_moyenne', $cote_moyenne);
+                            $profile->set('field_total_des_mises', $total_des_mises);
 
+                            $profile->save();
+                            kint($profile);
+                        }
 
+                    /* Si l'auteur est un tipster (le follower n'aura pas de flags sur son prono)*/
+                    if(in_array('tipster',$tab_role)) {
+                        $storage_flaggin = \Drupal::entityTypeManager()->getStorage('flagging');
+                        //kint($storage_flaggin);
+                        $query = \Drupal::entityQuery('flagging')
+                            ->condition('flag_id', 'suivre_un_prono', '=')
+                            ->condition('entity_id', $id_prono, '=');
+                        $ids_flaggin = $query->execute();
+                        $flaggins = $storage_flaggin->loadMultiple($ids_flaggin);
+                        //        kint($flags);
+                        /*!!!!!!!!!!!!!!if not empty$flaggins !!!!!!!!!!!!!!!!!!*/
+                        foreach ($flaggins as $flaggin) {
+                            echo 'flaggin';
+                            kint($flaggin);
+                            $id_better = $flaggin->getOwnerId();
 
+                            $storage_profile = \Drupal::entityTypeManager()->getStorage('profile');
+                            //kint($storage_profile);
+                            $query = \Drupal::entityQuery('profile')
+                                ->condition('uid', $id_better, '=');
+                            $id_profile = $query->execute();
+                            $profiles = $storage_profile->loadMultiple($id_profile);
+                            foreach ($profiles as $profile) {
+                                echo 'profile';
+                                $bankroll_actuelle = $profile->get('field_bankroll_actuelle')->value;
+                                $bankroll_depart = $profile->get('field_bankroll_de_depart')->value;
+                                //$roi = $profile->get('field_roi')->value;
+                                //$reussite = $profile->get('field__de_reussite')->value;
+                                //$bet_annules = $profile->get('field_bets_annules')->value;
+                                $bet_valides = $profile->get('field_bets_valides')->value;
+                                $bet_non_valides = $profile->get('field_bets_non_valides')->value;
+                                $cote_moyenne = $profile->get('field_cote_moyenne')->value;
+                                $total_des_mises = $profile->get('field_total_des_mises')->value;
 
+                                /*Calcul des éléments de BK*/
+                                //-$mise_prono en attendant de substituer la mise de la BK sur le hook create_flag_prono
+                                $bankroll_actuelle = ($bankroll_actuelle - $mise_prono) + $mise_prono * $cote_prono;
+                                echo 'bk actuelle : ' . $bankroll_actuelle . '</br>';
+                                $total_des_mises = $total_des_mises + $mise_prono;
+                                echo 'total des mises : ' . $total_des_mises . '</br>';
+                                $bet_valides = $bet_valides + 1;
+                                echo 'bets win : ' . $bet_valides . '</br>';
+                                $bet_total = $bet_valides + $bet_non_valides;
+                                echo 'bets total : ' . $bet_total . '</br>';
+                                $tx_reussite = round(($bet_valides / $bet_total) * 100, 2);
+                                echo 'Taux de réussite : ' . $tx_reussite . '%</br>';
+                                $cote_moyenne = ($cote_moyenne * ($bet_total - 1) + $cote_prono) / $bet_total;
+                                echo 'cote moyenne : ' . $cote_moyenne . '</br>';
+                                $roi = round((($bankroll_actuelle - $bankroll_depart) / $total_des_mises) * 100, 2);
+                                echo 'roi : ' . $roi . '%</br>';
 
+                                $profile->set('field_bankroll_actuelle', $bankroll_actuelle);
+                                $profile->set('field_bankroll_de_depart', $bankroll_depart);
+                                $profile->set('field_roi', $roi);
+                                $profile->set('field__de_reussite', $tx_reussite);
+                                //$profile->set('field_bets_annules');
+                                $profile->set('field_bets_valides', $bet_valides);
+                                //$profile->set('field_bets_non_valides',$bet_non_valides);
+                                $profile->set('field_cote_moyenne', $cote_moyenne);
+                                $profile->set('field_total_des_mises', $total_des_mises);
 
+                                $profile->save();
+                                kint($profile);
+                            }
+                            //kint($id_profile);
+                        }
+                        //kint($flaggins);
+                    }
                     break;
+
+                /*Le prono est perdu*/
                 case '30':  $entity->set('field_etat','Perdu');
-                            //echo 'perdu';die();
+                    $storage_flaggin = \Drupal::entityTypeManager()->getStorage('flagging');
+                    //kint($storage_flaggin);
+                    $query = \Drupal::entityQuery('flagging')
+                        ->condition('flag_id','suivre_un_prono','=')
+                        ->condition('entity_id',$id_prono,'=');
+                    $ids_flaggin=$query->execute();
+                    $flaggins = $storage_flaggin->loadMultiple($ids_flaggin);
+                    //        kint($flags);
 
+                    foreach ($flaggins as $flaggin){
+                        echo 'flaggin';
+                        kint($flaggin);
+                        $id_better=$flaggin->getOwnerId();
 
+                        $storage_profile = \Drupal::entityTypeManager()->getStorage('profile');
+                        //kint($storage_profile);
+                        $query = \Drupal::entityQuery('profile')
+                            ->condition('uid',$id_better,'=');
+                        $id_profile=$query->execute();
+                        $profiles = $storage_profile->loadMultiple($id_profile);
+                        foreach ($profiles as $profile){
+                            echo 'profile';
+                            $bankroll_actuelle = $profile->get('field_bankroll_actuelle')->value;
+                            $bankroll_depart = $profile->get('field_bankroll_de_depart')->value;
+                            //$roi = $profile->get('field_roi')->value;
+                            //$reussite = $profile->get('field__de_reussite')->value;
+                            //$bet_annules = $profile->get('field_bets_annules')->value;
+                            $bet_valides = $profile->get('field_bets_valides')->value;
+                            $bet_non_valides = $profile->get('field_bets_non_valides')->value;
+                            $cote_moyenne = $profile->get('field_cote_moyenne')->value;
+                            $total_des_mises = $profile->get('field_total_des_mises')->value;
 
+                            /*Calcul des éléments de BK*/
+                            // "-$mise_prono" en attendant de substituer la mise de la BK sur le hook create_flag_prono
+                            $bankroll_actuelle = $bankroll_actuelle - $mise_prono;
+                            echo 'bk actuelle : '. $bankroll_actuelle . '</br>';
+                            // "+$mise_prono" en attendant de substituer la mise de la BK sur le hook create_flag_prono
+                            $total_des_mises = $total_des_mises + $mise_prono;
+                            echo 'total des mises : '.$total_des_mises . '</br>';
+                            $bet_non_valides = $bet_non_valides + 1;
+                            echo 'bets loose : '.$bet_non_valides . '</br>';
+                            $bet_total = $bet_valides + $bet_non_valides;
+                            echo 'bets total : '.$bet_total . '</br>';
+                            $tx_reussite = round(($bet_valides / $bet_total) *100,2);
+                            echo 'Taux de réussite : '. $tx_reussite . '%</br>';
+                            $cote_moyenne = ($cote_moyenne * ($bet_total-1) + $cote_prono) / $bet_total;
+                            echo 'cote moyenne : '. $cote_moyenne . '</br>' ;
+                            $roi = round((($bankroll_actuelle - $bankroll_depart) / $total_des_mises)*100,2);
+                            echo 'roi : '. $roi  . '%</br>';
 
+                            $profile->set('field_bankroll_actuelle',$bankroll_actuelle);
+                            $profile->set('field_bankroll_de_depart',$bankroll_depart);
+                            $profile->set('field_roi',$roi);
+                            $profile->set('field__de_reussite',$tx_reussite);
+                            //$profile->set('field_bets_annules');
+                            //$profile->set('field_bets_valides',$bet_valides);
+                            $profile->set('field_bets_non_valides',$bet_non_valides);
+                            $profile->set('field_cote_moyenne',$cote_moyenne);
+                            $profile->set('field_total_des_mises',$total_des_mises);
 
+                            $profile->save();
+                            kint($profile);
+                        }
+                        //kint($id_profile);
+                    }
+                    //kint($flaggins);
+                    break;
 
+                /*Le prono est annulé*/
+                case '31':  $entity->set('field_etat','Annulé');
+                    $storage_flaggin = \Drupal::entityTypeManager()->getStorage('flagging');
+                    //kint($storage_flaggin);
+                    $query = \Drupal::entityQuery('flagging')
+                        ->condition('flag_id','suivre_un_prono','=')
+                        ->condition('entity_id',$id_prono,'=');
+                    $ids_flaggin=$query->execute();
+                    $flaggins = $storage_flaggin->loadMultiple($ids_flaggin);
+                    //        kint($flags);
 
+                    foreach ($flaggins as $flaggin){
+                        echo 'flaggin';
+                        kint($flaggin);
+                        $id_better=$flaggin->getOwnerId();
 
+                        $storage_profile = \Drupal::entityTypeManager()->getStorage('profile');
+                        //kint($storage_profile);
+                        $query = \Drupal::entityQuery('profile')
+                            ->condition('uid',$id_better,'=');
+                        $id_profile=$query->execute();
+                        $profiles = $storage_profile->loadMultiple($id_profile);
+                        foreach ($profiles as $profile){
+                            echo 'profile';
+                            $bet_annules = $profile->get('field_bets_annules')->value;
 
+                            /*Calcul des éléments de BK*/
+                            // "+$mise_prono" lorsqu'on aura substituer la mise de la BK sur le hook create_flag_prono
+                            //$bankroll_actuelle = $bankroll_actuelle + $mise_prono;
+                            $bet_annules = $bet_annules + 1;
+
+                            $profile->set('field_bets_annules',$bet_annules);
+
+                            $profile->save();
+                            kint($profile);
+                        }
+                        //kint($id_profile);
+                    }
+                    //kint($flaggins);
                     break;
             }
         }
