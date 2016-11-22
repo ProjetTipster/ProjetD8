@@ -1,0 +1,25 @@
+uuid: 018305e5-17cf-43ca-b9ae-2ce583df9ec2
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_valeur_unite
+    - profile.type.follower
+id: profile.follower.field_valeur_unite
+field_name: field_valeur_unite
+entity_type: profile
+bundle: follower
+label: 'Valeur de l''unité'
+description: 'Montant de la mise par défaut (en % de la bankroll de départ)'
+required: true
+translatable: true
+default_value:
+  -
+    value: !!float 5
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: '%'
+field_type: float

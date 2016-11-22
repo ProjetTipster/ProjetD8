@@ -1,0 +1,14 @@
+uuid: f960da0c-bdba-4a20-b7aa-4f6c46bd2c25
+langcode: fr
+status: true
+dependencies:
+  config:
+    - user.role.follower
+  module:
+    - user
+id: user_remove_role_action.follower
+label: 'Retirer le rôle Follower aux utilisateurs sélectionnés'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: follower

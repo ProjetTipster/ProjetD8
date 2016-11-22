@@ -1,0 +1,32 @@
+uuid: c24ba580-886f-4640-8813-37ac076fa8b0
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_resultat
+    - node.type.pronostique
+    - taxonomy.vocabulary.etat
+  content:
+    - 'taxonomy_term:etat:8415bd59-4c9b-4ace-a284-c298c0e31c69'
+id: node.pronostique.field_resultat
+field_name: field_resultat
+entity_type: node
+bundle: pronostique
+label: Résultat
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    target_uuid: 8415bd59-4c9b-4ace-a284-c298c0e31c69
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      etat: etat
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

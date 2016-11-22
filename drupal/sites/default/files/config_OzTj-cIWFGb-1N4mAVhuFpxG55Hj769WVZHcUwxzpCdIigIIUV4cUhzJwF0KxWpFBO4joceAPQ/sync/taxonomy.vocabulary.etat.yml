@@ -1,0 +1,9 @@
+uuid: 9d86aa69-82db-4367-8f39-c2e5bb1bf960
+langcode: fr
+status: true
+dependencies: {  }
+name: Etat
+vid: etat
+description: ''
+hierarchy: 0
+weight: 0

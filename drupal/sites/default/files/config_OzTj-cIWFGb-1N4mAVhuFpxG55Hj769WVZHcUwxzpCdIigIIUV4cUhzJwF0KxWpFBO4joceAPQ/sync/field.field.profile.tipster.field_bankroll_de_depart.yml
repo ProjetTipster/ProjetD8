@@ -1,0 +1,25 @@
+uuid: 54bbb0dd-192c-4c86-8e61-9fc62b8eb41d
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_bankroll_de_depart
+    - profile.type.tipster
+_core:
+  default_config_hash: 034F3WsnLETR3JAXOU3Sifo3UmLleRHB0tlIy6cEG74
+id: profile.tipster.field_bankroll_de_depart
+field_name: field_bankroll_de_depart
+entity_type: profile
+bundle: tipster
+label: 'Bankroll de départ'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: €
+field_type: float

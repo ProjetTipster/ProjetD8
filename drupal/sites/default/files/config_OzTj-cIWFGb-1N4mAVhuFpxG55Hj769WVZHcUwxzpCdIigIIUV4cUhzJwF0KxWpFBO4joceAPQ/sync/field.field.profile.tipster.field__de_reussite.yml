@@ -1,0 +1,27 @@
+uuid: 1d5114ce-4e18-4623-bc87-c32c8f9d7b91
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field__de_reussite
+    - profile.type.tipster
+_core:
+  default_config_hash: XwoDfHrq6EZdBa49mP5MMKl0gq2azu2VTXASqB0vyto
+id: profile.tipster.field__de_reussite
+field_name: field__de_reussite
+entity_type: profile
+bundle: tipster
+label: 'Taux de réussite'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 100
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: '%'
+field_type: integer

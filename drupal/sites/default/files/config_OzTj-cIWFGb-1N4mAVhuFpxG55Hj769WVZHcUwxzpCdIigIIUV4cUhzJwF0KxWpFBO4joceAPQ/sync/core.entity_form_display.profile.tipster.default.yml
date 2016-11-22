@@ -1,0 +1,85 @@
+uuid: f1b1e687-319d-4a01-95fe-ebaac711d998
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.profile.tipster.field__de_reussite
+    - field.field.profile.tipster.field_bankroll_actuelle
+    - field.field.profile.tipster.field_bankroll_de_depart
+    - field.field.profile.tipster.field_bets_annules
+    - field.field.profile.tipster.field_bets_non_valides
+    - field.field.profile.tipster.field_bets_valides
+    - field.field.profile.tipster.field_cote_moyenne
+    - field.field.profile.tipster.field_roi
+    - field.field.profile.tipster.field_total_des_mises
+    - field.field.profile.tipster.field_valeur_unite
+    - profile.type.tipster
+_core:
+  default_config_hash: w1rEjsMWXDAlzrdx3TFybPGP9lxW_2v7BIox3GZarqk
+id: profile.tipster.default
+targetEntityType: profile
+bundle: tipster
+mode: default
+content:
+  field__de_reussite:
+    weight: 3
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_bankroll_actuelle:
+    type: number
+    weight: 1
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_bankroll_de_depart:
+    weight: 0
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_bets_annules:
+    weight: 7
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_bets_non_valides:
+    weight: 6
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_bets_valides:
+    weight: 5
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_cote_moyenne:
+    weight: 4
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_roi:
+    type: number
+    weight: 9
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_total_des_mises:
+    weight: 2
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_valeur_unite:
+    type: number
+    weight: 8
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  langcode: true

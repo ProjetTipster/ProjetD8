@@ -1,0 +1,25 @@
+uuid: 04c88ce9-ce19-4dce-bd2a-939390a516b7
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_bets_valides
+    - profile.type.follower
+_core:
+  default_config_hash: t6ulkmwHAAdlBJjEH5OCcHMCTPqjj8YIw1xu7nQ43Lk
+id: profile.follower.field_bets_valides
+field_name: field_bets_valides
+entity_type: profile
+bundle: follower
+label: 'Bets validés'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

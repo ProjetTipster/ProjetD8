@@ -1,0 +1,21 @@
+uuid: 2667f915-48e6-466c-bc2f-93cfeecc4404
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_etat
+    - node.type.pronostique
+id: node.pronostique.field_etat
+field_name: field_etat
+entity_type: node
+bundle: pronostique
+label: Etat
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 'En attente'
+default_value_callback: ''
+settings: {  }
+field_type: string

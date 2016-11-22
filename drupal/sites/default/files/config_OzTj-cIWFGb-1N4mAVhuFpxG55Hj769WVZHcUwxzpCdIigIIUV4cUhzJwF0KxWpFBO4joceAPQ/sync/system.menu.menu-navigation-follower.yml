@@ -1,0 +1,8 @@
+uuid: 3d80b3f9-11e5-4d3b-9c5a-381406adcba0
+langcode: fr
+status: true
+dependencies: {  }
+id: menu-navigation-follower
+label: 'Menu Navigation Follower'
+description: ''
+locked: false

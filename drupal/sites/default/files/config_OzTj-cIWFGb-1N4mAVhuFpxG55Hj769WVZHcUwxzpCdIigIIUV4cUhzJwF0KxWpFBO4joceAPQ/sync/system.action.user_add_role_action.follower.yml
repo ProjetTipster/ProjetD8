@@ -1,0 +1,14 @@
+uuid: 093a6341-f945-4716-86b6-47ea4115918a
+langcode: fr
+status: true
+dependencies:
+  config:
+    - user.role.follower
+  module:
+    - user
+id: user_add_role_action.follower
+label: 'Ajouter le rôle Follower aux utilisateurs sélectionnés'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: follower

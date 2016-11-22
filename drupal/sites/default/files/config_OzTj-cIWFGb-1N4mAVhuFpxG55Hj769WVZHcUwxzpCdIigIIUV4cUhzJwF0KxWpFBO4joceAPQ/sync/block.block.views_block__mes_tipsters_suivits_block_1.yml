@@ -1,0 +1,38 @@
+uuid: d524a5da-e34b-40e2-8241-bc7afe012461
+langcode: fr
+status: true
+dependencies:
+  config:
+    - views.view.mes_tipsters_suivits
+  module:
+    - system
+    - user
+    - views
+  theme:
+    - bootstrap
+id: views_block__mes_tipsters_suivits_block_1
+theme: bootstrap
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:mes_tipsters_suivits-block_1'
+settings:
+  id: 'views_block:mes_tipsters_suivits-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: '/user/*'
+    negate: false
+    context_mapping: {  }
+  user_role:
+    id: user_role
+    roles:
+      administrator: administrator
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

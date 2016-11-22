@@ -1,0 +1,25 @@
+uuid: ad7c4a06-7d87-4152-b985-f4eff848a8ab
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_bets_annules
+    - profile.type.follower
+_core:
+  default_config_hash: VKx97BtMXd90Bpf58MZ3vsM3ON0gyPGCLFMiUEpceKE
+id: profile.follower.field_bets_annules
+field_name: field_bets_annules
+entity_type: profile
+bundle: follower
+label: 'Bets annulés'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

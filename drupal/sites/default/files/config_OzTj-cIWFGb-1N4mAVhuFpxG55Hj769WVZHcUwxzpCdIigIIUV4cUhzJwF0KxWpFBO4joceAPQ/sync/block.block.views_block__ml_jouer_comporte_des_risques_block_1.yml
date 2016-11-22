@@ -1,0 +1,24 @@
+uuid: 7e0bea4f-0916-4c5b-be6d-2248a99a807c
+langcode: fr
+status: true
+dependencies:
+  config:
+    - views.view.ml_jouer_comporte_des_risques
+  module:
+    - views
+  theme:
+    - bootstrap
+id: views_block__ml_jouer_comporte_des_risques_block_1
+theme: bootstrap
+region: navigation
+weight: -16
+provider: null
+plugin: 'views_block:ml_jouer_comporte_des_risques-block_1'
+settings:
+  id: 'views_block:ml_jouer_comporte_des_risques-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility: {  }

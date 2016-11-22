@@ -1,0 +1,32 @@
+uuid: cc527501-a8b1-46a8-940e-8cb106c66b16
+langcode: fr
+status: true
+dependencies:
+  config:
+    - system.menu.menu-navigation-non-authent
+  module:
+    - system
+    - user
+  theme:
+    - bootstrap
+id: menunavigationnonauthentifie
+theme: bootstrap
+region: navigation_collapsible
+weight: 0
+provider: null
+plugin: 'system_menu_block:menu-navigation-non-authent'
+settings:
+  id: 'system_menu_block:menu-navigation-non-authent'
+  label: 'Menu Navigation non authentifié'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      anonymous: anonymous
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

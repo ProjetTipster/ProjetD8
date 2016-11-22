@@ -1,0 +1,14 @@
+uuid: ce1aa5fb-c6e1-4731-a6b9-d652c34bfbde
+langcode: fr
+status: true
+dependencies:
+  config:
+    - user.role.tipster
+  module:
+    - user
+id: user_add_role_action.tipster
+label: 'Ajouter le rôle Tipster aux utilisateurs sélectionnés'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: tipster

@@ -1,0 +1,22 @@
+uuid: 7824a963-f4aa-4c2a-b35d-bb3bfd88e5e0
+langcode: fr
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - bootsub
+_core:
+  default_config_hash: MhtNdV__HKRTab0ZPjkPNfYL4Ng4UPBucDLoC7Rg5Eo
+id: bootsub_help
+theme: bootsub
+region: help
+weight: -7
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

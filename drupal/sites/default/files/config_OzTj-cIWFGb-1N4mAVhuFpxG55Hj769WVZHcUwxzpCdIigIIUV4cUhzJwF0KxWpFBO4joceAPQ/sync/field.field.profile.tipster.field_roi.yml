@@ -1,0 +1,25 @@
+uuid: fc2de542-8b4f-485e-8127-e5f14932a050
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_roi
+    - profile.type.tipster
+id: profile.tipster.field_roi
+field_name: field_roi
+entity_type: profile
+bundle: tipster
+label: ROI
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: '%'
+field_type: float

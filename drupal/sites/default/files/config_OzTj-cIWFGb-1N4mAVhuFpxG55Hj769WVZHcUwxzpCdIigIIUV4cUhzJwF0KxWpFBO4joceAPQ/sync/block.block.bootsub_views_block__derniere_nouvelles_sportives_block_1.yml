@@ -1,0 +1,32 @@
+uuid: 8b34a9df-427f-4424-b7dc-cf2888056da7
+langcode: fr
+status: true
+dependencies:
+  config:
+    - views.view.derniere_nouvelles_sportives
+  module:
+    - ctools
+    - views
+  theme:
+    - bootsub
+id: bootsub_views_block__derniere_nouvelles_sportives_block_1
+theme: bootsub
+region: sidebar_first
+weight: -9
+provider: null
+plugin: 'views_block:derniere_nouvelles_sportives-block_1'
+settings:
+  id: 'views_block:derniere_nouvelles_sportives-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      article: article
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

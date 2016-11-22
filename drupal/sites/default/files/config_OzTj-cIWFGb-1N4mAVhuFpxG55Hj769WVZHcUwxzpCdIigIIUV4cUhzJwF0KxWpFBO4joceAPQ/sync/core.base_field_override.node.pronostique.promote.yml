@@ -1,0 +1,22 @@
+uuid: 586bf2fe-a160-42b5-85c8-49398fc7f8ee
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.pronostique
+id: node.pronostique.promote
+field_name: promote
+entity_type: node
+bundle: pronostique
+label: 'Promu en page d''accueil'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Activé
+  off_label: Désactivé
+field_type: boolean

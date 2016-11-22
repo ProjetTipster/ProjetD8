@@ -1,0 +1,22 @@
+uuid: 8dbeacd2-a1f7-4ea6-a58a-ce0b30af6175
+langcode: fr
+status: true
+dependencies: {  }
+id: tipster
+label: Tipster
+weight: 4
+is_admin: null
+permissions:
+  - 'view any follower profile'
+  - 'view own follower profile'
+  - 'view any tipster profile'
+  - 'view own tipster profile'
+  - 'flag suivre_ce_pronostique'
+  - 'unflag suivre_ce_pronostique'
+  - 'add own tipster profile'
+  - 'add own follower profile'
+  - 'edit own follower profile'
+  - 'edit own tipster profile'
+  - 'create analyse content'
+  - 'delete own analyse content'
+  - 'edit own analyse content'

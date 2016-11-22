@@ -1,0 +1,22 @@
+uuid: a1dcb902-d01a-46da-8d03-ba02ba479769
+langcode: fr
+status: true
+dependencies: {  }
+id: follower
+label: Follower
+weight: 3
+is_admin: null
+permissions:
+  - 'flag suivre_ce_pronostique'
+  - 'unflag suivre_ce_pronostique'
+  - 'flag suivre_ce_tipster'
+  - 'unflag suivre_ce_tipster'
+  - 'flag suivre_un_prono'
+  - 'unflag suivre_un_prono'
+  - 'add own follower profile'
+  - 'edit own follower profile'
+  - 'view any follower profile'
+  - 'view own follower profile'
+  - 'add own tipster profile'
+  - 'view any tipster profile'
+  - 'view own tipster profile'

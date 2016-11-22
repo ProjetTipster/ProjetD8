@@ -1,0 +1,8 @@
+uuid: bc70657a-4623-4e17-85bd-914eb7a4a7c5
+langcode: fr
+status: true
+dependencies: {  }
+id: menu-compte-tipster
+label: 'Menu Compte Tipster'
+description: ''
+locked: false

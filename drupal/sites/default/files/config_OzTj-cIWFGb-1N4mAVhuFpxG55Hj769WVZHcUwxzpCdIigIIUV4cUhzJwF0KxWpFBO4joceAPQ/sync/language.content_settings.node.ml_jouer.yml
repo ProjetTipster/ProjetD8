@@ -1,0 +1,11 @@
+uuid: 9e67d2d9-057a-496d-8a4d-60d9d0e9b346
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.ml_jouer
+id: node.ml_jouer
+target_entity_type_id: node
+target_bundle: ml_jouer
+default_langcode: site_default
+language_alterable: false

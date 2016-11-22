@@ -1,0 +1,31 @@
+uuid: 330bebf2-d930-434f-af0f-972eb68c0db8
+langcode: fr
+status: true
+dependencies:
+  module:
+    - node
+id: suivre_un_prono
+label: 'suivre un prono'
+bundles:
+  - pronostique
+entity_type: node
+global: false
+weight: 0
+flag_short: 'Suivre le prono!'
+flag_long: ''
+flag_message: ''
+unflag_short: 'Ne plus suivre ce prono!'
+unflag_long: ''
+unflag_message: ''
+unflag_denied_text: ''
+flag_type: 'entity:node'
+link_type: ajax_link
+flagTypeConfig:
+  show_in_links: {  }
+  show_as_field: true
+  show_on_form: false
+  show_contextual_link: false
+  access_author: others
+linkTypeConfig:
+  flag_confirmation: 'Flag this content?'
+  unflag_confirmation: 'Unflag this content?'

@@ -1,0 +1,18 @@
+uuid: 362efa99-8157-4372-9b06-f1742d29256f
+langcode: fr
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Pronostique
+type: pronostique
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

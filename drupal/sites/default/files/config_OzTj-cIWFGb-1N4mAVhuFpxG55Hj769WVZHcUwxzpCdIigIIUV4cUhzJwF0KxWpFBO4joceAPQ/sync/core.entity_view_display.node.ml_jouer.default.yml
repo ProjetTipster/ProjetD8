@@ -1,0 +1,28 @@
+uuid: 5801fd51-4598-446a-9253-fae3185d4924
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.node.ml_jouer.field_img_ml_jouer
+    - node.type.ml_jouer
+  module:
+    - image
+    - user
+id: node.ml_jouer.default
+targetEntityType: node
+bundle: ml_jouer
+mode: default
+content:
+  field_img_ml_jouer:
+    weight: 102
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+  links:
+    weight: 100
+hidden:
+  addtoany: true
+  langcode: true

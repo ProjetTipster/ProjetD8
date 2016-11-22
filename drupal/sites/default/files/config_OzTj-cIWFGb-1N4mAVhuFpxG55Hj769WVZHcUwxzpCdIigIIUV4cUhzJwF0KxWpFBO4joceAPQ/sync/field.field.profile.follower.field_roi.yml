@@ -1,0 +1,25 @@
+uuid: b9a2405d-5b9d-4142-aec5-e21487df0655
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_roi
+    - profile.type.follower
+id: profile.follower.field_roi
+field_name: field_roi
+entity_type: profile
+bundle: follower
+label: ROI
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: !!float 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: '%'
+field_type: float

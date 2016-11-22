@@ -1,0 +1,11 @@
+uuid: d55aea77-4c8d-423f-944b-486b1d9be82d
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.analyse
+id: node.analyse
+target_entity_type_id: node
+target_bundle: analyse
+default_langcode: site_default
+language_alterable: false

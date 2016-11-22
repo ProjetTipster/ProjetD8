@@ -1,0 +1,19 @@
+uuid: 6592db24-1e7b-4cc0-84e0-371f94bbe6db
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mon_prono
+    - node.type.pronostique
+id: node.pronostique.field_mon_prono
+field_name: field_mon_prono
+entity_type: node
+bundle: pronostique
+label: 'Mon prono'
+description: 'Explicit lyrics (+2,5 buts, PSG, Nul, etc)'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

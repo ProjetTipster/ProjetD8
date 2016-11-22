@@ -1,0 +1,32 @@
+uuid: 8475a069-a573-471f-85d1-06cdbb083f2c
+langcode: fr
+status: true
+dependencies:
+  config:
+    - system.menu.menu-compte-follower
+  module:
+    - system
+    - user
+  theme:
+    - bootstrap
+id: menucomptefollower
+theme: bootstrap
+region: navigation_collapsible
+weight: -8
+provider: null
+plugin: 'system_menu_block:menu-compte-follower'
+settings:
+  id: 'system_menu_block:menu-compte-follower'
+  label: 'Menu Compte Follower'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      follower: follower
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

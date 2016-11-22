@@ -1,0 +1,9 @@
+uuid: 1c17efb0-4d09-4efd-8a81-1baa20d377a1
+langcode: fr
+status: true
+dependencies: {  }
+name: Compétition
+vid: competition
+description: ''
+hierarchy: 0
+weight: 0

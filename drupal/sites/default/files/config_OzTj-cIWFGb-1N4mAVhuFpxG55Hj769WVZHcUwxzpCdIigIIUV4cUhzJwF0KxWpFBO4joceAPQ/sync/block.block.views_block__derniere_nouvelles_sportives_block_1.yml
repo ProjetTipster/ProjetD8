@@ -1,0 +1,38 @@
+uuid: 1477faa0-2590-47c8-84be-3c0a0821f395
+langcode: fr
+status: true
+dependencies:
+  config:
+    - views.view.derniere_nouvelles_sportives
+  module:
+    - node
+    - system
+    - views
+  theme:
+    - bootstrap
+id: views_block__derniere_nouvelles_sportives_block_1
+theme: bootstrap
+region: sidebar_second
+weight: -10
+provider: null
+plugin: 'views_block:derniere_nouvelles_sportives-block_1'
+settings:
+  id: 'views_block:derniere_nouvelles_sportives-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: "/tous-les-derniers-pronostics\r\n/user/*\r\n/tous-les-tipsters\r\n/mes-followers\r\n/mes-tipsters\r\n/les-pronostics-de-mes-tipsters\r\n/mes-pronostics"
+    negate: true
+    context_mapping: {  }
+  node_type:
+    id: node_type
+    bundles:
+      article: article
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

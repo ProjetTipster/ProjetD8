@@ -1,0 +1,25 @@
+uuid: 31545dee-63e0-4b53-afe1-8c53209e019a
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_bankroll_actuelle
+    - profile.type.follower
+_core:
+  default_config_hash: KfhfhkVjE1WJsrfF6iolRF2cMp0q-qHNq6uK-N2bxYw
+id: profile.follower.field_bankroll_actuelle
+field_name: field_bankroll_actuelle
+entity_type: profile
+bundle: follower
+label: 'Bankroll actuelle'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: €
+field_type: float

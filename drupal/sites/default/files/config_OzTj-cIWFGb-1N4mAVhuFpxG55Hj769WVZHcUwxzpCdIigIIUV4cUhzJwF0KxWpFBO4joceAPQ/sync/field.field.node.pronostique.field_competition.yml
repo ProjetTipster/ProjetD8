@@ -1,0 +1,28 @@
+uuid: 7b5872e7-1af6-4f3d-b54c-c266cb4b14f9
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_competition
+    - node.type.pronostique
+    - taxonomy.vocabulary.competition
+id: node.pronostique.field_competition
+field_name: field_competition
+entity_type: node
+bundle: pronostique
+label: Compétition
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      competition: competition
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

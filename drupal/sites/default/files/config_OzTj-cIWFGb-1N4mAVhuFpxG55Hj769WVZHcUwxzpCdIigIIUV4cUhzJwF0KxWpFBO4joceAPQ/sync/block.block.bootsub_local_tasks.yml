@@ -1,0 +1,22 @@
+uuid: ef0d6b09-32a0-4b07-b8ad-59710e5a3479
+langcode: fr
+status: true
+dependencies:
+  theme:
+    - bootsub
+_core:
+  default_config_hash: qHdtze2DZ2mFfaJadxjZz6epm92_SN9SAFY4yJGl8Fo
+id: bootsub_local_tasks
+theme: bootsub
+region: header
+weight: -3
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Tabs
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: true
+visibility: {  }

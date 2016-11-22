@@ -1,0 +1,38 @@
+uuid: 8b0b46ed-831a-4455-9c64-4b137750b7d3
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_image_analyse
+    - node.type.analyse
+  module:
+    - image
+id: node.analyse.field_image_analyse
+field_name: field_image_analyse
+entity_type: node
+bundle: analyse
+label: Image
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg'
+  max_filesize: ''
+  max_resolution: ''
+  min_resolution: ''
+  alt_field: true
+  alt_field_required: false
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: null
+    height: null
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: image

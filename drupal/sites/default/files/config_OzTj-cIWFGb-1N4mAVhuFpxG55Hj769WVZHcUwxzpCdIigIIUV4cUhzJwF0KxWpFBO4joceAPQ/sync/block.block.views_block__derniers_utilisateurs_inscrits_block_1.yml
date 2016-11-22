@@ -1,0 +1,41 @@
+uuid: 80ec3fcf-578c-4604-a850-71ce38eda393
+langcode: fr
+status: true
+dependencies:
+  config:
+    - views.view.derniers_utilisateurs_inscrits
+  module:
+    - system
+    - user
+    - views
+  theme:
+    - bootstrap
+id: views_block__derniers_utilisateurs_inscrits_block_1
+theme: bootstrap
+region: sidebar_first
+weight: -10
+provider: null
+plugin: 'views_block:derniers_utilisateurs_inscrits-block_1'
+settings:
+  id: 'views_block:derniers_utilisateurs_inscrits-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: "/user/*\r\n/tous-les-derniers-pronostics\r\n/tous-les-tipsters\r\n/mes-followers\r\n/mes-tipsters\r\n/les-pronostics-de-mes-tipsters\r\n/mes-pronostics"
+    negate: true
+    context_mapping: {  }
+  user_role:
+    id: user_role
+    roles:
+      authenticated: authenticated
+      administrator: administrator
+      follower: follower
+      tipster: tipster
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

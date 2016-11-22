@@ -1,0 +1,53 @@
+uuid: 4ff6404c-ebcf-45e5-861e-0e76b7cb634d
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.node.analyse.body
+    - field.field.node.analyse.field_date
+    - field.field.node.analyse.field_evenement_sportif
+    - field.field.node.analyse.field_image_analyse
+    - node.type.analyse
+  module:
+    - datetime
+    - image
+    - text
+    - user
+id: node.analyse.default
+targetEntityType: node
+bundle: analyse
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+  field_date:
+    weight: 4
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+  field_evenement_sportif:
+    weight: 5
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_image_analyse:
+    weight: 2
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+hidden:
+  addtoany: true
+  langcode: true
+  links: true

@@ -1,0 +1,8 @@
+uuid: a5630d48-2105-4c2c-bf00-f8dd111f53a6
+langcode: fr
+status: true
+dependencies: {  }
+id: menu-navigation-tipster
+label: 'Menu Navigation Tipster'
+description: ''
+locked: false

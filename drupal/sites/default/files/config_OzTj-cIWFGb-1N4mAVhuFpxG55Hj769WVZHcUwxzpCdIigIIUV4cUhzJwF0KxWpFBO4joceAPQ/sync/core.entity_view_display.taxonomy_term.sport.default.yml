@@ -1,0 +1,32 @@
+uuid: 1cd67e7b-1698-4db1-8f2f-2480203c42b5
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.sport.field_picto_ball
+    - image.style.thumbnail
+    - taxonomy.vocabulary.sport
+  module:
+    - image
+    - text
+id: taxonomy_term.sport.default
+targetEntityType: taxonomy_term
+bundle: sport
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  field_picto_ball:
+    weight: 1
+    label: hidden
+    settings:
+      image_style: thumbnail
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+hidden:
+  langcode: true

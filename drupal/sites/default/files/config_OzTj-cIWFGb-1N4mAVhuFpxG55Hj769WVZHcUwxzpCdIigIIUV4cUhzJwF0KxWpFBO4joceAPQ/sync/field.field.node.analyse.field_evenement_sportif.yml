@@ -1,0 +1,19 @@
+uuid: 18cbb06d-74c5-452d-813b-6e588cd6f37d
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_evenement_sportif
+    - node.type.analyse
+id: node.analyse.field_evenement_sportif
+field_name: field_evenement_sportif
+entity_type: node
+bundle: analyse
+label: 'Evénement sportif'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

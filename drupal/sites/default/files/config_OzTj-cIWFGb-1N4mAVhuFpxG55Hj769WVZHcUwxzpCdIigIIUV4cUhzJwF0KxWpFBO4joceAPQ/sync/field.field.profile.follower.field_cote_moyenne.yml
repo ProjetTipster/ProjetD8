@@ -1,0 +1,25 @@
+uuid: 057e607c-bdab-48b7-81a8-0600fa5a2e30
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_cote_moyenne
+    - profile.type.follower
+_core:
+  default_config_hash: lIwMJAyNZh1iKU2fUKRNRnoVKGSXpMLCbaDbY5ZUJQE
+id: profile.follower.field_cote_moyenne
+field_name: field_cote_moyenne
+entity_type: profile
+bundle: follower
+label: 'Côte moyenne'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

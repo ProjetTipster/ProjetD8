@@ -1,0 +1,32 @@
+uuid: 19d112a7-c5ed-4bb0-bc5b-e72caa3d0d27
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_type
+    - node.type.pronostique
+    - taxonomy.vocabulary.type
+  content:
+    - 'taxonomy_term:type:d251e20f-2c65-48e2-83f7-2ecdc8897574'
+id: node.pronostique.field_type
+field_name: field_type
+entity_type: node
+bundle: pronostique
+label: Type
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    target_uuid: d251e20f-2c65-48e2-83f7-2ecdc8897574
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      type: type
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

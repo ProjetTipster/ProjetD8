@@ -1,0 +1,20 @@
+uuid: d7a39e9a-f34c-490f-8b73-216dc0d3c8da
+langcode: fr
+status: true
+dependencies:
+  theme:
+    - bootsub
+_core:
+  default_config_hash: ffxthelqQF8xcr4GTG4HlaNNsluiHftN0pujmQpW0bQ
+id: bootsub_local_actions
+theme: bootsub
+region: header
+weight: -5
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

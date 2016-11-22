@@ -1,0 +1,24 @@
+uuid: 93a0366d-7211-41bd-a9c2-0d9ff5830074
+langcode: fr
+status: true
+dependencies:
+  module:
+    - simplenews
+  theme:
+    - bootsub
+id: bootsub_simplenewssubscription
+theme: bootsub
+region: sidebar_first
+weight: -8
+provider: null
+plugin: simplenews_subscription_block
+settings:
+  id: simplenews_subscription_block
+  label: 'Simplenews subscription'
+  provider: simplenews
+  label_display: visible
+  newsletters:
+    lettre_d_information_tipsterone: lettre_d_information_tipsterone
+  message: 'Stay informed - subscribe to our newsletter.'
+  unique_id: 237b5e9a-3018-4829-a76e-37865cce67b5
+visibility: {  }

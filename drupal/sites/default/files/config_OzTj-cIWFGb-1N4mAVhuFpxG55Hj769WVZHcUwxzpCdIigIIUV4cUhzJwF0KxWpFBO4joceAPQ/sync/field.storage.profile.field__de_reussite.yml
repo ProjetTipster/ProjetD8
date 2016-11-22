@@ -1,0 +1,22 @@
+uuid: 68237fb8-f22f-4376-8342-df0a023d2d2d
+langcode: fr
+status: true
+dependencies:
+  module:
+    - profile
+_core:
+  default_config_hash: PRQec-dgkSqXdKeq5QsjzSkuTBXELPZvj8tq91icHRg
+id: profile.field__de_reussite
+field_name: field__de_reussite
+entity_type: profile
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

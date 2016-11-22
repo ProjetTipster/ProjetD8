@@ -1,0 +1,22 @@
+uuid: 8f7286a3-a0f5-4d8e-81aa-d32174ce56ba
+langcode: fr
+status: true
+dependencies:
+  module:
+    - profile
+_core:
+  default_config_hash: byVhv6uSPvBQTIDplpXvh4bSVWAm2solpc77o_FBPyw
+id: profile.field_bets_non_valides
+field_name: field_bets_non_valides
+entity_type: profile
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

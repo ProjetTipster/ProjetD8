@@ -1,0 +1,103 @@
+uuid: 7ed62452-8e16-45c1-8263-baf4126f8fb2
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.node.pronostique.field_analyse
+    - field.field.node.pronostique.field_competition
+    - field.field.node.pronostique.field_cote
+    - field.field.node.pronostique.field_date_et_heure
+    - field.field.node.pronostique.field_etat
+    - field.field.node.pronostique.field_mon_prono
+    - field.field.node.pronostique.field_opposant_1
+    - field.field.node.pronostique.field_opposant_deux
+    - field.field.node.pronostique.field_resultat
+    - field.field.node.pronostique.field_sport
+    - field.field.node.pronostique.field_type
+    - node.type.pronostique
+id: node.pronostique.default
+targetEntityType: node
+bundle: pronostique
+mode: default
+content:
+  field_analyse:
+    weight: 9
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+  field_competition:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+  field_cote:
+    weight: 8
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_date_et_heure:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_timestamp
+  field_etat:
+    weight: 11
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_mon_prono:
+    type: string_textfield
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_opposant_1:
+    weight: 3
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_opposant_deux:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_resultat:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+  field_sport:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+  field_type:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+  title:
+    type: string_textfield
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  langcode: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true

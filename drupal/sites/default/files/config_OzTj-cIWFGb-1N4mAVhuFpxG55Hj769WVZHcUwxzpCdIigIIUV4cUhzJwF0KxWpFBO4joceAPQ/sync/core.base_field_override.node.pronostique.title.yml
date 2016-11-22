@@ -1,0 +1,18 @@
+uuid: cf30f8a1-14b7-41b0-a2f1-e76d8cbcc1ff
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.pronostique
+id: node.pronostique.title
+field_name: title
+entity_type: node
+bundle: pronostique
+label: Titre
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

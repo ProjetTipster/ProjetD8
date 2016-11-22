@@ -1,0 +1,22 @@
+uuid: 876537fe-9ecf-4b2b-b9e8-a35ec5cf8b48
+langcode: fr
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - bootsub
+_core:
+  default_config_hash: fNNLN48MSGSLiqwIFywCuxH2Dk_IxDbaP0kYhg_IPrg
+id: bootsub_content
+theme: bootsub
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,16 @@
+uuid: 6d7707f2-32cc-47ec-a4bc-79bff065ef6c
+langcode: fr
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: WdtpY0lPsrMHOj5YWidhulvnfQvBafyeb513kR0HO68
+id: tipster
+label: Tipster
+registration: false
+multiple: false
+roles:
+  tipster: tipster
+  authenticated: '0'
+  administrator: '0'
+  follower: '0'
+weight: 0

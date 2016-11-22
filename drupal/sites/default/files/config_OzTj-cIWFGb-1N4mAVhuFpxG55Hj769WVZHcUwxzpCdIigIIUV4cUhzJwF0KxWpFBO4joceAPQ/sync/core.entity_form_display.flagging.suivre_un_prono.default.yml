@@ -1,0 +1,12 @@
+uuid: eec81edb-3c9f-47bc-ab2a-32bd24d28a3e
+langcode: fr
+status: true
+dependencies:
+  config:
+    - flag.flag.suivre_un_prono
+id: flagging.suivre_un_prono.default
+targetEntityType: flagging
+bundle: suivre_un_prono
+mode: default
+content: {  }
+hidden: {  }

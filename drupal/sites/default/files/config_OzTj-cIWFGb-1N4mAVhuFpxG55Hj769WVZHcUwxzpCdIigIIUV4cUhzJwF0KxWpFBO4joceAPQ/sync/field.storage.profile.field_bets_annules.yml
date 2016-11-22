@@ -1,0 +1,22 @@
+uuid: b266a83a-75d5-4fa5-a1c3-9472ebf5c1c6
+langcode: fr
+status: true
+dependencies:
+  module:
+    - profile
+_core:
+  default_config_hash: 6iVFmDPp1CToyMhKMD9ul3MKzEA1EARrDpVccOtgZOk
+id: profile.field_bets_annules
+field_name: field_bets_annules
+entity_type: profile
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

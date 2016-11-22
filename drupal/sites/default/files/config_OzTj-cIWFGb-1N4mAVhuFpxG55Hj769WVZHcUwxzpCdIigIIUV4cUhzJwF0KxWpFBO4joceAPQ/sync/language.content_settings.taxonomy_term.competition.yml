@@ -1,0 +1,11 @@
+uuid: 1821e004-08d3-4e67-bec1-06935d0a721c
+langcode: fr
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.competition
+id: taxonomy_term.competition
+target_entity_type_id: taxonomy_term
+target_bundle: competition
+default_langcode: site_default
+language_alterable: false

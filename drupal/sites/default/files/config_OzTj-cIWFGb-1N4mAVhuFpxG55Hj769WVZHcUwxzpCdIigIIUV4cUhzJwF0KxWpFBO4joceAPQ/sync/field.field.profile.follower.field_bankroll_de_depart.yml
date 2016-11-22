@@ -1,0 +1,25 @@
+uuid: f541f5aa-dcf1-46c2-adba-b0c16ef0fcdc
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_bankroll_de_depart
+    - profile.type.follower
+_core:
+  default_config_hash: oZTNuHDnQpRjevr8EQumV_L4JYg8dC0m_hM5zmMYHX4
+id: profile.follower.field_bankroll_de_depart
+field_name: field_bankroll_de_depart
+entity_type: profile
+bundle: follower
+label: 'Bankroll de départ'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: €
+field_type: float

@@ -1,0 +1,21 @@
+uuid: 1fd01aeb-c4e5-499d-a704-00b2d3591ce5
+langcode: fr
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ml_jouer.field_img_ml_jouer
+    - node.type.ml_jouer
+  module:
+    - user
+id: node.ml_jouer.teaser
+targetEntityType: node
+bundle: ml_jouer
+mode: teaser
+content:
+  links:
+    weight: 100
+hidden:
+  addtoany: true
+  field_img_ml_jouer: true
+  langcode: true

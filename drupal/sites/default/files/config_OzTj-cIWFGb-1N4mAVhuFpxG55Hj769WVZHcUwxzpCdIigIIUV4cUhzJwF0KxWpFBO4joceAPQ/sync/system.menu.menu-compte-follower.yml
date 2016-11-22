@@ -1,0 +1,8 @@
+uuid: 70fa8de1-d931-4e90-bad7-bd47feedb2b8
+langcode: fr
+status: true
+dependencies: {  }
+id: menu-compte-follower
+label: 'Menu Compte Follower'
+description: ''
+locked: false

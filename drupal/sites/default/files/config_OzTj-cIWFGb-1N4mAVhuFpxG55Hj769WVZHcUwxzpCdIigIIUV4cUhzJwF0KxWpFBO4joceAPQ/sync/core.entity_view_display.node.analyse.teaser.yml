@@ -1,0 +1,31 @@
+uuid: 7cc2594c-36dd-4080-a23a-095544d17ac2
+langcode: fr
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.analyse.body
+    - field.field.node.analyse.field_image_analyse
+    - node.type.analyse
+  module:
+    - text
+    - user
+id: node.analyse.teaser
+targetEntityType: node
+bundle: analyse
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 0
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+hidden:
+  addtoany: true
+  field_date: true
+  field_evenement_sportif: true
+  field_image_analyse: true
+  langcode: true
+  links: true

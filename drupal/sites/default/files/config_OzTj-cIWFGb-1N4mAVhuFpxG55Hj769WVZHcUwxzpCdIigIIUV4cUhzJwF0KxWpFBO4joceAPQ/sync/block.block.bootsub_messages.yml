@@ -1,0 +1,22 @@
+uuid: 24751237-8e5f-449a-95aa-0ea55c1da7e8
+langcode: fr
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - bootsub
+_core:
+  default_config_hash: 9RnnTUBcn0WRWXfrGOnId2H0Q31uQUeu_F5TnDxl2yg
+id: bootsub_messages
+theme: bootsub
+region: header
+weight: -4
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

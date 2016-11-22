@@ -1,0 +1,30 @@
+uuid: 0c4c516a-f786-492e-81a9-ad812795f929
+langcode: fr
+status: true
+dependencies:
+  module:
+    - simplenews
+    - system
+  theme:
+    - bootstrap
+id: simplenewssubscription
+theme: bootstrap
+region: sidebar_second
+weight: -9
+provider: null
+plugin: simplenews_subscription_block
+settings:
+  id: simplenews_subscription_block
+  label: Newsletter
+  provider: simplenews
+  label_display: visible
+  newsletters:
+    lettre_d_information_tipsterone: lettre_d_information_tipsterone
+  message: 'Restez informé des dernières actualités '
+  unique_id: 8f997bb5-8a50-49b4-8e88-37ac02d54cb6
+visibility:
+  request_path:
+    id: request_path
+    pages: "/tous-les-derniers-pronostics\r\n/user/*\r\n/tous-les-tipsters\r\n/mes-followers\r\n/mes-tipsters\r\n/mes-pronostics\r\n/les-pronostics-de-mes-tipsters"
+    negate: true
+    context_mapping: {  }

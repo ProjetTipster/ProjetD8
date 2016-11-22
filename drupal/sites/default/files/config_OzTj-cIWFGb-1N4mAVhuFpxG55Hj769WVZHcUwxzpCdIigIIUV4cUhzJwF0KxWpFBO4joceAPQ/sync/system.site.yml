@@ -1,0 +1,15 @@
+uuid: 363d3b07-a551-4295-97f1-04f8cd35e553
+name: 'La référence pour les Tipsters'
+mail: projettipster@gmail.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+langcode: fr
+default_langcode: fr
+_core:
+  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI
+mail_notification: ''

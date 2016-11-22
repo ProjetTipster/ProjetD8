@@ -1,0 +1,40 @@
+uuid: c8ad06af-56b0-45fb-a2eb-f34f009d953f
+langcode: fr
+status: false
+dependencies:
+  config:
+    - views.view.infos_follower
+  module:
+    - system
+    - user
+    - views
+  theme:
+    - bootstrap
+id: views_block__infos_follower_block_1
+theme: bootstrap
+region: '-1'
+weight: -9
+provider: null
+plugin: 'views_block:infos_follower-block_1'
+settings:
+  id: 'views_block:infos_follower-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: '/user/*'
+    negate: false
+    context_mapping: {  }
+  user_role:
+    id: user_role
+    roles:
+      administrator: administrator
+      follower: follower
+      tipster: tipster
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

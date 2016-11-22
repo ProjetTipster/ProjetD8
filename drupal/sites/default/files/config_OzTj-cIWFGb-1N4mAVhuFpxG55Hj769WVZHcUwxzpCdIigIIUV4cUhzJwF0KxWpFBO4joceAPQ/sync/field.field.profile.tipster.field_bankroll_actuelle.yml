@@ -1,0 +1,25 @@
+uuid: 771b40fc-9ed0-4ef7-8230-1a68d96070ba
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_bankroll_actuelle
+    - profile.type.tipster
+_core:
+  default_config_hash: wgBoey1Oed_DehX2GTDIfBnwiCTJoldw2CjYT-TuabY
+id: profile.tipster.field_bankroll_actuelle
+field_name: field_bankroll_actuelle
+entity_type: profile
+bundle: tipster
+label: 'Bankroll actuelle'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: €
+field_type: float

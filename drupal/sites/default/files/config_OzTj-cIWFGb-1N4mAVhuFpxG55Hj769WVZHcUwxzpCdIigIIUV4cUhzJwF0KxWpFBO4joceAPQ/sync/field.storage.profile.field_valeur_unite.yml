@@ -1,0 +1,18 @@
+uuid: 13ed1224-a62b-4a8a-b015-f9808782141b
+langcode: fr
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.field_valeur_unite
+field_name: field_valeur_unite
+entity_type: profile
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

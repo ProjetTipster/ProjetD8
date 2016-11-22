@@ -1,0 +1,17 @@
+uuid: 4b77fcc5-07f2-4183-b40c-615dcf385d48
+langcode: fr
+status: true
+dependencies: {  }
+name: 'Lettre d''information - TipsterOne'
+id: lettre_d_information_tipsterone
+description: 'Lettre d''information - TipsterOne'
+format: html
+priority: 3
+receipt: true
+from_name: SiteTipster
+subject: '[[simplenews-newsletter:name]] [node:title]'
+from_address: projettipster@gmail.com
+hyperlinks: true
+new_account: 'on'
+opt_inout: double
+weight: 0

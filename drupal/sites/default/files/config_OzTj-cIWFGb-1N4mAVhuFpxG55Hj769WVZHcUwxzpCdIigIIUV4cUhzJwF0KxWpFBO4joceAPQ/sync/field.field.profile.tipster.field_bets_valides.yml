@@ -1,0 +1,27 @@
+uuid: 7248c3c3-0e0a-4443-8167-dd368d8711dc
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_bets_valides
+    - profile.type.tipster
+_core:
+  default_config_hash: BP5f4FJIbIYYMBErc1a4Kue1rkGMLGqlgEyBzbdYjgY
+id: profile.tipster.field_bets_valides
+field_name: field_bets_valides
+entity_type: profile
+bundle: tipster
+label: 'Bets validés'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

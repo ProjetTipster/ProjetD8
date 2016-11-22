@@ -1,0 +1,72 @@
+uuid: ddfcafc6-d150-4643-8a82-e802f7e97282
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.node.analyse.body
+    - field.field.node.analyse.field_date
+    - field.field.node.analyse.field_evenement_sportif
+    - field.field.node.analyse.field_image_analyse
+    - image.style.thumbnail
+    - node.type.analyse
+  module:
+    - datetime
+    - image
+    - text
+id: node.analyse.default
+targetEntityType: node
+bundle: analyse
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 4
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+  created:
+    type: datetime_timestamp
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+  field_date:
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+  field_evenement_sportif:
+    weight: 27
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_image_analyse:
+    weight: 3
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+  title:
+    type: string_textfield
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  langcode: true
+  path: true
+  promote: true
+  sticky: true

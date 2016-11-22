@@ -1,0 +1,27 @@
+uuid: dbf7b068-2cda-4eea-912a-77df6cd16e1c
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_cote_moyenne
+    - profile.type.tipster
+_core:
+  default_config_hash: DyjGyHeBW12h4JFevKXjK583_2qlqAQf7FC6c9nBHaw
+id: profile.tipster.field_cote_moyenne
+field_name: field_cote_moyenne
+entity_type: profile
+bundle: tipster
+label: 'Côte moyenne'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 1
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

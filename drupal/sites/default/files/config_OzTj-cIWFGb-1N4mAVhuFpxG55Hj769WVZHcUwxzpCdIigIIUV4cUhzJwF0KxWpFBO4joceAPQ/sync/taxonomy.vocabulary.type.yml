@@ -1,0 +1,9 @@
+uuid: d2d3cc1a-95c5-4302-be14-af2a595c7bdf
+langcode: fr
+status: true
+dependencies: {  }
+name: Type
+vid: type
+description: ''
+hierarchy: 0
+weight: 0

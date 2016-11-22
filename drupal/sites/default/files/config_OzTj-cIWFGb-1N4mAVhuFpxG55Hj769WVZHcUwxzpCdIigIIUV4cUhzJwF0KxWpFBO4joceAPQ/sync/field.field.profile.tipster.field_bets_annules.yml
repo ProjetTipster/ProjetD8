@@ -1,0 +1,27 @@
+uuid: 10353a8b-b689-4ad4-9a6f-605581217dd6
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_bets_annules
+    - profile.type.tipster
+_core:
+  default_config_hash: UCT5EGZv8Cr2tXN7W4qOfXgiZRHOzkAVnhyZASqRFzE
+id: profile.tipster.field_bets_annules
+field_name: field_bets_annules
+entity_type: profile
+bundle: tipster
+label: 'Bets annulés'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

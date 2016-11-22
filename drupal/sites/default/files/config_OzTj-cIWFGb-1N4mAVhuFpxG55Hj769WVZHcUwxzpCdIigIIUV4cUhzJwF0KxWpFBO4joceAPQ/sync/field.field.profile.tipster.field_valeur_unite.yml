@@ -1,0 +1,25 @@
+uuid: d7611f5e-8f3d-422f-bc53-cc6d0ad214a6
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_valeur_unite
+    - profile.type.tipster
+id: profile.tipster.field_valeur_unite
+field_name: field_valeur_unite
+entity_type: profile
+bundle: tipster
+label: 'Valeur de l''unité'
+description: 'Montant de la mise par défaut (en % de la bankroll de départ)'
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 5
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: '%'
+field_type: float

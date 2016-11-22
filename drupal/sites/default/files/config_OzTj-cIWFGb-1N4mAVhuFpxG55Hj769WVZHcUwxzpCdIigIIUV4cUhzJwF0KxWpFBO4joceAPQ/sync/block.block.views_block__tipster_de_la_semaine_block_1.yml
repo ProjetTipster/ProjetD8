@@ -1,0 +1,42 @@
+uuid: 206e280e-98e3-461e-bee4-38b367f6c57b
+langcode: fr
+status: true
+dependencies:
+  config:
+    - views.view.tipster_de_la_semaine
+  module:
+    - system
+    - user
+    - views
+  theme:
+    - bootstrap
+id: views_block__tipster_de_la_semaine_block_1
+theme: bootstrap
+region: sidebar_second
+weight: -11
+provider: null
+plugin: 'views_block:tipster_de_la_semaine-block_1'
+settings:
+  id: 'views_block:tipster_de_la_semaine-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: "/user/*\r\n/tous-les-derniers-pronostics\r\n/tous-les-tipsters\r\n/mes-followers\r\n/mes-tipsters\r\n/les-pronostics-de-mes-tipsters\r\n/mes-pronostics"
+    negate: true
+    context_mapping: {  }
+  user_role:
+    id: user_role
+    roles:
+      anonymous: anonymous
+      authenticated: authenticated
+      administrator: administrator
+      follower: follower
+      tipster: tipster
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

@@ -1,0 +1,32 @@
+uuid: dfadad8c-1d41-4004-8368-808370f9c006
+langcode: fr
+status: true
+dependencies:
+  config:
+    - system.menu.menu-compte-tipster
+  module:
+    - system
+    - user
+  theme:
+    - bootstrap
+id: menucomptetipster
+theme: bootstrap
+region: navigation_collapsible
+weight: -10
+provider: null
+plugin: 'system_menu_block:menu-compte-tipster'
+settings:
+  id: 'system_menu_block:menu-compte-tipster'
+  label: 'Menu Compte Tipster'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      tipster: tipster
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

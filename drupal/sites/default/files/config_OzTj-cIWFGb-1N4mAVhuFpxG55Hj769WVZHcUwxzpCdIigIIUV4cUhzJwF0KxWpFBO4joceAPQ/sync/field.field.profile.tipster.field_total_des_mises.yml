@@ -1,0 +1,27 @@
+uuid: f22cee5a-b5bb-43fc-b906-1cfde6ab0ad2
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_total_des_mises
+    - profile.type.tipster
+_core:
+  default_config_hash: 3BM2Nv-09F23W0Vj1h9CFTgPkI2RUizGGNqDWAMHzlc
+id: profile.tipster.field_total_des_mises
+field_name: field_total_des_mises
+entity_type: profile
+bundle: tipster
+label: 'Total des mises'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: €
+field_type: float

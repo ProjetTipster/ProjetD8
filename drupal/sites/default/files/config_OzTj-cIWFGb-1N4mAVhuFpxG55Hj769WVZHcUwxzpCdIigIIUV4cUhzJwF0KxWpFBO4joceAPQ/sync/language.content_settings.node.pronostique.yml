@@ -1,0 +1,11 @@
+uuid: 852c9f93-438e-4351-9ae0-a45bf6b35c03
+langcode: fr
+status: true
+dependencies:
+  config:
+    - node.type.pronostique
+id: node.pronostique
+target_entity_type_id: node
+target_bundle: pronostique
+default_langcode: site_default
+language_alterable: false

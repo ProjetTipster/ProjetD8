@@ -1,0 +1,112 @@
+uuid: b4d87d5f-57e2-4646-9ee9-789570c7fcbf
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.node.pronostique.field_analyse
+    - field.field.node.pronostique.field_competition
+    - field.field.node.pronostique.field_cote
+    - field.field.node.pronostique.field_date_et_heure
+    - field.field.node.pronostique.field_etat
+    - field.field.node.pronostique.field_mon_prono
+    - field.field.node.pronostique.field_opposant_1
+    - field.field.node.pronostique.field_opposant_deux
+    - field.field.node.pronostique.field_resultat
+    - field.field.node.pronostique.field_sport
+    - field.field.node.pronostique.field_type
+    - node.type.pronostique
+  module:
+    - user
+id: node.pronostique.default
+targetEntityType: node
+bundle: pronostique
+mode: default
+content:
+  field_analyse:
+    weight: 10
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_competition:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_cote:
+    weight: 7
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+  field_date_et_heure:
+    weight: 4
+    label: above
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+    third_party_settings: {  }
+    type: timestamp
+  field_mon_prono:
+    type: string
+    weight: 6
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_opposant_1:
+    weight: 2
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_opposant_deux:
+    weight: 3
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_resultat:
+    weight: 8
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_sport:
+    weight: 0
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_type:
+    weight: 5
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  flag_suivre_ce_pronostique:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  flag_suivre_un_prono:
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  addtoany: true
+  field_etat: true
+  langcode: true
+  links: true

@@ -1,0 +1,25 @@
+uuid: 724831c9-1435-432c-b5e5-bf2f1cc39208
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_total_des_mises
+    - profile.type.follower
+_core:
+  default_config_hash: G_4q0nvRCdy7hjEeKB1_75Vm8kgNw7Ydl7-WvHaOnTw
+id: profile.follower.field_total_des_mises
+field_name: field_total_des_mises
+entity_type: profile
+bundle: follower
+label: 'Total des mises'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: €
+field_type: float

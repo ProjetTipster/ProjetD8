@@ -1,0 +1,37 @@
+uuid: e51d93e0-7d76-4f6f-b785-89b672aec0b3
+langcode: fr
+status: true
+dependencies:
+  module:
+    - addtoany
+    - system
+    - user
+  theme:
+    - bootstrap
+id: addtoanybuttons
+theme: bootstrap
+region: content
+weight: -9
+provider: null
+plugin: addtoany_block
+settings:
+  id: addtoany_block
+  label: 'AddToAny buttons'
+  provider: addtoany
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: '/user/*'
+    negate: false
+    context_mapping: {  }
+  user_role:
+    id: user_role
+    roles:
+      authenticated: authenticated
+      administrator: administrator
+      follower: follower
+      tipster: tipster
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

@@ -1,0 +1,14 @@
+uuid: 4e756351-843b-4ca1-9d7e-9cb39e005535
+langcode: fr
+status: true
+dependencies:
+  config:
+    - user.role.tipster
+  module:
+    - user
+id: user_remove_role_action.tipster
+label: 'Retirer le rôle Tipster aux utilisateurs sélectionnés'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: tipster

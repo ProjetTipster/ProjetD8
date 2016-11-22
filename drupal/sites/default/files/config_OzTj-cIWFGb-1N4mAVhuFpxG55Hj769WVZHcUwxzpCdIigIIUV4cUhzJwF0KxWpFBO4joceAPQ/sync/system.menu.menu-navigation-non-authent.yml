@@ -1,0 +1,8 @@
+uuid: a7cb10ac-29b6-4540-8181-eaceb98aae96
+langcode: fr
+status: true
+dependencies: {  }
+id: menu-navigation-non-authent
+label: 'Menu Navigation non authentifié'
+description: ''
+locked: false

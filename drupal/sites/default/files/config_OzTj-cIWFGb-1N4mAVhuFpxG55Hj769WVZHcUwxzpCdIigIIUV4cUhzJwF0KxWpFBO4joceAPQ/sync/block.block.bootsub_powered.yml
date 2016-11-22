@@ -1,0 +1,22 @@
+uuid: 4ccffc6e-142b-45a9-8c15-b605c9d6c3d8
+langcode: fr
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - bootsub
+_core:
+  default_config_hash: iggZSiUKz4mYP1YPJ8SsUfFu79HIgOTt6IDy3Up59aM
+id: bootsub_powered
+theme: bootsub
+region: '-1'
+weight: -5
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }

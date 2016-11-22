@@ -1,0 +1,16 @@
+uuid: 6bb021b3-80ea-46e9-8ed1-466a3ae5e986
+langcode: fr
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: scpbodk7SqRl8BO1sY7NER6HnXmcGuDHyfTsph9nUJs
+id: follower
+label: Follower
+registration: false
+multiple: false
+roles:
+  follower: follower
+  authenticated: '0'
+  administrator: '0'
+  tipster: '0'
+weight: 0

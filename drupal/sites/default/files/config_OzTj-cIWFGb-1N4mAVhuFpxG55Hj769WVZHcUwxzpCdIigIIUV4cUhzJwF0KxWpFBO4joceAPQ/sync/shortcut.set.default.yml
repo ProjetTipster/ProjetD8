@@ -1,0 +1,8 @@
+uuid: f9db49a2-3572-48c4-96f1-75d98a1b198f
+langcode: fr
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: U5VlGjd_SfV0Qm_EfnaynOfc549cNscFAx48JfYoMRI
+id: default
+label: 'raccourcis 1'

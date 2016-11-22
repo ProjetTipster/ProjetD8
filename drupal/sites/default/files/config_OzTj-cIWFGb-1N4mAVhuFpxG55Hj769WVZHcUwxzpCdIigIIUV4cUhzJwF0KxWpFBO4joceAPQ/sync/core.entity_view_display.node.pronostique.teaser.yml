@@ -1,0 +1,38 @@
+uuid: 67f4919f-2a7c-48ce-922e-704fd70a4ad4
+langcode: fr
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.pronostique.field_competition
+    - field.field.node.pronostique.field_cote
+    - field.field.node.pronostique.field_date_et_heure
+    - field.field.node.pronostique.field_etat
+    - field.field.node.pronostique.field_mon_prono
+    - field.field.node.pronostique.field_opposant_1
+    - field.field.node.pronostique.field_opposant_deux
+    - field.field.node.pronostique.field_resultat
+    - field.field.node.pronostique.field_type
+    - node.type.pronostique
+  module:
+    - user
+id: node.pronostique.teaser
+targetEntityType: node
+bundle: pronostique
+mode: teaser
+content:
+  flag_suivre_un_prono:
+    weight: 10
+hidden:
+  addtoany: true
+  field_competition: true
+  field_cote: true
+  field_date_et_heure: true
+  field_etat: true
+  field_mon_prono: true
+  field_opposant_1: true
+  field_opposant_deux: true
+  field_resultat: true
+  field_type: true
+  langcode: true
+  links: true

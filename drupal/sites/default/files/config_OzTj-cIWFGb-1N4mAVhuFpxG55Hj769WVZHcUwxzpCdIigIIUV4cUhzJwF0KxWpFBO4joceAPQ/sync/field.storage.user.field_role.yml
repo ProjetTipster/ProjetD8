@@ -1,0 +1,20 @@
+uuid: b33cd3c0-a79d-47dd-89f8-e6fe33261aa6
+langcode: fr
+status: true
+dependencies:
+  module:
+    - profile
+    - user
+id: user.field_role
+field_name: field_role
+entity_type: user
+type: entity_reference
+settings:
+  target_type: profile_type
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
