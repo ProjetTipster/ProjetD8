@@ -1,0 +1,13 @@
+langcode: fr
+status: true
+dependencies: {  }
+id: tipster
+label: Tipster
+registration: false
+multiple: false
+roles:
+  tipster: tipster
+  authenticated: '0'
+  administrator: '0'
+  follower: '0'
+weight: 0

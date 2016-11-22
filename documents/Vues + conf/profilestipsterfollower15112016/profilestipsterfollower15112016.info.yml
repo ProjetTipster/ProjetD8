@@ -1,0 +1,11 @@
+name: ProfilesTipsterFollower15112016
+type: module
+core: 8.x
+dependencies:
+  - block
+  - ctools
+  - node
+  - profile
+  - system
+  - user
+  - views

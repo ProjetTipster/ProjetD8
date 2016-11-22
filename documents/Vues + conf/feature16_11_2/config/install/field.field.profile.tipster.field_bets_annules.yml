@@ -1,0 +1,22 @@
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_bets_annules
+    - profile.type.tipster
+id: profile.tipster.field_bets_annules
+field_name: field_bets_annules
+entity_type: profile
+bundle: tipster
+label: 'Bets annulés'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

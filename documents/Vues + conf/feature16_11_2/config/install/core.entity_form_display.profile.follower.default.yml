@@ -1,0 +1,72 @@
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.profile.follower.field__de_reussite
+    - field.field.profile.follower.field_bankroll_actuelle
+    - field.field.profile.follower.field_bankroll_de_depart
+    - field.field.profile.follower.field_bets_annules
+    - field.field.profile.follower.field_bets_non_valides
+    - field.field.profile.follower.field_bets_valides
+    - field.field.profile.follower.field_cote_moyenne
+    - field.field.profile.follower.field_total_des_mises
+    - profile.type.follower
+id: profile.follower.default
+targetEntityType: profile
+bundle: follower
+mode: default
+content:
+  field__de_reussite:
+    weight: 7
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_bankroll_actuelle:
+    weight: 3
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_bankroll_de_depart:
+    weight: 4
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_bets_annules:
+    weight: 8
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_bets_non_valides:
+    weight: 9
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_bets_valides:
+    weight: 10
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_cote_moyenne:
+    weight: 5
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_total_des_mises:
+    weight: 6
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  langcode:
+    type: language_select
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

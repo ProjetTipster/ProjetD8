@@ -1,0 +1,92 @@
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.field.profile.tipster.field__de_reussite
+    - field.field.profile.tipster.field_bankroll_actuelle
+    - field.field.profile.tipster.field_bankroll_de_depart
+    - field.field.profile.tipster.field_bets_annules
+    - field.field.profile.tipster.field_bets_non_valides
+    - field.field.profile.tipster.field_bets_valides
+    - field.field.profile.tipster.field_cote_moyenne
+    - field.field.profile.tipster.field_total_des_mises
+    - profile.type.tipster
+id: profile.tipster.default
+targetEntityType: profile
+bundle: tipster
+mode: default
+content:
+  field__de_reussite:
+    weight: 3
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+  field_bankroll_actuelle:
+    weight: 1
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+  field_bankroll_de_depart:
+    weight: 0
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+  field_bets_annules:
+    weight: 7
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+  field_bets_non_valides:
+    weight: 6
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+  field_bets_valides:
+    weight: 5
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+  field_cote_moyenne:
+    weight: 4
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+  field_total_des_mises:
+    weight: 2
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+hidden:
+  langcode: true

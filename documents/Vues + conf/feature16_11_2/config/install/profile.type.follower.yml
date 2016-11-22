@@ -1,0 +1,13 @@
+langcode: fr
+status: true
+dependencies: {  }
+id: follower
+label: Follower
+registration: true
+multiple: false
+roles:
+  follower: follower
+  authenticated: '0'
+  administrator: '0'
+  tipster: '0'
+weight: 0

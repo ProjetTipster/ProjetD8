@@ -1,0 +1,22 @@
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_bankroll_de_depart
+    - profile.type.tipster
+id: profile.tipster.field_bankroll_de_depart
+field_name: field_bankroll_de_depart
+entity_type: profile
+bundle: tipster
+label: 'Bankroll de départ'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: €
+field_type: float

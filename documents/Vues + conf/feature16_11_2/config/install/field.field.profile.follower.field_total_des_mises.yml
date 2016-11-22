@@ -1,0 +1,22 @@
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_total_des_mises
+    - profile.type.follower
+id: profile.follower.field_total_des_mises
+field_name: field_total_des_mises
+entity_type: profile
+bundle: follower
+label: 'Total des mises'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: €
+field_type: float

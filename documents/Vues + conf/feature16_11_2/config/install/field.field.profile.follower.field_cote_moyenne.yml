@@ -1,0 +1,22 @@
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_cote_moyenne
+    - profile.type.follower
+id: profile.follower.field_cote_moyenne
+field_name: field_cote_moyenne
+entity_type: profile
+bundle: follower
+label: 'Côte moyenne'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

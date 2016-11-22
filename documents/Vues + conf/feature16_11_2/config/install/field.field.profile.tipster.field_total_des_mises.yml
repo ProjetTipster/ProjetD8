@@ -1,0 +1,22 @@
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_total_des_mises
+    - profile.type.tipster
+id: profile.tipster.field_total_des_mises
+field_name: field_total_des_mises
+entity_type: profile
+bundle: tipster
+label: 'Total des mises'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: €
+field_type: float

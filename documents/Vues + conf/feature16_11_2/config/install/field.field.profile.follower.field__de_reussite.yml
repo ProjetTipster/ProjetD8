@@ -1,0 +1,22 @@
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field__de_reussite
+    - profile.type.follower
+id: profile.follower.field__de_reussite
+field_name: field__de_reussite
+entity_type: profile
+bundle: follower
+label: '% de réussite'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: '%'
+field_type: integer
