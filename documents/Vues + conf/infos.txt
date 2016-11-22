@@ -1,0 +1,33 @@
+
+Modifs dans user.role.tipster.yml :
+
+
+  - 'delete own analyse content'
+  - 'create analyse content'
+  - 'edit own analyse content'
+
+
+LIENS :
+
+MENU Pronostics :
+	- Créer un pronostic ( http://localhost/ProjetD8/drupal/fr/node/add/pronostique )
+	- Mes Pronostics ( http://localhost/ProjetD8/drupal/fr/mes-pronostics ) 
+
+MENU ANALYSES : 
+	- Créer une analyse ( http://localhost/ProjetD8/drupal/fr/node/add/analyse )
+	- Mes analyses ( http://localhost/ProjetD8/drupal/fr/mes-analyses )
+
+
+FICHIERS : 
+
+views.view.derniers_pronostiques.yml
+views.view.derniers_utilisateurs_inscrits.yml
+views.view.tipster_de_la_semaine.yml
+
+views.view.followers_qui_me_suivent.yml
+views.view.les_pronostics_de_mes_tipsters.yml
+views.view.mes_analyses.yml
+views.view.mes_followers.yml
+views.view.tous_les_derniers_pronostics.yml
+
+

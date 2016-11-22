@@ -160,6 +160,9 @@ SIDE BAR RIGHT
 .view-derniers-pronostiques .views-field-title {
   font-weight: bold;
 }
+.view-derniers-pronostiques .views-label-field-cote {
+  float: left;
+}
 .view-tipster-de-la-semaine .views-label {
   float: left;
 }
@@ -217,7 +220,16 @@ article.pronostique .field--name-field-analyse .field--item {
   font-weight: normal;
   color: black;
 }
-
+.views-field-field-sport h2,
+.field--name-field-sport h2 a{
+  display: none;
+}
+.views-field-field-sport .field--name-field-picto-ball {
+  display: block;
+}
+.field--name-field-sport .field--name-field-picto-ball {
+  border-bottom: none !important;
+}
 /*
 SLIDESHOW
 */
@@ -270,6 +282,7 @@ SLIDESHOW
   -webkit-border-radius: 9px;
   border-radius: 9px;
   border: 3px solid #024a07;
+  max-width: 100%;
 }
 
 /*
