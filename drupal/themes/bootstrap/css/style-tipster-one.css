@@ -345,7 +345,8 @@ article img {
   max-width: 100%;
 }
 .views-element-container .view-frontpage .views-row article,
-.views-element-container .view-actualites .views-row article {
+.views-element-container .view-actualites .views-row article,
+.views-element-container .view-mes-analyses .views-row article {
   border: solid 3px #024a07;
   -moz-border-radius: 9px;
   -webkit-border-radius: 9px;
@@ -359,7 +360,8 @@ article img {
   padding-right: 10px;
 }
 .views-element-container .view-frontpage .views-row article article,
-.views-element-container .view-actualites .views-row article article {
+.views-element-container .view-actualites .views-row article article,
+.views-element-container .view-mes-analyses .views-row article article {
   display: none;
 }
 .pagination > .active > a,
