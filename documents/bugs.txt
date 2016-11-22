@@ -1,0 +1,27 @@
+.CONFIG 
+Images slideshow format + images manquantes.
+
+block "Tipster du moment" (afficher les infos du meilleur sur le% de réussite)
+
+block "Derniers pronos" : op1 'VS' op2 'côte:' $cote
+
+Enlever le AddToAny du mode affichage teaser des articles + changer les droits follower pour le visualiser.
+
+Vue 'Tous les pronos'
+
+Vue "Mes pronos" + ajouter lien menu "Mes pronos" pour follower
+
+Vue "Les pronos de mes tipsters (en attente)" + lien menu "Les pronos de mes tipsters
+
+Vue "Mes followers"
+
+Vue "Mes analyses" + liens menu "Analyses -> Créer une analyse et Analyses -> mes analyses "
+
+Lien "Modifier mon compte" (tipster + follower) + Lien menu sur tipster
+
+
+.DEV
+Redirection après inscription vers création de BK
+Création de bk follower : Ajouter le champs "mise par défaut"
+Lien "Valider mon prono"
+Fonctionnalité BK
